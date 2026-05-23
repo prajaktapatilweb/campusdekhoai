@@ -6,6 +6,8 @@ import TestimonialsSection from "@/components/testimonials-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import AppThemeSetting from "./AppThemeSetting";
+import EventCards from "@/components/events";
+import Gallery from "@/components/Gallery";
 
 export default function Page() {
   return (
@@ -17,9 +19,11 @@ export default function Page() {
       <Navbar />
       <HeroSlider />
       <AboutSection />
+       <EventCards />
       <ServicesSection />
-      <TestimonialsSection />
-      <ContactSection />
+      <Gallery/>
+      {/* <TestimonialsSection /> */}
+      {/* <ContactSection /> */}
       <Footer />
     </main>
     </>

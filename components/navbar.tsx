@@ -84,11 +84,11 @@ export default function Navbar() {
             </span>
           </div> */}
         </a>
-        {/* Togle Button To change Language */}
-        <div className="hidden md:flex">
+        {/* Toggle Button To change Language */}
+        {/* <div className="hidden md:flex">
           <div
             className={`flex overflow-hidden rounded-md border ${
-              scrolled ? "border-[#1a237e]" : "border-white/50"
+              scrolled ? "border-white/50" : "border-white/50"
             }`}
           >
             <button
@@ -121,7 +121,7 @@ export default function Navbar() {
               मराठी
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* Desktop Nav */}
         <div className="hidden items-center gap-8 md:flex ">

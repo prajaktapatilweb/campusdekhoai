@@ -6,18 +6,19 @@ import Image from "next/image";
 
 const stats = [
   { icon: Calendar, value: "2022", label: "Established" },
-  { icon: Users, value: "500+", label: "Clients Served" },
+  { icon: Users, value: "500+", label: "Students Helped" },
   { icon: MapPin, value: "6+", label: "Cities Covered" },
   { icon: Award, value: "100%", label: "Satisfaction" },
 ];
 
 const highlights = [
-  "Trusted IT partner for corporate offices & IT parks",
-  "Pan-India delivery: Pune, Chennai, Bangalore, Noida & more",
-  "Flexible rental plans for startups & enterprises",
-  "Certified technicians with rapid response times",
-  "AMC services for hassle-free IT management",
-  "Competitive pricing with premium quality assurance",
+
+"Free one-on-one counselling sessions",
+"Direct interaction with college representatives",
+"Scholarship and financial aid guidance",
+"Career aptitude assessments",
+"Complete admission process support",
+"Documentation guidance and review",
 ];
 
 export default function AboutSection() {
@@ -39,9 +40,9 @@ export default function AboutSection() {
           <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">
             About Us
           </span>
-          <h2 className="font-serif text-4xl font-bold text-[hsl(var(--foreground))] md:text-5xl">
-            Your Trusted IT{" "}
-            <span className="text-[hsl(var(--primary))]">Solutions Partner</span>
+          <h2 className="font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-5xl">
+          Trusted Admission Guidance  
+            <span className="text-[hsl(var(--primary))]"> Across Maharashtra</span>
           </h2>
         </motion.div>
 
@@ -58,8 +59,8 @@ export default function AboutSection() {
             <div className="relative">
               <div className="overflow-hidden rounded-2xl border border-[hsl(var(--border))]">
                 <Image
-                  src="/images/aboutus1.jpg"
-                  alt="Vakrtunda Infotech office - professional IT workspace"
+                  src="/images/guide2.jpg"
+                  alt="Pudhari Campus To Career connect"
                   width={640}
                   height={440}
                   className="h-[320px] w-full object-cover md:h-[440px]"
@@ -108,25 +109,22 @@ export default function AboutSection() {
             className="w-full lg:w-1/2"
           >
             <h3 className="mb-6 font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-3xl">
-              Delivering Premium IT Services{" "}
+             Complete Guidance After 12th Under One Roof
               <span className="text-[hsl(var(--primary))]">Across India</span>
             </h3>
 
             <p className="mb-6 leading-relaxed text-[hsl(var(--muted-foreground))]">
-              Founded in 2022, Vakrtunda Infotech Solutions has rapidly grown to become a trusted name in
-              IT infrastructure services. We specialize in providing comprehensive technology
-              solutions to businesses in Pune{"'"}s thriving IT corridors - Kharadi, Hinjwadi, and
-              Baner - and have expanded our footprint to major cities including Chennai,
-              Bangalore, Madurai, and Noida.
+               Pudhari Campus To Career is Maharashtra’s leading education counselling platform, dedicated to helping students navigate the complex world of college admissions. Our mission is to bridge the gap between students and their dream institutions through expert guidance, personalized counselling, and comprehensive support.
+With a team of experienced counsellors and partnerships with over 100+ prestigious institutions, we provide end-to-end admission assistance tailored to each student's unique aspirations and capabilities.
             </p>
 
-            <p className="mb-8 leading-relaxed text-[hsl(var(--muted-foreground))]">
+            {/* <p className="mb-8 leading-relaxed text-[hsl(var(--muted-foreground))]">
               From rental laptops and desktops to complete networking infrastructure, CCTV
               surveillance systems, and software configuration - we deliver end-to-end IT
               solutions that keep your business running smoothly. Our commitment to quality and
               rapid service has made us the preferred partner for IT companies and corporate
               offices.
-            </p>
+            </p> */}
 
             {/* Highlights */}
             <div className="mb-8 grid gap-3 md:grid-cols-2">
@@ -147,7 +145,7 @@ export default function AboutSection() {
 
             {/* Location tags */}
             <div className="flex flex-wrap gap-2">
-              {["Pune", "Chennai", "Bangalore", "Madurai", "Noida", "UP"].map((city) => (
+              {["Pune", "Kolhapur", "Sambhajinagar", "Nashik", "Satara", "Baramati"].map((city) => (
                 <span
                   key={city}
                   className="flex items-center gap-1.5 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--secondary))] px-3 py-1.5 text-xs font-medium text-[hsl(var(--secondary-foreground))]"
