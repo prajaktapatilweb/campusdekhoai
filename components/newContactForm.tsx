@@ -26,9 +26,10 @@ interface FormValues {
   whatsapp: string;
   education: string;
   targetStream: string;
-  attendedSeminar: string;
+  attendingSeminar: boolean | string;
   reference: string;
   district: string;
+  evenetLocation: string;
 }
 
 const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
@@ -49,9 +50,10 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
 
   education: yup.string().required("Required"),
   targetStream: yup.string().required("Required"),
-  attendedSeminar: yup.string().required("Required"),
+  attendingSeminar: yup.boolean().required("Required"),
   reference: yup.string().required("Required"),
   district: yup.string().required("Required"),
+  evenetLocation: yup.string().required("Required"),
 });
 
 /* =========================================================
@@ -80,7 +82,7 @@ export default function NewContactForm() {
     helpers: FormikHelpers<FormValues>,
   ): Promise<void> => {
     try {
-      await Axios.post("/api/nodemail", values);
+      await Axios.post("/api/studentregistration", values);
 
       setSubmitted(true);
 
@@ -169,15 +171,16 @@ export default function NewContactForm() {
           >
             <Formik<FormValues>
               initialValues={{
-                fullname: "",
-                email: "",
-                phone: "",
-                whatsapp: "",
-                education: "",
-                targetStream: "",
-                attendedSeminar: "",
-                reference: "",
-                district: "",
+                fullname: "BJP",
+                email: "am@g.com",
+                phone: "0000000000",
+                whatsapp: "0000000000",
+                education: "12th",
+                targetStream: "Engineering",
+                attendingSeminar: "yes",
+                reference: "Daily Pudhari",
+                district: "Pune",
+                evenetLocation: "Pune",
               }}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
@@ -286,7 +289,7 @@ export default function NewContactForm() {
                     />
                     {/* RADIO */}
                     <RadioGroup
-                      name="attendedSeminar"
+                      name="attendingSeminar"
                       label={t("form.seminar")}
                       options={seminarOptions}
                     />
@@ -319,7 +322,7 @@ export default function NewContactForm() {
                         "Submitting..."
                       ) : (
                         <>
-                          {t("nav.login")}
+                          {t("nav.register")}
                           {/* Submit Message */}
                           <Send
                             size={18}

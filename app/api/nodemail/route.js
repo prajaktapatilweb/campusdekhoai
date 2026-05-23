@@ -15,10 +15,12 @@ const client = nodemailer.createTransport({
 });
 
 export default async function handler(req, res) {
+    console.log('first', req.body)
     const { method } = req;
     switch (method) {
         case "POST":
             try {
+                console.log('first', req.body)
                 const date = moment().utcOffset("+05:30").format('MMMM Do YYYY, h:mm:ss a')
                 const clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop().trim() ||
                     req.socket.remoteAddress;
@@ -35,7 +37,7 @@ export default async function handler(req, res) {
                 client.sendMail(
                     {
                         from: `Web Developer <${process.env.EMAILID}>`,
-                        to: "prajubpatil@gmail.com,vakratundtech@gmail.com",
+                        to: "prajubpatil@gmail.com",
                         subject: emailSubject,
                         text: emailContent
                     }

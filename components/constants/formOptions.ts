@@ -1,6 +1,6 @@
-import { TranslationKeys } from "./translations";
+// import { TranslationKeys } from "./translations";
 
-type TranslateFunction = (key: TranslationKeys) => string;
+type TranslateFunction = (key: string) => string;
 
 export const getTargetStreamOptions = (t: TranslateFunction) => [
   {

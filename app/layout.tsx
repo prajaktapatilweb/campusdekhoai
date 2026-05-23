@@ -5,6 +5,7 @@ import { Inter, Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import LanguageToggle from "@/components/LanguageToggle";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
@@ -72,6 +73,7 @@ export default function RootLayout({
         <LanguageProvider>
           {/* <AuthProvider> */}
           {children}
+           <LanguageToggle />
           {/* </AuthProvider>*/}
         </LanguageProvider>
         {/* {process.env.NODE_ENV === "production" && <Analytics />} */}

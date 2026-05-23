@@ -9,6 +9,9 @@ import AppThemeSetting from "./AppThemeSetting";
 
 export default function Page() {
   return (
+    <>
+
+   
     <main>
       <AppThemeSetting/>
       <Navbar />
@@ -19,5 +22,6 @@ export default function Page() {
       <ContactSection />
       <Footer />
     </main>
+    </>
   );
 }

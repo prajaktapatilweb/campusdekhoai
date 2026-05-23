@@ -40,10 +40,36 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex  items-center justify-between border-b-2 border-white" style={{background:'#1a237e'}}>
         {/* Logo */}
         <a href="#home" className="flex items-center gap-2">
-          <Image src="/logo3.png" width="100" height="100" alt="vakrtuninfotech"></Image>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div
+              className="
+      relative z-[2]
+      flex h-[95px] w-[270px] md:w-[400px]
+      
+       items-center
+      bg-white px-4
+    "
+              style={{
+                clipPath: "polygon(0 0, 100% 0, 85% 100%, 0% 100%)",
+              }}
+            >
+              <Image
+                src="/images/pudharilogo.png"
+                alt="CampusDekho.AI Logo"
+                width={320}
+                height={120}
+                priority
+              />
+            </div>
+          </motion.div>
+          {/* <Image src="/logo3.png" width="100" height="100" alt="vakrtuninfotech"></Image> */}
           {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[hsl(var(--primary))] bg-[hsl(var(--primary))]/10">
             <span className="font-serif text-xl font-bold text-[hsl(var(--primary))]">
               T
@@ -98,12 +124,12 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-8 md:flex ">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-[hsl(var(--primary))] after:transition-all after:duration-300 hover:after:w-full"
+              className="relative text-sm font-medium text-white transition-colors hover:text-[hsl(var(--primary))] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-[hsl(var(--primary))] after:transition-all after:duration-300 hover:after:w-full"
             >
               {link.label}
             </a>
@@ -111,10 +137,10 @@ export default function Navbar() {
         </div>
 
         {/* CTA + Mobile Toggle */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 pr-4 ">
           <a
             href="tel:9175932227"
-            className="hidden items-center gap-2 rounded-full border border-[hsl(var(--primary))] bg-[hsl(var(--primary))]/10 px-5 py-2.5 text-sm font-semibold text-[hsl(var(--primary))] transition-all hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))] md:flex"
+            className="hidden items-center  gap-2 rounded-full border border-white bg-[hsl(var(--primary))]/10 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))] md:flex"
           >
             <Phone className="h-4 w-4" />
             Call Now

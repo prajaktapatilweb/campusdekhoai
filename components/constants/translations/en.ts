@@ -8,7 +8,7 @@ const en = {
   "nav.gallery": "Gallery",
   "nav.contact": "Contact",
   "nav.register": "Register Now",
-  "nav.login": "Login12",
+  "nav.login": "Login",
 
   // Hero
   "hero.badge.date": "June 2026",
