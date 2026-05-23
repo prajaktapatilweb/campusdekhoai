@@ -7,7 +7,15 @@ import * as yup from "yup";
 // import { motion, AnimatePresence } from "framer-motion";
 import { motion, AnimatePresence } from "motion/react";
 
-import { User, Phone, Mail, MessageSquare, Send, CheckCircle2, GraduationCap } from "lucide-react";
+import {
+  User,
+  Phone,
+  Mail,
+  MessageSquare,
+  Send,
+  CheckCircle2,
+  GraduationCap,
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import FormInput from "./Formik/FormInput";
 import FormSelect from "./Formik/FormSelect";
@@ -30,6 +38,15 @@ interface FormValues {
   reference: string;
   district: string;
   evenetLocation: string;
+}
+
+interface Props {
+  selectedEvent?: {
+    city: string;
+    venue: string;
+    date: string;
+    time: string;
+  };
 }
 
 const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
@@ -63,8 +80,7 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
-
-export default function NewContactForm() {
+export default function NewContactForm({ selectedEvent }: Props) {
   const { t } = useLanguage();
 
   const targetStreamOptions = getTargetStreamOptions(t);
@@ -108,28 +124,11 @@ export default function NewContactForm() {
         {submitted ? (
           <motion.div
             key="success"
-            initial={{
-              opacity: 0,
-              scale: 0.8,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.8,
-            }}
-            transition={{
-              duration: 0.4,
-            }}
-            className="
-              flex flex-col items-center justify-center
-              rounded-3xl border border-[hsl(var(--border))]
-              bg-[hsl(var(--background))/0.7]
-              backdrop-blur-xl
-              p-10 text-center
-            "
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.4 }}
+            className="flex flex-col items-center justify-center p-10 text-center"
           >
             <motion.div
               initial={{ scale: 0 }}
@@ -143,21 +142,18 @@ export default function NewContactForm() {
               <CheckCircle2 className="mb-5 h-20 w-20 text-[hsl(var(--primary))]" />
             </motion.div>
 
-            <h4 className="mb-2 text-3xl font-bold text-[hsl(var(--foreground))]">Thank You!</h4>
+            <h4 className="mb-2 text-3xl font-bold text-[hsl(var(--foreground))]">
+              Thank You!
+            </h4>
 
             <p className="max-w-md text-[hsl(var(--muted-foreground))]">
-              We've received your message. Our team will get back to you shortly.
+              We've received your message. Our team will get back to you
+              shortly.
             </p>
 
             <button
               onClick={() => setSubmitted(false)}
-              className="
-                mt-6 rounded-full border border-[hsl(var(--border))]
-                px-5 py-2 text-sm font-medium
-                transition-all duration-300
-                hover:bg-[hsl(var(--primary))]
-                hover:text-[hsl(var(--primary-foreground))]
-              "
+              className="mt-6 rounded-full border border-[hsl(var(--border))] px-5 py-2 text-sm font-medium transition-all duration-300 hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))]"
             >
               Send another message
             </button>
@@ -180,35 +176,29 @@ export default function NewContactForm() {
                 attendingSeminar: "yes",
                 reference: "Daily Pudhari",
                 district: "Pune",
-                evenetLocation: "Pune",
+                evenetLocation: selectedEvent?.city || "",
               }}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
             >
               {({ isSubmitting }) => (
-                <Form
-                  className="
-                    rounded-3xl border border-white/10
-                    bg-[hsl(var(--background))/0.65]
-                    backdrop-blur-xl
-                    p-6 md:p-10
-                    shadow-2xl
-                  "
-                >
+                <Form className="h-full bg-transparent p-6 md:p-10">
                   {/* HEADER */}
-                  <motion.div
+                  {/* <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                     className="mb-8"
                   >
-                    <h3 className="text-3xl font-bold text-[hsl(var(--foreground))]">Contact Us</h3>
+                    <h3 className="text-3xl font-bold text-[hsl(var(--foreground))]">
+                      Contact Us
+                    </h3>
 
                     <p className="mt-2 text-[hsl(var(--muted-foreground))]">
                       Fill the form and our team will contact you shortly.
                     </p>
-                  </motion.div>
+                  </motion.div> */}
 
                   {/* FIELDS */}
                   <motion.div
@@ -294,7 +284,7 @@ export default function NewContactForm() {
                       options={seminarOptions}
                     />
 
-
+                    <Field type="hidden" name="evenetLocation" />
                     {/* BUTTON */}
                     <motion.button
                       whileHover={{
@@ -305,18 +295,7 @@ export default function NewContactForm() {
                       }}
                       disabled={isSubmitting}
                       type="submit"
-                      className="
-                        group flex w-full items-center justify-center gap-2
-                        rounded-2xl
-                        bg-[hsl(var(--primary))]
-                        px-8 py-4
-                        text-sm font-sans font-semibold
-                        text-[hsl(var(--primary-foreground))]
-                        transition-all duration-300
-                        hover:shadow-xl
-                        hover:shadow-[hsl(var(--primary))]/30
-                        disabled:opacity-70
-                      "
+                      className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70"
                     >
                       {isSubmitting ? (
                         "Submitting..."
@@ -326,10 +305,7 @@ export default function NewContactForm() {
                           {/* Submit Message */}
                           <Send
                             size={18}
-                            className="
-                              transition-transform duration-300
-                              group-hover:translate-x-1
-                            "
+                            className="transition-transform duration-300 group-hover:translate-x-1"
                           />
                         </>
                       )}

@@ -13,19 +13,19 @@ export default function Page() {
   return (
     <>
 
-   
-    <main>
-      <AppThemeSetting/>
-      <Navbar />
-      <HeroSlider />
-      <AboutSection />
-       <EventCards />
-      <ServicesSection />
-      <Gallery/>
-      {/* <TestimonialsSection /> */}
-      {/* <ContactSection /> */}
-      <Footer />
-    </main>
+
+      <main>
+        <AppThemeSetting />
+        <Navbar />
+        <HeroSlider />
+        <AboutSection />
+        <EventCards />
+        <ServicesSection />
+        <Gallery />
+        {/* <TestimonialsSection /> */}
+        {/* <ContactSection /> */}
+        <Footer />
+      </main>
     </>
   );
 }
