@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ArrowUp } from "lucide-react";
 import Image from "next/image";
@@ -36,7 +37,7 @@ export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
+  const { t } = useLanguage();
   return (
     <footer className="relative overflow-hidden border-t border-[hsl(var(--border))] bg-[hsl(0,0%,3%)]">
       {/* Gold line accent */}
@@ -51,16 +52,18 @@ export default function Footer() {
             viewport={{ once: true }}
           >
             <div className="mb-4 flex items-center gap-2">
-                        <Image src='/logo3.png' width='100' height='100' alt="vakrtuninfotech"></Image>
-              
-            
+              <Image
+                src="/images/pudharilogo.png"
+                width="300"
+                height="100"
+                alt="vakrtuninfotech"
+              ></Image>
             </div>
             <p className="mb-6 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-              Your trusted IT solutions partner since 2022. We provide premium
-              rental equipment, hardware solutions, networking infrastructure,
-              and comprehensive IT services across India.
+              Your trusted counselling partner for Engineering, Pharmacy &
+              Management admissions in Maharashtra.
             </p>
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               <a
                 href="tel:9175932227 "
                 className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
@@ -73,14 +76,14 @@ export default function Footer() {
                 className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
               >
                 <Mail className="h-4 w-4 text-[hsl(var(--primary))]" />
-               vakratundtech@gmail.com 
+                vakratundtech@gmail.com
               </a>
               <span className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))]">
                 <MapPin className="h-4 w-12 text-[hsl(var(--primary))]" />
-                Office No-4, Jay Shri Hari Building Vinayak Nagar Lane No-2 Kate Puram Chowk Opposite RK 
-Complex Pimple Gurav Pune 411061
+                Office No-4, Jay Shri Hari Building Vinayak Nagar Lane No-2 Kate
+                Puram Chowk Opposite RK Complex Pimple Gurav Pune 411061
               </span>
-            </div>
+            </div> */}
           </motion.div>
 
           {/* Quick Links */}
@@ -108,7 +111,7 @@ Complex Pimple Gurav Pune 411061
           </motion.div>
 
           {/* Services */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -129,10 +132,10 @@ Complex Pimple Gurav Pune 411061
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </motion.div> */}
 
           {/* Locations */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -152,7 +155,7 @@ Complex Pimple Gurav Pune 411061
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
 
@@ -160,7 +163,8 @@ Complex Pimple Gurav Pune 411061
       <div className="border-t border-[hsl(var(--border))]">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 md:flex-row">
           <p className="text-xs text-[hsl(var(--muted-foreground))]">
-            &copy; {new Date().getFullYear()} Vakrtunda Infotech. All rights reserved.
+            &copy; {new Date().getFullYear()}
+            Campus Dekho. {t("footer.rights")}
           </p>
           <button
             type="button"
