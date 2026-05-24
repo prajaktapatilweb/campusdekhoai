@@ -34,13 +34,16 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[hsl(0,0%,4%)]/95 backdrop-blur-md shadow-lg shadow-[hsl(43,74%,49%)]/5"
+          ? "bg-[hsl(0,0%,4%)]/95 shadow-lg shadow-[hsl(43,74%,49%)]/5 backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex  items-center justify-between border-b-2 border-white" style={{background:'#1a237e'}}>
+      <div
+        className="mx-auto flex items-center justify-between border-b-2 border-white"
+        style={{ background: "#1a237e" }}
+      >
         {/* Logo */}
         <a href="#home" className="flex items-center gap-2">
           <motion.div
@@ -49,20 +52,14 @@ export default function Navbar() {
             transition={{ duration: 0.5 }}
           >
             <div
-              className="
-      relative z-[2]
-      flex h-[95px] w-[270px] md:w-[400px]
-      
-       items-center
-      bg-white px-4
-    "
+              className="relative z-[2] flex h-[95px] w-[270px] items-center bg-white px-4 md:w-[400px]"
               style={{
                 clipPath: "polygon(0 0, 100% 0, 85% 100%, 0% 100%)",
               }}
             >
               <Image
                 src="/images/pudharilogo.png"
-                alt="CampusDekho.AI Logo"
+                alt="Pudhari Campus 2 Career Logo"
                 width={320}
                 height={120}
                 priority
@@ -124,12 +121,12 @@ export default function Navbar() {
         </div> */}
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-8 md:flex ">
+        <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium text-white transition-colors hover:text-[hsl(var(--primary))] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-[hsl(var(--primary))] after:transition-all after:duration-300 hover:after:w-full"
+              className="relative text-sm font-medium text-white transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-[hsl(var(--primary))] after:transition-all after:duration-300 hover:text-[hsl(var(--primary))] hover:after:w-full"
             >
               {link.label}
             </a>
@@ -137,10 +134,10 @@ export default function Navbar() {
         </div>
 
         {/* CTA + Mobile Toggle */}
-        <div className="flex items-center gap-4 pr-4 ">
+        <div className="flex items-center gap-4 pr-4">
           <a
             href="tel:9175932227"
-            className="hidden items-center  gap-2 rounded-full border border-white bg-[hsl(var(--primary))]/10 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))] md:flex"
+            className="hidden items-center gap-2 rounded-full border border-white bg-[hsl(var(--primary))]/10 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))] md:flex"
           >
             <Phone className="h-4 w-4" />
             Call Now
@@ -151,7 +148,11 @@ export default function Navbar() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>
@@ -186,7 +187,10 @@ export default function Navbar() {
                       if (!element) return;
 
                       const offset = 90; // adjust if navbar height changes
-                      const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
+                      const top =
+                        element.getBoundingClientRect().top +
+                        window.pageYOffset -
+                        offset;
 
                       window.scrollTo({
                         top,

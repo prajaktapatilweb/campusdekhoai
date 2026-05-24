@@ -1,189 +1,214 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
-import useEmblaCarousel from "embla-carousel-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay, Pagination } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+
+import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
+
+import "swiper/css";
+import "swiper/css/pagination";
 
 const testimonials = [
-{ name: "Sarvesh Surve ",  
-   avatar: "SS", 
-  rating: 5, 
-  feedback: "I had given my laptop for repair at Vakratund Infotech and I am very happy with their service The staff was polite and helpful. They repaired my laptop quickly and now it is working very well. The service charges were also reasonable. My uncle had taken a projector on rent from Vakratund Infotech. The proiector quality was excellent and very easy to use. Delivery and return process was also smooth. Overall, we had a very good experience. I would surelv recommend Vakratund Infotech for both laptop repair and projector rental",
- },
   {
-    name: "Manish Belekar",
-    avatar: "MB",
+    name: "Priya Sharma",
+    course: "B.Tech CSE",
+    college: "IIT Bombay",
     rating: 5,
-    feedback:
-      "I had given my Dell Capmutar new 2nd hand at Vakratund Infotech and I am very happy with their service The staff was polite and helpful. Camputer quickly and now it is working very well. The service charges were also reasonable.The quality was excellent and very easy to use. Delivery and return process was also smooth. Overall, we had a very good experience. recommend Vakratund Infotech for both Camputer and projector rental",
+    review:
+      "The counselling session was incredibly helpful! I was confused between multiple engineering branches, but the experts helped me understand my strengths and guided me towards Computer Science.",
+    avatar: "PS",
   },
   {
-    name: "Priyanka Thakur",
-    avatar: "PT",
+    name: "Rahul Verma",
+    course: "MBBS",
+    college: "AIIMS Delhi",
     rating: 5,
-    feedback:
-      "Fast & Excellent Service provider @Gaurav. Highly recommended - Vakratund infotech.",
+    review:
+      "The scholarship guidance helped my family understand the financial options available. Now studying at AIIMS Delhi with a full scholarship!",
+    avatar: "RV",
   },
   {
-    name: "CA Sagar Lahane",
-    avatar: "CA",
+    name: "Ananya Patel",
+    course: "MBA",
+    college: "IIM Ahmedabad",
     rating: 5,
-    feedback:
-      "Quick and professional services here. Highly recommended for all IT related products and services. 👍👍",
+    review:
+      "The CAP round guidance was a lifesaver! The counsellors explained every step of the admission process clearly.",
+    avatar: "AP",
   },
   {
-    name: "Vijay Lode",
-    avatar: "VL",
-    rating: 5,
-    feedback:
-      "Excellent service my Laptop windows totally crash recovery all data and we'll service my laptop",
+    name: "Karthik Reddy",
+    course: "B.Arch",
+    college: "SPA Delhi",
+    rating: 4,
+    review:
+      "The college comparison feature helped me shortlist the best architecture schools. The portfolio review session was extremely valuable.",
+    avatar: "KR",
   },
-  { name: "Niranjan More ", 
-    // role: "IT Director, NexGen Enterprises",
-    //  // location: "Bangalore", 
-    avatar: "NM",
-     rating: 5, feedback: "Laptops offered at best affordable price !", extended: " ", 
-    },
-{ name: "Akanksha Bhangale",
-   // role: "IT Director, NexGen Enterprises", 
-   // // location: "Bangalore", 
-   avatar: "AB", 
-   rating: 5, 
-   feedback: "I recently had Vakratund Infotech build a custom PC for me, and the experience was flawless. They helped me pick the best components for my budget and the cable management is incredibly clean. The system was stress-tested before I picked it up, and it’s running like a dream. If you're looking for a professional build without the headache, this is the place to go ", },
+  {
+    name: "Sneha Gupta",
+    course: "B.Pharm",
+    college: "NIPER Mohali",
+    rating: 5,
+    review:
+      "The education loan guidance was exceptional. Without this support, pursuing my pharmacy dream would have been difficult.",
+    avatar: "SG",
+  },
+  {
+    name: "Arjun Singh",
+    course: "LLB",
+    college: "NLSIU Bangalore",
+    rating: 5,
+    review:
+      "The mentorship program connected me with a practicing lawyer who guided me through CLAT preparation.",
+    avatar: "AS",
+  },
+];
 
-{ name: "Sakshi Jha", 
-  // role: "IT Director, NexGen Enterprises", 
-  // // location: "Bangalore", 
-  avatar: "SJ", 
-  rating: 5, feedback: "It's was really very nice product the look and the function of the laptop is really very good I like it thanks" },
-  ];
-
-export default function TestimonialsSection() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-const [emblaRef, emblaApi] = useEmblaCarousel({
-  loop: true,
-  align: "start",
-  slidesToScroll: 1,
-  containScroll: "trimSnaps",
-});
-
-useEffect(() => {
-  if (!emblaApi) return;
-
-  const interval = setInterval(() => {
-    emblaApi.scrollNext();
-  }, 3000); // 3 seconds
-
-  return () => clearInterval(interval);
-}, [emblaApi]);
-
-
-
-  const scrollPrev = useCallback(() => {
-    emblaApi && emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    emblaApi && emblaApi.scrollNext();
-  }, [emblaApi]);
+export default function Testimonials() {
+  const swiperRef = useRef<SwiperType | null>(null);
 
   return (
-    <section id="testimonials" className="relative overflow-hidden py-24 md:py-32">
-      <div className="absolute right-1/4 top-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/3 blur-3xl" />
-
-      <div className="relative mx-auto max-w-7xl px-6">
+    <section className="bg-gradient-to-b from-slate-50 to-white py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-16 text-center">
-          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">
-            Testimonials
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 text-center"
+        >
+          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-[hsl(var(--primary))] uppercase">
+            Success Stories
           </span>
-          <h2 className="font-serif text-4xl font-bold md:text-5xl">
-            What Our Clients{" "}
-            <span className="text-[hsl(var(--primary))]">Say</span>
+          <h2 className="font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-5xl">
+            What Our
+            <span className="text-[hsl(var(--primary))]"> Students Say</span>
           </h2>
-        </div>
+        </motion.div>
 
         {/* Slider */}
-        <div>
-          <div ref={emblaRef} className="overflow-hidden">
-            <div className="flex">
-              {testimonials.map((item, index) => {
-                const words = item.feedback.split(" ");
-                const isLong = words.length > 20;
-                const isExpanded = expandedIndex === index;
-                const shortText = words.slice(0, 20).join(" ");
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="relative">
+            <Swiper
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+              modules={[Navigation, Autoplay, Pagination]}
+              spaceBetween={24}
+              slidesPerView={1}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                clickable: true,
+                bulletClass: "swiper-pagination-bullet testimonial-bullet",
+                bulletActiveClass:
+                  "swiper-pagination-bullet-active testimonial-bullet-active",
+              }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+              className="pt-5 pb-16"
+            >
+              {testimonials.map((testimonial, index) => (
+                <SwiperSlide key={index}>
+                  <div className="h-full rounded-[2rem] border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    {/* User */}
+                    <div className="flex items-center gap-4">
+                      {/* Avatar */}
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-700 text-sm font-semibold text-white">
+                        {testimonial.avatar}
+                      </div>
 
-                return (
-                  <motion.div
-                    key={index}
-className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_calc(100%/3)] px-3 flex"
-                  >
-                    <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 transition-all hover:border-[hsl(var(--primary))]/30 hover:shadow-lg hover:shadow-[hsl(var(--primary))]/5">
-                    <Quote className="mb-4 h-8 w-8 text-[hsl(var(--primary))]/30" />
+                      {/* Info */}
+                      <div>
+                        <h3 className="font-semibold text-[#1e3a5f]">
+                          {testimonial.name}
+                        </h3>
 
-                    {/* Stars */}
-                    <div className="mb-4 flex gap-1">
-                      {Array.from({ length: item.rating }).map((_, j) => (
+                        <p className="text-sm text-slate-500">
+                          {testimonial.course} | {testimonial.college}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Quote */}
+                    <Quote size={40} className="my-3 text-blue-700/20" />
+
+                    {/* Rating */}
+                    <div className="mb-3 flex items-center gap-1">
+                      {[...Array(testimonial.rating)].map((_, i) => (
                         <Star
-                          key={`star-${item.name}-${j}`}
-                          className="h-4 w-4 fill-[hsl(var(--primary))] text-[hsl(var(--primary))]"
+                          key={i}
+                          size={16}
+                          className="fill-yellow-400 text-yellow-400"
                         />
                       ))}
                     </div>
 
-                    {/* Feedback */}
-                    <p className="text-gray-400 mb-4">
-                      “{isExpanded || !isLong
-                        ? item.feedback
-                        : shortText + "..."}”
+                    {/* Review */}
+                    <p className="min-h-[140px] text-[15px] leading-7 text-slate-600">
+                      "{testimonial.review}"
                     </p>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-                    {isLong && (
-                      <button
-                        onClick={() =>
-                          setExpandedIndex(isExpanded ? null : index)
-                        }
-                        className="text-sm font-semibold text-[hsl(var(--primary))] mb-4"
-                      >
-                        {isExpanded ? "Read Less" : "Read More"}
-                      </button>
-                    )}
+            {/* Navigation */}
+            <div className="pointer-events-none absolute top-[40%] right-[-20px] left-[-20px] z-10 hidden justify-between md:flex">
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg transition-all duration-300 hover:bg-blue-700 hover:text-white"
+              >
+                <ArrowLeft size={20} />
+              </button>
 
-                    {/* Avatar */}
-                    <div className="flex items-center gap-3 border-t border-[hsl(var(--border))] pt-4">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[hsl(var(--primary))]/15 font-serif text-sm font-bold text-[hsl(var(--primary))]">
-                        {item.avatar}
-                      </div>
-                      <h4 className="text-sm font-semibold">
-                        {item.name}
-                      </h4>
-                    </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg transition-all duration-300 hover:bg-blue-700 hover:text-white"
+              >
+                <ArrowRight size={20} />
+              </button>
             </div>
           </div>
-
-          {/* Buttons */}
-          <div className="mt-8 flex justify-center gap-4">
-            <button
-              onClick={scrollPrev}
-              className="flex items-center justify-center rounded-full border px-6 py-2 border-[hsl(var(--border))] transition-all hover:border-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            <button
-              onClick={scrollNext}
-              className="flex items-center justify-center rounded-full border px-6 py-2 border-[hsl(var(--border))] transition-all hover:border-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Pagination Styles */}
+      <style jsx global>{`
+        .testimonial-bullet {
+          width: 10px;
+          height: 10px;
+          background: #cbd5e1;
+          opacity: 1;
+        }
+
+        .testimonial-bullet-active {
+          width: 30px;
+          border-radius: 999px;
+          background: #1d4ed8;
+        }
+      `}</style>
     </section>
   );
 }

@@ -62,19 +62,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`
-    ${inter.variable}
-    ${poppins.variable}
-    ${playfair.variable}
-    bg-background
-  `}
+      className={` ${inter.variable} ${poppins.variable} ${playfair.variable} bg-background`}
     >
       <body className="font-sans antialiased">
         <LanguageProvider>
-          {/* <AuthProvider> */}
-          {children}
-           <LanguageToggle />
-          {/* </AuthProvider>*/}
+          <AuthProvider>
+            {children}
+            <LanguageToggle />
+          </AuthProvider>
         </LanguageProvider>
         {/* {process.env.NODE_ENV === "production" && <Analytics />} */}
       </body>

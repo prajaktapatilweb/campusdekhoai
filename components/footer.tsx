@@ -56,7 +56,7 @@ export default function Footer() {
                 src="/images/pudharilogo.png"
                 width="300"
                 height="100"
-                alt="vakrtuninfotech"
+                alt="Pudhari Campus 2 Career Logo"
               ></Image>
             </div>
             <p className="mb-6 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">

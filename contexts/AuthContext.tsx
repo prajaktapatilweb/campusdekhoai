@@ -1,80 +1,108 @@
-'use client'
+"use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { useRouter } from 'next/navigation'
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+// import { useRouter } from "next/navigation";
 
 interface User {
-  id: string
-  email: string
-  name: string
-  role: 'admin' | 'staff'
+  id: string;
+  email: string;
+  name: string;
+  role: "admin" | "staff";
 }
 
 interface AuthContextType {
-  user: User | null
-  loading: boolean
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>
-  logout: () => Promise<void>
-  isAdmin: boolean
+  user: User | null;
+  loading: boolean;
+  login: (
+    email: string,
+    password: string,
+  ) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
+  isAdmin: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-  const router = useRouter()
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  // const router = useRouter();
 
   useEffect(() => {
-    checkAuth()
-  }, [])
+    if (window.location.pathname.startsWith("/dashboard")) {
+      checkAuth();
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('/api/auth/me')
-      const data = await response.json()
-      
+      const response = await fetch("/api/auth/me");
+      if (!response.ok) {
+        setLoading(false);
+        return;
+      }
+
+      const contentType = response.headers.get("content-type");
+
+      if (!contentType?.includes("application/json")) {
+        throw new Error("Invalid response type");
+      }
+
+      const data = await response.json();
+
       if (data.success) {
-        setUser(data.data.user)
+        setUser(data.data.user);
       }
     } catch (error) {
-      console.error('Auth check failed:', error)
+      console.error("Auth check failed:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (data.success) {
-        setUser(data.data.user)
-        return { success: true }
+        setUser(data.data.user);
+        return { success: true };
       } else {
-        return { success: false, error: data.error || 'Login failed' }
+        return { success: false, error: data.error || "Login failed" };
       }
     } catch (error) {
-      console.error('Login error:', error)
-      return { success: false, error: 'Network error' }
+      console.error("Login error:", error);
+      return { success: false, error: "Network error" };
     }
-  }
+  };
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' })
-      setUser(null)
-      router.push('/login')
+      await fetch("/api/auth/logout", { method: "POST" });
+      setUser(null);
+      window.location.href = "/login";
+      // router.push("/login");
     } catch (error) {
-      console.error('Logout error:', error)
+      console.error("Logout error:", error);
     }
-  }
+  };
 
   return (
     <AuthContext.Provider
@@ -83,18 +111,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading,
         login,
         logout,
-        isAdmin: user?.role === 'admin',
+        isAdmin: user?.role === "admin",
       }}
     >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider')
+    throw new Error("useAuth must be used within an AuthProvider");
   }
-  return context
+  return context;
 }

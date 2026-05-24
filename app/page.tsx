@@ -8,12 +8,13 @@ import Footer from "@/components/footer";
 import AppThemeSetting from "./AppThemeSetting";
 import EventCards from "@/components/events";
 import Gallery from "@/components/Gallery";
+import Colleges from "@/components/colleges";
+import ExpertGuidesSection from "@/components/expertguide";
+import FAQSection from "@/components/faq";
 
 export default function Page() {
   return (
     <>
-
-
       <main>
         <AppThemeSetting />
         <Navbar />
@@ -22,7 +23,10 @@ export default function Page() {
         <EventCards />
         <ServicesSection />
         <Gallery />
-        {/* <TestimonialsSection /> */}
+        <Colleges />
+        <TestimonialsSection />
+        <ExpertGuidesSection />
+        {/* <FAQSection /> */}
         {/* <ContactSection /> */}
         <Footer />
       </main>

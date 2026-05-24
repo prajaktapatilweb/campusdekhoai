@@ -12,20 +12,22 @@ const stats = [
 ];
 
 const highlights = [
-
-"Free one-on-one counselling sessions",
-"Direct interaction with college representatives",
-"Scholarship and financial aid guidance",
-"Career aptitude assessments",
-"Complete admission process support",
-"Documentation guidance and review",
+  "Free one-on-one counselling sessions",
+  "Direct interaction with college representatives",
+  "Scholarship and financial aid guidance",
+  "Career aptitude assessments",
+  "Complete admission process support",
+  "Documentation guidance and review",
 ];
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative scroll-mt-24 overflow-hidden py-24 md:py-32">
+    <section
+      id="about"
+      className="relative scroll-mt-24 overflow-hidden py-24 md:py-32"
+    >
       {/* Background decoration */}
-      <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
+      <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
       <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[hsl(var(--primary))]/3 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6">
@@ -37,12 +39,14 @@ export default function AboutSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">
+          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-[hsl(var(--primary))] uppercase">
             About Us
           </span>
           <h2 className="font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-5xl">
-          Trusted Admission Guidance  
-            <span className="text-[hsl(var(--primary))]"> Across Maharashtra</span>
+            Trusted Admission Guidance
+            <span className="text-[hsl(var(--primary))]">
+              Across Maharashtra
+            </span>
           </h2>
         </motion.div>
 
@@ -94,7 +98,9 @@ export default function AboutSection() {
                   <p className="font-serif text-xl font-bold text-[hsl(var(--foreground))]">
                     {stat.value}
                   </p>
-                  <p className="text-xs text-[hsl(var(--muted-foreground))]">{stat.label}</p>
+                  <p className="text-xs text-[hsl(var(--muted-foreground))]">
+                    {stat.label}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -109,13 +115,20 @@ export default function AboutSection() {
             className="w-full lg:w-1/2"
           >
             <h3 className="mb-6 font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-3xl">
-             Complete Guidance After 12th Under One Roof
-              <span className="text-[hsl(var(--primary))]">Across India</span>
+              Complete Guidance After 12th Under One Roof
+              <span className="text-[hsl(var(--primary))]"> Across India</span>
             </h3>
 
             <p className="mb-6 leading-relaxed text-[hsl(var(--muted-foreground))]">
-               Pudhari Campus To Career is Maharashtra’s leading education counselling platform, dedicated to helping students navigate the complex world of college admissions. Our mission is to bridge the gap between students and their dream institutions through expert guidance, personalized counselling, and comprehensive support.
-With a team of experienced counsellors and partnerships with over 100+ prestigious institutions, we provide end-to-end admission assistance tailored to each student's unique aspirations and capabilities.
+              Pudhari Campus To Career is Maharashtra’s leading education
+              counselling platform, dedicated to helping students navigate the
+              complex world of college admissions. Our mission is to bridge the
+              gap between students and their dream institutions through expert
+              guidance, personalized counselling, and comprehensive support.
+              With a team of experienced counsellors and partnerships with over
+              100+ prestigious institutions, we provide end-to-end admission
+              assistance tailored to each student's unique aspirations and
+              capabilities.
             </p>
 
             {/* <p className="mb-8 leading-relaxed text-[hsl(var(--muted-foreground))]">
@@ -138,14 +151,23 @@ With a team of experienced counsellors and partnerships with over 100+ prestigio
                   className="flex items-start gap-3"
                 >
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[hsl(var(--primary))]" />
-                  <span className="text-sm text-[hsl(var(--foreground))]">{item}</span>
+                  <span className="text-sm text-[hsl(var(--foreground))]">
+                    {item}
+                  </span>
                 </motion.div>
               ))}
             </div>
 
             {/* Location tags */}
             <div className="flex flex-wrap gap-2">
-              {["Pune", "Kolhapur", "Sambhajinagar", "Nashik", "Satara", "Baramati"].map((city) => (
+              {[
+                "Pune",
+                "Kolhapur",
+                "Sambhajinagar",
+                "Nashik",
+                "Satara",
+                "Baramati",
+              ].map((city) => (
                 <span
                   key={city}
                   className="flex items-center gap-1.5 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--secondary))] px-3 py-1.5 text-xs font-medium text-[hsl(var(--secondary-foreground))]"

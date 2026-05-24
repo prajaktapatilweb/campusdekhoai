@@ -12,28 +12,30 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
-    const body = await req.json();
+    const { email, password } = await req.json();
 
-    const user = await User.findOne({
-      email: body.email,
-    });
+    if (!email || !password) {
+      return NextResponse.json(
+        { success: false, error: "Email and password are required" },
+        { status: 400 },
+      );
+    }
+    // Find user by email
+    const user = await User.findOne({ email: email.toLowerCase() });
 
     if (!user) {
       return NextResponse.json(
         { message: "Invalid credentials" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
-    const isMatch = await bcrypt.compare(
-      body.password,
-      user.password
-    );
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return NextResponse.json(
         { message: "Invalid credentials" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -41,28 +43,36 @@ export async function POST(req: NextRequest) {
       id: user._id,
       role: user.role,
       email: user.email,
+      name: user.name,
     });
 
     const response = NextResponse.json({
       success: true,
-      role: user.role,
+      data: {
+        token,
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        },
+      },
     });
 
-    response.cookies.set("token", token, {
+    response.cookies.set("auth-token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
     });
 
     return response;
   } catch (error) {
-    console.log(error);
-
+    console.log("Error during login:", error);
     return NextResponse.json(
-      { message: "Server Error" },
-      { status: 500 }
+      { success: false, message: "Server Error" },
+      { status: 500 },
     );
   }
 }
