@@ -19,10 +19,7 @@ export async function POST(req: NextRequest) {
         },
       );
     }
-    const existingOtp = await Otp.findOne({
-      phone,
-      otp,
-    });
+    const existingOtp = await Otp.findOne({ phone });
 
     if (!existingOtp) {
       return NextResponse.json(
@@ -85,7 +82,7 @@ export async function POST(req: NextRequest) {
         },
       );
     }
-        // =========================
+    // =========================
     // VERIFIED
     // =========================
 

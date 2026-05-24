@@ -56,7 +56,11 @@ export async function POST(req: NextRequest) {
     // OTP COOLDOWN
     // =========================
 
-    if (existingOtp && existingOtp.cooldownUntil && new Date() < existingOtp.cooldownUntil) {
+    if (
+      existingOtp &&
+      existingOtp.cooldownUntil &&
+      new Date() < existingOtp.cooldownUntil
+    ) {
       return NextResponse.json(
         {
           success: false,
@@ -78,7 +82,7 @@ export async function POST(req: NextRequest) {
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
     // 60 sec cooldown
-    const cooldownUntil = new Date(Date.now() + 60 * 1000);
+    const cooldownUntil = new Date(Date.now() + 45 * 1000);
 
     // Delete old OTP
     await Otp.deleteMany({ phone });

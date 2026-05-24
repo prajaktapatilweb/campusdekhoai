@@ -82,21 +82,10 @@ export default function FormInput({
             <AnimatePresence mode="wait">
               {hasError && (
                 <motion.div
-                  initial={{
-                    opacity: 0,
-                    y: -5,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    y: -5,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.2 }}
                   className="text-sm text-red-500"
                 >
                   {form.errors[name]}

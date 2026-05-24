@@ -26,6 +26,7 @@ import {
   getSeminarOptions,
   getTargetStreamOptions,
 } from "@/components/constants/formOptions";
+import OTPPhoneInput from "./Formik/OTPPhoneInput";
 
 interface FormValues {
   fullname: string;
@@ -38,14 +39,12 @@ interface FormValues {
   reference: string;
   district: string;
   evenetLocation: string;
+  phoneVerified: boolean;
 }
 
 interface Props {
   selectedEvent?: {
     city: string;
-    venue: string;
-    date: string;
-    time: string;
   };
 }
 
@@ -71,6 +70,10 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
   reference: yup.string().required("Required"),
   district: yup.string().required("Required"),
   evenetLocation: yup.string().required("Required"),
+  phoneVerified: yup
+    .boolean()
+    .oneOf([true], "Phone verification required")
+    .required(),
 });
 
 /* =========================================================
@@ -177,11 +180,12 @@ export default function NewContactForm({ selectedEvent }: Props) {
                 reference: "Daily Pudhari",
                 district: "Pune",
                 evenetLocation: selectedEvent?.city || "",
+                phoneVerified: false,
               }}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, values }) => (
                 <Form className="h-full bg-transparent p-6 md:p-10">
                   {/* HEADER */}
                   {/* <motion.div
@@ -232,6 +236,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                       icon={<Mail size={18} />}
                     />
 
+                    <OTPPhoneInput name="phone" label="Phone Number" />
                     {/* PHONE + WHATSAPP */}
 
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -293,7 +298,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                       whileTap={{
                         scale: 0.97,
                       }}
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || !values.phoneVerified}
                       type="submit"
                       className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70"
                     >

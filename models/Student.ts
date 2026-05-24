@@ -6,12 +6,18 @@ const StudentSchema = new mongoose.Schema(
     email: String,
     phone: String,
     whatsapp: String,
+    district: String,
+
+    college: String,
+    address: String,
+
     education: String,
     targetStream: String,
     attendedSeminar: String,
+
+    eventCity: String,
+
     reference: String,
-    district: String,
-    evenetLocation: String,
 
     verified: {
       type: Boolean,
@@ -25,4 +31,5 @@ const StudentSchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.models.Student || mongoose.model("Student", StudentSchema);
+export default mongoose.models.Student ||
+  mongoose.model("Student", StudentSchema);

@@ -28,6 +28,10 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 import FormInput from "@/components/Formik/FormInput";
 import FormInputMarathi from "@/components/Formik/FormInputMarathi";
+import {
+  FormDateInput,
+  FormTimeRangeInput,
+} from "@/components/Formik/FormDateTimeInput";
 
 interface Event {
   _id: string;
@@ -35,8 +39,8 @@ interface Event {
   cityMarathi: string;
   venue: string;
   venueMarathi: string;
-  date: string;
-  time: string;
+  startDateTime: string;
+  endDateTime: string;
   isActive: boolean;
   maxAttendees: number;
 }
@@ -47,7 +51,18 @@ const validationSchema = Yup.object({
   venue: Yup.string().required("Required"),
   venueMarathi: Yup.string().required("Required"),
   date: Yup.string().required("Required"),
-  time: Yup.string().required("Required"),
+  // time: Yup.string().required("Required"),
+  startTime: Yup.string().required("Start time required"),
+
+  endTime: Yup.string()
+    .required("End time required")
+    .test("is-greater", "End time must be after start time", function (value) {
+      const { startTime } = this.parent;
+
+      if (!startTime || !value) return true;
+
+      return value > startTime;
+    }),
   maxAttendees: Yup.number()
     .required("Required")
     .min(1, "Must be at least 1")
@@ -60,8 +75,9 @@ const initialValues = {
   venue: "",
   venueMarathi: "",
   date: "",
-  time: "",
-  maxAttendees: 0,
+  startTime: "16:00",
+  endTime: "19:30",
+  maxAttendees: 100,
 };
 
 export default function EventsPage() {
@@ -98,7 +114,7 @@ export default function EventsPage() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("/api/events");
+      const response = await fetch("/api/event/get");
       if (!response.ok) {
         setLoading(false);
         return;
@@ -133,8 +149,11 @@ export default function EventsPage() {
         cityMarathi: event.cityMarathi,
         venue: event.venue,
         venueMarathi: event.venueMarathi,
-        date: event.date,
-        time: event.time,
+        date: event.startDateTime.split("T")[0],
+
+        startTime: new Date(event.startDateTime).toTimeString().slice(0, 5),
+
+        endTime: new Date(event.endDateTime).toTimeString().slice(0, 5),
         maxAttendees: event.maxAttendees,
       });
     } else {
@@ -154,11 +173,27 @@ export default function EventsPage() {
   const handleSubmit = async (values: typeof initialValues) => {
     setSubmitting(true);
     setError("");
+    console.log("Form values on submit:", values);
+    const { date, startTime, endTime, ...rest } = values;
 
+    const startDateTime = new Date(`${date}T${startTime}`);
+
+    const endDateTime = new Date(`${date}T${endTime}`);
+
+    const payload = {
+      ...rest,
+
+      startDateTime,
+      endDateTime,
+
+      maxAttendees: Number(values.maxAttendees),
+    };
+
+    console.log("Submitting values:", payload, editingEvent);
     try {
       const url = editingEvent
-        ? `/api/events/${editingEvent._id}`
-        : "/api/events";
+        ? `/api/event/edit/${editingEvent._id}`
+        : "/api/event/add";
 
       const method = editingEvent ? "PUT" : "POST";
 
@@ -167,7 +202,7 @@ export default function EventsPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -204,7 +239,7 @@ export default function EventsPage() {
     }
 
     try {
-      const response = await fetch(`/api/events/${id}`, {
+      const response = await fetch(`/api/event/delete/${id}`, {
         method: "DELETE",
       });
 
@@ -311,14 +346,30 @@ export default function EventsPage() {
                 <div className="mb-3 flex items-center gap-3 text-slate-600">
                   <CalendarDays className="h-4 w-4" />
 
-                  <p className="text-sm">{event.date}</p>
+                  <p className="text-sm">
+                    {new Date(event.startDateTime).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </p>
                 </div>
 
                 {/* TIME */}
                 <div className="flex items-center gap-3 text-slate-600">
                   <Clock3 className="h-4 w-4" />
 
-                  <p className="text-sm">{event.time}</p>
+                  <p className="text-sm">
+                    {new Date(event.startDateTime).toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                    {" - "}
+                    {new Date(event.endDateTime).toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -360,7 +411,9 @@ export default function EventsPage() {
               initial={{ opacity: 0, scale: 0.9, y: 40 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 40 }}
-              className="fixed top-1/2 left-1/2 z-50 w-[95%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6 shadow-2xl"
+              // className="fixed top-1/2 left-1/2 z-50 w-[95%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6 shadow-2xl"
+              // className="fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-[95%] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl"
+              className="fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-[95%] max-w-2xl -translate-x-1/2 -translate-y-1/2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl"
             >
               <h2 className="mb-6 text-2xl font-bold text-[#1a237e]">
                 {editingEvent ? "Edit Event" : "Add Event"}
@@ -378,8 +431,9 @@ export default function EventsPage() {
                 enableReinitialize
                 onSubmit={handleSubmit}
               >
-                {({ handleSubmit }) => (
+                {({ handleSubmit, values }) => (
                   <form onSubmit={handleSubmit}>
+                    {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       <FormInput
                         name="city"
@@ -409,7 +463,7 @@ export default function EventsPage() {
                         icon={<MapPin size={18} />}
                       />
 
-                      <FormInput
+                      {/* <FormInput
                         name="date"
                         label="Date"
                         placeholder="June 15, 2026"
@@ -421,7 +475,9 @@ export default function EventsPage() {
                         label="Time"
                         placeholder="10:00 AM - 6:00 PM"
                         icon={<Clock3 size={18} />}
-                      />
+                      /> */}
+                      <FormDateInput name="date" label="Event Date" />
+
                       <FormInput
                         name="maxAttendees"
                         label="Maximum Seats for the event"
@@ -429,7 +485,11 @@ export default function EventsPage() {
                         icon={<Users size={18} />}
                       />
                     </div>
-
+                    <FormTimeRangeInput
+                      startName="startTime"
+                      endName="endTime"
+                      label="Event Time"
+                    />
                     {/* ACTIONS */}
                     <div className="mt-8 flex justify-end gap-3">
                       <button

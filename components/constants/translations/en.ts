@@ -69,13 +69,17 @@ const en = {
   "offer.cap.desc":
     "Complete guidance for CAP rounds including option form filling and seat allotment.",
   "offer.comparison": "College Comparison",
-  "offer.comparison.desc": "Detailed comparison of colleges to help you make the best decision.",
+  "offer.comparison.desc":
+    "Detailed comparison of colleges to help you make the best decision.",
   "offer.mentorship": "Expert Mentorship",
-  "offer.mentorship.desc": "One-on-one mentorship sessions with industry experts and educators.",
+  "offer.mentorship.desc":
+    "One-on-one mentorship sessions with industry experts and educators.",
   "offer.hostel": "Hostel Guidance",
-  "offer.hostel.desc": "Help finding the right accommodation near your college.",
+  "offer.hostel.desc":
+    "Help finding the right accommodation near your college.",
   "offer.loan": "Education Loan Support",
-  "offer.loan.desc": "Guidance on education loans and financial planning for studies.",
+  "offer.loan.desc":
+    "Guidance on education loans and financial planning for studies.",
 
   // Gallery
   "gallery.title": "Event Gallery",
@@ -195,7 +199,8 @@ const en = {
   "form.submitting": "Submitting...",
 
   "form.success.title": "Registration Successful!",
-  "form.success.message": "Thank you for registering. Our team will contact you soon.",
+  "form.success.message":
+    "Thank you for registering. Our team will contact you soon.",
 
   "form.submitAgain": "Submit Another Response",
 
@@ -224,5 +229,8 @@ const en = {
   "district.satara": "Satara",
   "district.sangli": "Sangli",
   "district.solapur": "Solapur",
+
+  "event.seats": "Seats Left",
+  "event.closed": "Closed",
 };
 export default en;
