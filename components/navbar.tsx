@@ -66,73 +66,23 @@ export default function Navbar() {
               />
             </div>
           </motion.div>
-          {/* <Image src="/logo3.png" width="100" height="100" alt="vakrtuninfotech"></Image> */}
-          {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[hsl(var(--primary))] bg-[hsl(var(--primary))]/10">
-            <span className="font-serif text-xl font-bold text-[hsl(var(--primary))]">
-              T
-            </span>
-          </div>
-          <div>
-            <span className="font-serif text-xl font-bold tracking-wide text-[hsl(var(--foreground))]">
-              Tech
-            </span>
-            <span className="font-serif text-xl font-bold tracking-wide text-[hsl(var(--primary))]">
-              Nova
-            </span>
-          </div> */}
         </a>
-        {/* Toggle Button To change Language */}
-        {/* <div className="hidden md:flex">
-          <div
-            className={`flex overflow-hidden rounded-md border ${
-              scrolled ? "border-white/50" : "border-white/50"
-            }`}
-          >
-            <button
-              onClick={() => handleLanguageChange("en")}
-              className={`px-4 py-1 text-xs transition-all duration-200 ${
-                language === "en"
-                  ? scrolled
-                    ? "bg-[#1a237e] text-white"
-                    : "bg-white/20 text-white"
-                  : scrolled
-                    ? "bg-[rgba(26,35,126,0.1)] text-[#1a237e] hover:bg-[rgba(26,35,126,0.15)]"
-                    : "bg-white/20 text-white hover:bg-white/10"
-              }`}
-            >
-              EN
-            </button>
-
-            <button
-              onClick={() => handleLanguageChange("mr")}
-              className={`px-4 py-1 text-xs transition-all duration-200 ${
-                language === "mr"
-                  ? scrolled
-                    ? "bg-[#1a237e] text-white"
-                    : "bg-white/20 text-white"
-                  : scrolled
-                    ? "bg-[rgba(26,35,126,0.1)] text-[#1a237e] hover:bg-[rgba(26,35,126,0.15)]"
-                    : "bg-white/20 text-white hover:bg-white/10"
-              }`}
-            >
-              मराठी
-            </button>
-          </div>
-        </div> */}
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-8 md:flex">
+
+        <div className="hidden items-center gap-4 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium text-white transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-[hsl(var(--primary))] after:transition-all after:duration-300 hover:text-[hsl(var(--primary))] hover:after:w-full"
+              className="group relative overflow-hidden rounded-md px-3 py-2 text-lg font-medium text-white transition-all duration-300 hover:bg-white/10 hover:text-[#facc15]"
             >
-              {link.label}
+              <span className="relative z-10">{link.label}</span>
+
+              <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#facc15] transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </div>
-
         {/* CTA + Mobile Toggle */}
         <div className="flex items-center gap-4 pr-4">
           <a
@@ -149,9 +99,9 @@ export default function Navbar() {
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             {mobileOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 text-white" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6 text-white" />
             )}
           </button>
         </div>
@@ -168,17 +118,10 @@ export default function Navbar() {
           >
             <div className="flex flex-col gap-1 px-6 py-4">
               {navLinks.map((link) => (
-                // <a
-                //   key={link.href}
-                //   href={link.href}
-                //   onClick={() => setMobileOpen(false)}
-                //   className="rounded-lg px-4 py-3 text-sm font-medium text-[hsl(var(--muted-foreground))] transition-colors hover:bg-[hsl(var(--primary))]/10 hover:text-[hsl(var(--primary))]"
-                // >
-
                 <button
                   key={link.href}
                   type="button"
-                  className="rounded-lg px-4 py-3 text-sm font-medium text-[hsl(var(--muted-foreground))] transition-colors hover:bg-[hsl(var(--primary))]/10 hover:text-[hsl(var(--primary))]"
+                  className="rounded-lg px-4 py-3 text-lg font-medium text-white transition-colors hover:bg-[hsl(var(--primary))]/10 hover:text-[hsl(var(--primary))]"
                   onClick={() => {
                     setMobileOpen(false);
 
@@ -199,7 +142,7 @@ export default function Navbar() {
                     }, 300); // wait for menu animation to close
                   }}
                 >
-                  {link.label}
+                  <span className="relative z-10">{link.label}</span>
                   {/* </a> */}
                 </button>
               ))}
