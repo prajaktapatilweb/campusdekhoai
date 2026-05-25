@@ -13,29 +13,24 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "What is CampusDekho.AI?",
+    question: "Is registration free?",
     answer:
-      "CampusDekho.AI is a career guidance and admission support platform helping students with CET, CAP rounds, college selection, scholarships, counselling, and admission processes across Maharashtra and India.",
+      "Yes. C2C Campus to Career is an outreach initiative backed by Pudhari Media Group & leading academic sponsors, meaning entry passes are 100% free for students and parents.",
   },
   {
-    question: "How can I register for counselling sessions?",
+    question: "What should I bring to the event?",
     answer:
-      "You can register directly through our website by filling out the registration form. Our team will contact you with available counselling slots and event details.",
+      "We highly recommend bringing your MHT-CET/JEE scorecards, mock percentiles, and 10th/12th marksheets so our expert panel can curate your tailored choice codes list.",
   },
   {
-    question: "Do you provide scholarship guidance?",
+    question: "Can parents attend along with students?",
     answer:
-      "Yes, we help students explore government scholarships, private funding options, education loans, and merit-based opportunities available for various courses.",
+      "Absolutely. Parents play an integral role in admissions decision-making and are highly encouraged to attend for the special CAP Round option form training.",
   },
   {
-    question: "Which courses do you guide students for?",
+    question: "  Where can I get help if my preferred city is full?",
     answer:
-      "We provide guidance for Engineering, Medical, Pharmacy, Law, Management, Design, Architecture, and many other professional courses.",
-  },
-  {
-    question: "Is the counselling available online?",
-    answer:
-      "Yes, we offer both online and offline counselling sessions depending on your preference and location.",
+      "Please contact our principal local coordinator, Aniket Kadam, at the help desk or register for adjacent district hubs.",
   },
 ];
 

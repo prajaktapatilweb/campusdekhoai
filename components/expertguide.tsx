@@ -28,38 +28,34 @@ const experts: ExpertCardProps[] = [
     achievement: "Former Directorate of Technical Education Panelist",
     experience:
       "Over 25+ years of core regulatory experience guiding Maharashtra State engineering admissions.",
-    highlight:
-      "Helping students and parents navigate admissions with trusted expertise.",
+    highlight: "",
   },
   {
-    initials: "PS",
-    name: "Dr. Priya Sharma",
-    designation: "Senior Career Counsellor",
-    achievement: "Worked with top CET & NEET counselling boards",
+    initials: "DJ",
+    name: "Prof. Devika S. Joshi",
+    designation: "Lead CAP Counselor & Choice Logic Expert",
+    achievement: "National Seat Allocation Analyst",
     experience:
-      "18+ years of experience mentoring students for engineering and medical admissions.",
-    highlight:
-      "Focused on helping students discover the right career pathways.",
+      "Specializes in predictive algorithms for cutoff allocation across prime ICT & COEP streams.",
+    highlight: "",
   },
   {
-    initials: "RJ",
-    name: "Prof. Rahul Joshi",
-    designation: "Admission Strategy Advisor",
-    achievement: "Former CAP Round Consultant",
+    initials: "AK",
+    name: "Mr. Aniket Kadam",
+    designation: "Strategic Chief Coordinator",
+    achievement: "Pudhari Publications Liaison",
     experience:
-      "20+ years of expertise in Maharashtra CAP rounds and counselling systems.",
-    highlight:
-      "Guiding families with accurate admission planning and college selection.",
+      "Manages all on-ground venue assets, print checklists, and academic institutional alliances.",
+    highlight: "",
   },
   {
-    initials: "AP",
-    name: "Dr. Anita Patil",
-    designation: "Scholarship & Abroad Consultant",
-    achievement: "International Education Guidance Specialist",
+    initials: "SP",
+    name: "Dr. Sunil Patil",
+    designation: "Dean of Academic Alliances",
+    achievement: "PCET & DY Patil Educational Hubs",
     experience:
-      "15+ years assisting students with scholarships and global opportunities.",
-    highlight:
-      "Helping ambitious students unlock funding and international careers.",
+      "Advises candidates directly on multi-campus placement statistics and tier-1 recruitment trends.",
+    highlight: "",
   },
 ];
 
