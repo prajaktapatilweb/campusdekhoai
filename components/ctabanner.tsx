@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CalendarDays, ArrowRight } from "lucide-react";
-import NewContactForm from "./newContactForm";
+import NewContactForm from "./Forms/newContactForm";
 import HeadingAndSub from "./headingandsub";
 import { headList8 } from "./constants/headindconst";
 

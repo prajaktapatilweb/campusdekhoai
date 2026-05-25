@@ -158,13 +158,22 @@ export default function OTPPhoneInput({
           />
 
           <Field name={name}>
-            {({ field }: any) => (
+            {({ field, form }: any) => (
               <input
                 {...field}
                 type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 maxLength={10}
                 disabled={verified}
                 placeholder={placeholder}
+                onChange={(e) => {
+                  const value = e.target.value
+                    .replace(/\D/g, "") // remove non-digits
+                    .slice(0, 10); // limit to 10 digits
+
+                  form.setFieldValue(name, value);
+                }}
                 className={`w-full rounded-2xl border py-3.5 pr-4 pl-12 text-sm transition-all outline-none ${
                   hasError
                     ? "border-red-500"

@@ -179,7 +179,7 @@ const en = {
   "form.email.placeholder": "Enter Email",
 
   "form.phone": "Phone Number",
-  "form.phone.placeholder": "10 Digit Number",
+  "form.phone.placeholder": "10 Digit Mobile Number",
 
   "form.whatsapp": "WhatsApp Number",
 

@@ -30,7 +30,7 @@ export default function Page() {
         <ExpertGuidesSection />
         <SeminarAgenda />
         <FAQSection />
-        <CTABanner />
+        {/* <CTABanner /> */}
         {/* <ContactSection /> */}
         <Footer />
       </main>

@@ -17,16 +17,16 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import FormInput from "./Formik/FormInput";
-import FormSelect from "./Formik/FormSelect";
-import RadioGroup from "./Formik/RadioGroup";
+import FormInput from "../Formik/FormInput";
+import FormSelect from "../Formik/FormSelect";
+import RadioGroup from "../Formik/RadioGroup";
 import {
   getDistrictOptions,
   getReferenceOptions,
   getSeminarOptions,
   getTargetStreamOptions,
 } from "@/components/constants/formOptions";
-import OTPPhoneInput from "./Formik/OTPPhoneInput";
+import OTPPhoneInput from "../Formik/OTPPhoneInput";
 
 interface FormValues {
   fullname: string;
@@ -221,10 +221,14 @@ export default function NewContactForm({ selectedEvent }: Props) {
                       icon={<Mail size={18} />}
                     />
 
-                    <OTPPhoneInput name="phone" label="Phone Number" />
+                    <OTPPhoneInput
+                      name="phone"
+                      label={t("form.whatsapp")}
+                      placeholder={t("form.phone.placeholder")}
+                    />
                     {/* PHONE + WHATSAPP */}
 
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                       <FormInput
                         name="phone"
                         label={t("form.phone")}
@@ -238,7 +242,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                         placeholder={t("form.phone.placeholder")}
                         icon={<MessageSquare size={18} />}
                       />
-                    </div>
+                    </div> */}
 
                     {/* EDUCATION */}
 

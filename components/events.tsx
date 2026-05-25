@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import NewContactForm from "./newContactForm";
+import NewContactForm from "./Forms/newContactForm";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { useLanguage } from "@/contexts/LanguageContext";
