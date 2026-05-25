@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { mobilenumber1 } from "./constants/contactconst";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -86,7 +87,7 @@ export default function Navbar() {
         {/* CTA + Mobile Toggle */}
         <div className="flex items-center gap-4 pr-4">
           <a
-            href="tel:9175932227"
+            href={`tel:${mobilenumber1}`}
             className="hidden items-center gap-2 rounded-full border border-white bg-[hsl(var(--primary))]/10 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))] md:flex"
           >
             <Phone className="h-4 w-4" />

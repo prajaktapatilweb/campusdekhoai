@@ -127,17 +127,20 @@ export default function OTPPhoneInput({
   // RESET IF PHONE CHANGES
   // =========================
 
+  const [previousPhone, setPreviousPhone] = useState("");
+
   useEffect(() => {
-    setVerified(false);
-
-    setOtp("");
-
-    setOtpSent(false);
-
-    setFieldValue("phoneVerified", false);
+    if (previousPhone && previousPhone !== phone) {
+      setVerified(false);
+      setOtp("");
+      setOtpSent(false);
+      setFieldValue("phoneVerified", false);
+    }
+    setPreviousPhone(phone);
   }, [phone]);
 
   const hasError = touched[name] && errors[name];
+  const verificationError = touched.phoneVerified && errors.phoneVerified;
 
   return (
     <div className="space-y-3">
@@ -195,25 +198,16 @@ export default function OTPPhoneInput({
 
       {/* FORM ERROR */}
       <AnimatePresence>
-        {hasError && (
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: -5,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              y: -5,
-            }}
-            className="text-sm text-red-500"
-          >
-            {errors[name] as string}
-          </motion.div>
-        )}
+        {/* {verificationError && !verified && ( */}
+        <motion.div
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          className="text-sm text-red-500"
+        >
+          {errors.phoneVerified as string}
+        </motion.div>
+        {/* )} */}
       </AnimatePresence>
 
       {/* OTP FIELD */}

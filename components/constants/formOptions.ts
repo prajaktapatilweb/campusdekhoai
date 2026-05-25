@@ -86,10 +86,10 @@ export const getDistrictOptions = (t: TranslateFunction) => [
 export const getSeminarOptions = (t: TranslateFunction) => [
   {
     label: t("form.yes"),
-    value: "yes",
+    value: "Yes",
   },
   {
     label: t("form.no"),
-    value: "no",
+    value: "No",
   },
 ];

@@ -5,6 +5,8 @@ import NewContactForm from "./newContactForm";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { useLanguage } from "@/contexts/LanguageContext";
+import HeadingAndSub from "./headingandsub";
+import { headList2 } from "./constants/headindconst";
 
 interface EventType {
   _id: string;
@@ -176,7 +178,7 @@ export default function EventCards() {
   };
   return (
     <>
-      <section className="bg-[#020b2d] px-4 py-16">
+      <section id="events" className="bg-[#020b2d] px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -184,12 +186,7 @@ export default function EventCards() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full border border-white/70 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-white/80 uppercase">
-            Select Your City
-          </span>
-          <h2 className="font-serif text-2xl font-bold text-white/90 md:text-4xl">
-            Choose your nearest event location and register for free
-          </h2>
+          <HeadingAndSub data={headList2} />
         </motion.div>
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedEvents.map((event, index) => {

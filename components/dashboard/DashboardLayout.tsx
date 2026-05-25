@@ -1,10 +1,9 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { CalendarDays, Users, UserCog, LogOut, Menu, X } from "lucide-react";
 import Image from "next/image";
-import { CalendarDays, Users, UserCog, LogOut } from "lucide-react";
-
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -16,6 +15,8 @@ export default function DashboardLayout({ children }: Props) {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const closeMobileMenu = () => setMobileOpen(false);
   const { user, logout } = useAuth();
   const { language, setLanguage } = useLanguage();
 
@@ -50,16 +51,37 @@ export default function DashboardLayout({ children }: Props) {
 
   return (
     <div className="flex min-h-screen bg-[#f5f7fa]">
+      {/* MOBILE OVERLAY */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+          onClick={closeMobileMenu}
+        />
+      )}
+
       {/* SIDEBAR */}
-      <aside className="hidden w-[270px] flex-col bg-[#1a237e] text-white lg:flex">
+      <aside
+        className={`fixed top-0 left-0 z-50 flex h-screen w-[270px] flex-col bg-[#1a237e] text-white transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* MOBILE CLOSE */}
+        <div className="flex items-center justify-between border-b border-white/10 p-4 lg:hidden">
+          <h2 className="text-lg font-bold">Menu</h2>
+
+          <button onClick={closeMobileMenu}>
+            <X className="h-6 w-6" />
+          </button>
+        </div>
+
         {/* LOGO */}
         <div className="border-b border-white/10 p-6">
           <Image
-            src="/images/logo.png"
-            alt="CampusDekho.AI"
-            width={160}
-            height={50}
-            className="brightness-0 invert"
+            src="/images/pudharilogo.png"
+            alt="Pudhari Campus 2 Career Logo"
+            width={320}
+            height={120}
+            priority
           />
         </div>
 
@@ -74,8 +96,11 @@ export default function DashboardLayout({ children }: Props) {
               return (
                 <button
                   key={item.href}
-                  onClick={() => router.push(item.href)}
-                  className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 transition ${
+                  onClick={() => {
+                    router.push(item.href);
+                    closeMobileMenu();
+                  }}
+                  className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 transition-all duration-300 ${
                     active ? "bg-[#f9a825] text-[#1a237e]" : "hover:bg-white/10"
                   }`}
                 >
@@ -107,18 +132,32 @@ export default function DashboardLayout({ children }: Props) {
       </aside>
 
       {/* MAIN */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col lg:ml-0">
         {/* HEADER */}
         <header className="sticky top-0 z-30 border-b border-slate-200 bg-white">
-          <div className="flex items-center justify-between px-6 py-4">
-            <h1 className="text-2xl font-bold text-[#1a237e]">Dashboard</h1>
+          <div className="flex items-center justify-between px-4 py-4 lg:px-6">
+            {/* LEFT */}
+            <div className="flex items-center gap-3">
+              {/* MOBILE MENU BUTTON */}
+              <button
+                onClick={() => setMobileOpen(true)}
+                className="rounded-xl border p-2 text-[#1a237e] lg:hidden"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
 
+              <h1 className="text-xl font-bold text-[#1a237e] lg:text-2xl">
+                Dashboard
+              </h1>
+            </div>
+
+            {/* RIGHT */}
             <div className="flex items-center gap-3">
               {/* LANGUAGE */}
               <div className="flex overflow-hidden rounded-xl border">
                 <button
                   onClick={() => setLanguage("en")}
-                  className={`px-4 py-2 text-sm font-medium ${
+                  className={`px-3 py-2 text-sm font-medium lg:px-4 ${
                     language === "en" ? "bg-[#1a237e] text-white" : "bg-white"
                   }`}
                 >
@@ -127,7 +166,7 @@ export default function DashboardLayout({ children }: Props) {
 
                 <button
                   onClick={() => setLanguage("mr")}
-                  className={`px-4 py-2 text-sm font-medium ${
+                  className={`px-3 py-2 text-sm font-medium lg:px-4 ${
                     language === "mr" ? "bg-[#1a237e] text-white" : "bg-white"
                   }`}
                 >
@@ -135,7 +174,7 @@ export default function DashboardLayout({ children }: Props) {
                 </button>
               </div>
 
-              <div className="rounded-full bg-[#1a237e]/10 px-4 py-2 text-sm font-semibold text-[#1a237e]">
+              <div className="rounded-full bg-[#1a237e]/10 px-3 py-2 text-xs font-semibold text-[#1a237e] lg:px-4 lg:text-sm">
                 {user?.role}
               </div>
             </div>
@@ -143,7 +182,7 @@ export default function DashboardLayout({ children }: Props) {
         </header>
 
         {/* PAGE */}
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-4 lg:p-6">{children}</main>
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import HeadingAndSub from "./headingandsub";
+import { headList5 } from "./constants/headindconst";
 
 const testimonials = [
   {
@@ -82,13 +84,7 @@ export default function Testimonials() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-[hsl(var(--primary))] uppercase">
-            Success Stories
-          </span>
-          <h2 className="font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-5xl">
-            What Our
-            <span className="text-[hsl(var(--primary))]"> Students Say</span>
-          </h2>
+          <HeadingAndSub data={headList5} />
         </motion.div>
 
         {/* Slider */}

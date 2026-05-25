@@ -10,6 +10,8 @@ import {
   Palette,
   Box,
 } from "lucide-react";
+import HeadingAndSub from "./headingandsub";
+import { headList6 } from "./constants/headindconst";
 
 const categories = [
   {
@@ -72,19 +74,7 @@ export default function Colleges() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-[hsl(var(--primary))] uppercase">
-            Top Colleges & Universities
-          </span>
-          <h2 className="font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-4xl">
-            Trusted Admission Guidance
-            <span className="text-[hsl(var(--primary))]">
-              &nbsp;Across Maharashtra
-            </span>
-          </h2>
-          {/* <p className="mx-auto max-w-2xl text-base text-slate-500 md:text-lg">
-            Meet representatives from India&apos;s most prestigious institutions
-            across various disciplines
-          </p> */}
+          <HeadingAndSub data={headList6} />
         </motion.div>
 
         {/* Categories Grid */}

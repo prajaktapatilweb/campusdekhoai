@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import HeadingAndSub from "./headingandsub";
+import { headList10 } from "./constants/headindconst";
 
 interface FAQItem {
   question: string;
@@ -105,18 +107,7 @@ export default function FAQSection() {
           transition={{ duration: 0.5 }}
           className="mb-14 text-center"
         >
-          <p className="mb-2 text-sm font-semibold tracking-[0.2em] text-blue-700 uppercase">
-            Frequently Asked Questions
-          </p>
-
-          <h2 className="font-poppins text-4xl font-bold text-slate-800 md:text-5xl">
-            Got Questions? <span className="text-blue-700">We’ve Answers</span>
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-2xl text-slate-500 md:text-lg">
-            Find answers to the most common questions about admissions,
-            counselling, scholarships, and career guidance.
-          </p>
+          <HeadingAndSub data={headList10} />
         </motion.div>
 
         {/* FAQ List */}

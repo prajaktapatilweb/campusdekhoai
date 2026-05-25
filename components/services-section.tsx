@@ -12,7 +12,8 @@ import {
   Building2,
   Landmark,
 } from "lucide-react";
-
+import HeadingAndSub from "./headingandsub";
+import { headList3 } from "./constants/headindconst";
 
 interface ServiceCard {
   title: string;
@@ -80,17 +81,15 @@ const features = [
   },
 ];
 
-
 export default function ServicesSection() {
-  
   return (
     <section
       id="services"
-      className="relative scroll-mt-24 overflow-hidden bg-[hsl(var(--card))] py-24 md:py-32"
+      className="relative scroll-mt-24 overflow-hidden bg-[hsl(var(--card))] py-15 md:py-15"
     >
       {/* Background accents */}
-      <div className="absolute left-0 top-1/4 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/3 blur-3xl" />
-      <div className="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
+      <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/3 blur-3xl" />
+      <div className="absolute right-0 bottom-0 h-64 w-64 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Section header */}
@@ -101,13 +100,8 @@ export default function ServicesSection() {
           transition={{ duration: 0.6 }}
           className="mb-12 text-center"
         >
-          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">
-            Our Services
-          </span>
-          <h2 className="font-serif text-4xl font-bold text-[hsl(var(--foreground))] md:text-5xl">
-            What We{" "}
-            <span className="text-[hsl(var(--primary))]">Offer</span>
-          </h2>
+          <HeadingAndSub data={headList3} />
+
           {/* <p className="mx-auto mt-4 max-w-2xl text-[hsl(var(--muted-foreground))]">
             Comprehensive IT solutions tailored to meet the demands of modern
             businesses. From rentals to infrastructure, we{"'"}ve got you covered.
@@ -122,71 +116,46 @@ export default function ServicesSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-10 flex flex-wrap items-center justify-center gap-3"
         >
-         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-  {features.map((feature, index) => (
-    <motion.div
-      key={feature.title}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="h-full"
-    >
-      <div
-        className="
-          group h-full cursor-pointer rounded-3xl
-          border border-slate-200 bg-white p-6
-          transition-all duration-300
-          hover:-translate-y-2 hover:shadow-2xl
-        "
-      >
-        {/* Icon */}
-        <div
-          className="
-            feature-icon mb-5 flex h-16 w-16
-            items-center justify-center rounded-2xl
-            transition-all duration-300
-            group-hover:scale-110
-          "
-          style={{
-            backgroundColor: `${feature.color}15`,
-          }}
-        >
-          <feature.icon
-            className="h-8 w-8 transition-all duration-300 group-hover:text-white"
-            style={{
-              color: feature.color,
-            }}
-          />
-        </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="h-full"
+              >
+                <div className="group h-full cursor-pointer rounded-3xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                  {/* Icon */}
+                  <div
+                    className="feature-icon mb-5 flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110"
+                    style={{
+                      backgroundColor: `${feature.color}15`,
+                    }}
+                  >
+                    <feature.icon
+                      className="h-8 w-8 transition-all duration-300 group-hover:text-white"
+                      style={{
+                        color: feature.color,
+                      }}
+                    />
+                  </div>
 
-        {/* Title */}
-        <h3
-          className="
-            mb-3 text-xl font-semibold
-            text-[#1e3a5f]
-          "
-        >
-          {feature.title}
-        </h3>
+                  {/* Title */}
+                  <h3 className="mb-3 text-xl font-semibold text-[#1e3a5f]">
+                    {feature.title}
+                  </h3>
 
-        {/* Description */}
-        <p
-          className="
-            text-sm leading-7
-            text-slate-500
-          "
-        >
-          {feature.description}
-        </p>
-      </div>
-    </motion.div>
-  ))}
-</div>
+                  {/* Description */}
+                  <p className="text-sm leading-7 text-slate-500">
+                    {feature.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
-
-    
-        
       </div>
     </section>
   );

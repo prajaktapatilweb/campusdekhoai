@@ -6,8 +6,8 @@ import Otp from "@/models/otp";
 export async function POST(req: NextRequest) {
   try {
     const origin = req.headers.get("origin");
-
-    if (origin !== process.env.NEXT_PUBLIC_SITE_URL) {
+    console.log("Origin:", origin);
+    if (origin !== process.env.NEXT_PUBLIC_WEB_BASE_URL) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     }
 

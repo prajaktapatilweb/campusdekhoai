@@ -8,6 +8,8 @@ import {
   BriefcaseBusiness,
   User,
 } from "lucide-react";
+import { headList7 } from "./constants/headindconst";
+import HeadingAndSub from "./headingandsub";
 
 interface ExpertCardProps {
   initials: string;
@@ -140,13 +142,7 @@ export default function ExpertGuidesSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-[hsl(var(--primary))] uppercase">
-            Meet Our Experts
-          </span>
-          <h2 className="font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-5xl">
-            Trusted Admission
-            <span className="text-[hsl(var(--primary))]"> Mentors</span>
-          </h2>
+          <HeadingAndSub data={headList7} />
         </motion.div>
 
         {/* Cards */}

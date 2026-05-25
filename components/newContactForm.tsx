@@ -66,7 +66,7 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
 
   education: yup.string().required("Required"),
   targetStream: yup.string().required("Required"),
-  attendingSeminar: yup.boolean().required("Required"),
+  attendingSeminar: yup.string().required("Required"),
   reference: yup.string().required("Required"),
   district: yup.string().required("Required"),
   evenetLocation: yup.string().required("Required"),
@@ -101,7 +101,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
     helpers: FormikHelpers<FormValues>,
   ): Promise<void> => {
     try {
-      await Axios.post("/api/studentregistration", values);
+      await Axios.post("/api/students/registration", values);
 
       setSubmitted(true);
 
@@ -185,24 +185,9 @@ export default function NewContactForm({ selectedEvent }: Props) {
               validationSchema={validationSchema}
               onSubmit={onSubmit}
             >
-              {({ isSubmitting, values }) => (
-                <Form className="h-full bg-transparent p-6 md:p-10">
-                  {/* HEADER */}
-                  {/* <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-8"
-                  >
-                    <h3 className="text-3xl font-bold text-[hsl(var(--foreground))]">
-                      Contact Us
-                    </h3>
-
-                    <p className="mt-2 text-[hsl(var(--muted-foreground))]">
-                      Fill the form and our team will contact you shortly.
-                    </p>
-                  </motion.div> */}
+              {({ isSubmitting, values, errors }) => (
+                <Form className="h-full bg-transparent p-6 md:p-8">
+                  {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
 
                   {/* FIELDS */}
                   <motion.div
@@ -216,7 +201,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                     }}
                     initial="hidden"
                     animate="show"
-                    className="space-y-6"
+                    className="space-y-3"
                   >
                     {/* FULL NAME */}
 

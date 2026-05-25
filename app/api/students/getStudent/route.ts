@@ -11,10 +11,7 @@ export async function GET(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
 
     if (!token) {
-      return NextResponse.json(
-        { message: "Unauthorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     jwt.verify(token, process.env.JWT_SECRET!);
@@ -24,13 +21,16 @@ export async function GET(req: NextRequest) {
     const students = await Student.find().sort({
       createdAt: -1,
     });
+    console.log("Students fetched:", students.length);
 
-    return NextResponse.json(students);
-
-  } catch (error) {
     return NextResponse.json(
-      { message: "Unauthorized" },
-      { status: 401 }
+      {
+        success: true,
+        data: students,
+      },
+      { status: 200 },
     );
+  } catch (error) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 }

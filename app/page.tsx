@@ -11,6 +11,8 @@ import Gallery from "@/components/Gallery";
 import Colleges from "@/components/colleges";
 import ExpertGuidesSection from "@/components/expertguide";
 import FAQSection from "@/components/faq";
+import SeminarAgenda from "@/components/eventstimeline";
+import CTABanner from "@/components/ctabanner";
 
 export default function Page() {
   return (
@@ -26,7 +28,9 @@ export default function Page() {
         <Colleges />
         <TestimonialsSection />
         <ExpertGuidesSection />
-        {/* <FAQSection /> */}
+        <SeminarAgenda />
+        <FAQSection />
+        <CTABanner />
         {/* <ContactSection /> */}
         <Footer />
       </main>

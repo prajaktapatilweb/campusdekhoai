@@ -4,15 +4,19 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ArrowUp } from "lucide-react";
 import Image from "next/image";
+import { email, mobilenumber1 } from "./constants/contactconst";
+import { FaFacebookF } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 
 const services = [
-  "Laptop & Desktop Rentals",
-  "Hardware & Accessories",
-  "Networking Solutions",
-  "CCTV & Surveillance",
-  "Software Installation",
-  "Refurbished Devices",
-  "Accessories Supply",
+  "Career Counselling",
+  "Admission Guidance",
+  "CAP Round Guidance",
+  "Expert Mentorship",
+  "Scholarship Assistance",
+  "Education Loan Support",
 ];
 
 const quickLinks = [
@@ -24,13 +28,13 @@ const quickLinks = [
 ];
 
 const locations = [
-  "Kharadi, Pune",
-  "Hinjwadi, Pune",
-  "Baner, Pune",
-  "Chennai",
-  "Bangalore",
-  "Madurai",
-  "Noida",
+  "Pune",
+  "Sangali",
+  "Satara",
+  "Baramati",
+  "Kolahpur",
+  "Bidri",
+  "Nashik",
 ];
 
 export default function Footer() {
@@ -59,31 +63,26 @@ export default function Footer() {
                 alt="Pudhari Campus 2 Career Logo"
               ></Image>
             </div>
-            <p className="mb-6 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
+            <p className="mb-6 text-sm leading-relaxed text-[hsl(var(--muted-foreground))] text-white/60">
               Your trusted counselling partner for Engineering, Pharmacy &
               Management admissions in Maharashtra.
             </p>
-            {/* <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
               <a
-                href="tel:9175932227 "
-                className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
+                href={`tel:${mobilenumber1}`}
+                className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
               >
-                <Phone className="h-4 w-4 text-[hsl(var(--primary))]" />
-                +91 9175932227
+                <Phone className="h-4 w-4 text-white/60" />
+                +91 7498528125
               </a>
               <a
-                href="mailto:vakratundtech@gmail.com"
-                className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
+                href={`mailto:${email}`}
+                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
               >
-                <Mail className="h-4 w-4 text-[hsl(var(--primary))]" />
-                vakratundtech@gmail.com
+                <Mail className="h-4 w-4 text-white/60" />
+                {email}
               </a>
-              <span className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))]">
-                <MapPin className="h-4 w-12 text-[hsl(var(--primary))]" />
-                Office No-4, Jay Shri Hari Building Vinayak Nagar Lane No-2 Kate
-                Puram Chowk Opposite RK Complex Pimple Gurav Pune 411061
-              </span>
-            </div> */}
+            </div>
           </motion.div>
 
           {/* Quick Links */}
@@ -93,7 +92,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <h4 className="mb-5 font-serif text-lg font-bold text-[hsl(var(--foreground))]">
+            <h4 className="mb-5 font-serif text-lg font-bold text-white">
               Quick Links
             </h4>
             <ul className="flex flex-col gap-3">
@@ -101,7 +100,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
+                    className="text-sm text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
                   >
                     {link.label}
                   </a>
@@ -111,13 +110,13 @@ export default function Footer() {
           </motion.div>
 
           {/* Services */}
-          {/* <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <h4 className="mb-5 font-serif text-lg font-bold text-[hsl(var(--foreground))]">
+            <h4 className="mb-5 font-serif text-lg font-bold text-white">
               Our Services
             </h4>
             <ul className="flex flex-col gap-3">
@@ -125,37 +124,68 @@ export default function Footer() {
                 <li key={service}>
                   <a
                     href="#services"
-                    className="text-sm text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
+                    className="text-sm text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
                   >
                     {service}
                   </a>
                 </li>
               ))}
             </ul>
-          </motion.div> */}
+          </motion.div>
 
           {/* Locations */}
-          {/* <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <h4 className="mb-5 font-serif text-lg font-bold text-[hsl(var(--foreground))]">
+            <h4 className="mb-5 font-serif text-lg font-bold text-white">
               Service Locations
             </h4>
+
             <ul className="flex flex-col gap-3">
               {locations.map((loc) => (
                 <li
                   key={loc}
-                  className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))]"
+                  className="flex items-center gap-2 text-sm text-white/60"
                 >
                   <MapPin className="h-3 w-3 text-[hsl(var(--primary))]" />
                   {loc}
                 </li>
               ))}
             </ul>
-          </motion.div> */}
+
+            {/* SOCIAL MEDIA */}
+            <div className="mt-6 flex items-center gap-4">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
+              >
+                <FaInstagram className="h-5 w-5" />
+              </a>
+
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
+              >
+                <FaFacebookF className="h-5 w-5" />
+              </a>
+
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
+              >
+                <FaTwitter className="h-5 w-5" />
+              </a>
+            </div>
+          </motion.div>
         </div>
       </div>
 
