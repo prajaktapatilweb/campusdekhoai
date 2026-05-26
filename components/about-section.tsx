@@ -57,7 +57,7 @@ export default function AboutSection() {
             <div className="relative">
               <div className="overflow-hidden rounded-2xl border border-[hsl(var(--border))]">
                 <Image
-                  src="/images/image1.png"
+                  src="/images/Image1.png"
                   alt="Pudhari Campus To Career connect"
                   width={640}
                   height={440}

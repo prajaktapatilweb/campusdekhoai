@@ -111,9 +111,11 @@ export async function POST(req: NextRequest) {
           {
             kind: "template",
             template: {
-              name: "OTP",
+              name: "campus2career_otp",
               language: "en",
-              components: [],
+              components: [
+                { type: "body", parameters: [{ type: "text", text: otp }] },
+              ],
             },
           },
         ],
@@ -126,28 +128,6 @@ export async function POST(req: NextRequest) {
         },
       },
     );
-    /*
-      CHATMITRA API HERE
-    */
-
-    // Example:
-    /*
-
-    
-    await Axios.post(
-      "YOUR_CHATMITRA_URL",
-      {
-        number: `91${phone}`,
-        type: "text",
-        message: `Your CampusDekho OTP is ${otp}`,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.CHATMITRA_API_KEY}`,
-        },
-      }
-    );
-    */
 
     return NextResponse.json({
       success: true,
