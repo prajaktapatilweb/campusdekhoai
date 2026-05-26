@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
 
     console.log("OTP:", otp);
 
-    await Axios.post(
+    const response = await Axios.post(
       "https://backend.chatmitra.com/developer/api/send_message",
       {
         recipient_mobile_number: `91${phone}`,
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
           {
             kind: "template",
             template: {
-              name: "campus2career_otp",
+              name: "campus2career_otp_20260526185828",
               language: "en",
               components: [
                 { type: "body", parameters: [{ type: "text", text: otp }] },
@@ -128,13 +128,13 @@ export async function POST(req: NextRequest) {
         },
       },
     );
-
+    console.log(response.data);
     return NextResponse.json({
       success: true,
       message: "OTP sent successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.log("Error in sending Whatsappmessage", error);
 
     return NextResponse.json(
       {
