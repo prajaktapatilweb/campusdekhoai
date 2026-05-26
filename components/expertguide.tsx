@@ -10,11 +10,13 @@ import {
 } from "lucide-react";
 import { headList7 } from "./constants/headindconst";
 import HeadingAndSub from "./headingandsub";
+import Image from "next/image";
 
 interface ExpertCardProps {
   initials: string;
+  img?: string;
   name: string;
-  designation: string;
+  // designation: string;
   experience: string;
   achievement: string;
   highlight: string;
@@ -22,47 +24,53 @@ interface ExpertCardProps {
 
 const experts: ExpertCardProps[] = [
   {
-    initials: "MK",
-    name: "Dr. Milind Kulkarni",
-    designation: "Chief Admission Architect, CampusDekho.AI",
-    achievement: "Former Directorate of Technical Education Panelist",
+    initials: "RB",
+    img: "/images/Ramdas_Biradar.jpeg",
+    name: "Ramdas Biradar",
+    // designation: "Outreach & Admission, PCU",
+    achievement: "Outreach & Admission, PCU",
     experience:
       "Over 25+ years of core regulatory experience guiding Maharashtra State engineering admissions.",
     highlight: "",
   },
   {
-    initials: "DJ",
-    name: "Prof. Devika S. Joshi",
-    designation: "Lead CAP Counselor & Choice Logic Expert",
-    achievement: "National Seat Allocation Analyst",
-    experience:
-      "Specializes in predictive algorithms for cutoff allocation across prime ICT & COEP streams.",
+    initials: "SR",
+    img: "/images/Shekhar_Rahane.jpeg",
+    name: " Dr.Shekhar Rahane",
+    // designation: "Associate Professor & Dean",
+    achievement: "Associate Professor & Dean",
+    experience: "First Year B.Tech,I/C Admissions",
     highlight: "",
   },
   {
     initials: "AK",
-    name: "Mr. Aniket Kadam",
-    designation: "Strategic Chief Coordinator",
-    achievement: "Pudhari Publications Liaison",
-    experience:
-      "Manages all on-ground venue assets, print checklists, and academic institutional alliances.",
+    img: "/images/Pallavi_Ahire1.jpeg",
+
+    name: "Dr. Pallavi Pankaj Ahire",
+    // designation: "Associate Professor, Head- Computer Science & Engineering",
+    achievement: "Associate Professor, Head- Computer Science & Engineering",
+    experience: "21 Years of Experience",
     highlight: "",
   },
   {
     initials: "SP",
-    name: "Dr. Sunil Patil",
-    designation: "Dean of Academic Alliances",
-    achievement: "PCET & DY Patil Educational Hubs",
+    img: "/images/Prasannata_Ramtirthe1.jpeg",
+
+    name: "Dr. Prasannata Ramtirthe",
+    // designation:"Assistant Professor of English, School of Law, Pimpri Chinchwad University, Pune",
+    achievement:
+      "Assistant Professor of English, School of Law, Pimpri Chinchwad University, Pune",
     experience:
-      "Advises candidates directly on multi-campus placement statistics and tier-1 recruitment trends.",
+      "Guides law aspirants on cracking interviews, mastering legal English, and building courtroom-ready communication skills for careers in litigation, judiciary & corporate law.",
     highlight: "",
   },
 ];
 
 function ExpertCard({
   initials,
+  img,
   name,
-  designation,
+  // designation,
   achievement,
   experience,
   highlight,
@@ -84,15 +92,28 @@ function ExpertCard({
           {/* Avatar */}
 
           {/* Avatar */}
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-700 text-sm font-semibold text-white">
-            {initials}
-          </div>
+          {/* Avatar / Image */}
+          {img ? (
+            <div className="relative mb-4 h-15 w-15 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+              <Image
+                src={img}
+                alt={name}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          ) : (
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-700 text-sm font-semibold text-white">
+              {initials}
+            </div>
+          )}
 
           {/* Name */}
           <div>
             <h3 className="text-xl font-bold text-slate-800">{name}</h3>
 
-            <p className="text-sm font-medium text-blue-700">{designation}</p>
+            {/* <p className="text-sm font-medium text-blue-700">{designation}</p> */}
           </div>
         </div>
 

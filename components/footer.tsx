@@ -43,7 +43,10 @@ export default function Footer() {
   };
   const { t } = useLanguage();
   return (
-    <footer className="relative overflow-hidden border-t border-[hsl(var(--border))] bg-[hsl(0,0%,3%)]">
+    <footer
+      id="contact"
+      className="relative overflow-hidden border-t border-[hsl(var(--border))] bg-[hsl(0,0%,3%)]"
+    >
       {/* Gold line accent */}
       <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[hsl(var(--primary))] to-transparent" />
 

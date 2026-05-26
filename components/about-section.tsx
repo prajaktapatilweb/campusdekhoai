@@ -8,8 +8,8 @@ import HeadingAndSub from "./headingandsub";
 
 const stats = [
   { icon: Calendar, value: "2022", label: "Established" },
-  { icon: Users, value: "500+", label: "Students Helped" },
-  { icon: MapPin, value: "6+", label: "Cities Covered" },
+  { icon: Users, value: "1500+", label: "Students Helped" },
+  { icon: MapPin, value: "10+", label: "Cities Covered" },
   { icon: Award, value: "100%", label: "Satisfaction" },
 ];
 
@@ -57,7 +57,7 @@ export default function AboutSection() {
             <div className="relative">
               <div className="overflow-hidden rounded-2xl border border-[hsl(var(--border))]">
                 <Image
-                  src="/images/guide2.jpg"
+                  src="/images/image1.png"
                   alt="Pudhari Campus To Career connect"
                   width={640}
                   height={440}

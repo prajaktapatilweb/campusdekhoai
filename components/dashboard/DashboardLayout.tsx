@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }: Props) {
 
     return true;
   });
-
+  console.log("Filtered Menu Items", filteredMenu, user?.role);
   return (
     <div className="flex min-h-screen bg-[#f5f7fa]">
       {/* MOBILE OVERLAY */}

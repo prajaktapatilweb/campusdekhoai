@@ -18,6 +18,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import EventForm from "@/components/Forms/EventForm";
 import AppModal from "@/components/@/AppModal";
 import DeleteDialog from "@/components/@/DeleteDialog";
+import { apiFetch } from "@/lib/api";
 
 interface Event {
   _id: string;
@@ -140,15 +141,11 @@ export default function EventsPage() {
         ? `/api/event/edit/${editingEvent._id}`
         : "/api/event/add";
       const method = editingEvent ? "PUT" : "POST";
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+
+      const data = await apiFetch(url, {
+        method: method,
         body: JSON.stringify(payload),
       });
-
-      const data = await response.json();
 
       if (data.success) {
         setSuccess(

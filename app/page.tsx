@@ -13,6 +13,7 @@ import ExpertGuidesSection from "@/components/expertguide";
 import FAQSection from "@/components/faq";
 import SeminarAgenda from "@/components/eventstimeline";
 import CTABanner from "@/components/ctabanner";
+import EventCardsSection from "@/components/Appcard";
 
 export default function Page() {
   return (
@@ -33,6 +34,7 @@ export default function Page() {
         {/* <CTABanner /> */}
         {/* <ContactSection /> */}
         <Footer />
+        <EventCardsSection />
       </main>
     </>
   );

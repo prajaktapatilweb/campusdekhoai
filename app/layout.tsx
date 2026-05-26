@@ -6,6 +6,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
@@ -26,6 +27,9 @@ export const metadata: Metadata = {
   title: "CampusDekho.AI | पुढारी Campus to Career | CET & Admission Guidance",
   description:
     "CampusDekho.AI - The Admission Corridor. Get expert career counselling and admission guidance for CET, engineering, medical, management courses. पुढारी कॅम्पस टू करिअर - CET व प्रवेश प्रक्रियेसाठी विविध शहरांत उपक्रम.",
+  icons: {
+    icon: "/favicon.png",
+  },
   keywords: [
     "CampusDekho.AI",
     "पुढारी Campus Career",
@@ -64,6 +68,9 @@ export default function RootLayout({
       lang="en"
       className={` ${inter.variable} ${poppins.variable} ${playfair.variable} bg-background`}
     >
+      <Head>
+        <link rel="icon" href="/images/pudharilogo.png" />
+      </Head>
       <body className="font-sans antialiased">
         <LanguageProvider>
           <AuthProvider>

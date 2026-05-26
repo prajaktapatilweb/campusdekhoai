@@ -2,16 +2,29 @@ import { NextRequest, NextResponse } from "next/server";
 
 import EventModel from "@/models/Event";
 import { connectDB } from "@/lib/mongodb";
+import { withAuth } from "@/lib/withAuth";
 
 // ================= CREATE EVENT =================
 
-export async function POST(req: NextRequest) {
+export const POST = withAuth(async (req: NextRequest, user) => {
   try {
+    //  Optional Role Check
+    if (user.role !== "admin") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthorized",
+        },
+        {
+          status: 403,
+        },
+      );
+    }
     await connectDB();
 
     const body = await req.json();
 
-    const event = await EventModel.create(body);
+    const event = await EventModel.create({ ...body, createdBy: user.id });
 
     return NextResponse.json(
       {
@@ -30,4 +43,4 @@ export async function POST(req: NextRequest) {
       { status: 500 },
     );
   }
-}
+});

@@ -6,10 +6,9 @@ export async function POST() {
     message: "Logged out successfully",
   });
 
-  response.cookies.set("auth-token", "", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+  response.cookies.set({
+    name: "auth-token",
+    value: "",
     maxAge: 0,
     path: "/",
   });

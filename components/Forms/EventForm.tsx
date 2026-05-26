@@ -56,7 +56,7 @@ export default function EventForm({
     >
       {({ handleSubmit, errors }) => (
         <form onSubmit={handleSubmit}>
-          <pre>{JSON.stringify(errors, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormInput
               name="city"

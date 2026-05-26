@@ -2,47 +2,58 @@ import { NextRequest, NextResponse } from "next/server";
 
 import EventModel from "@/models/Event";
 import { connectDB } from "@/lib/mongodb";
+import { withAuth } from "@/lib/withAuth";
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  try {
-    await connectDB();
+export const PUT = withAuth(
+  async (req, user, { params }: { params: Promise<{ id: string }> }) => {
+    try {
+      if (user.role !== "admin") {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Unauthorized",
+          },
+          {
+            status: 403,
+          },
+        );
+      }
+      await connectDB();
 
-    const { id } = await params;
+      const { id } = await params;
 
-    const body = await req.json();
+      const body = await req.json();
 
-    const updatedEvent = await EventModel.findByIdAndUpdate(id, body, {
-      new: true,
-    });
+      const updatedEvent = await EventModel.findByIdAndUpdate(id, body, {
+        new: true,
+      });
 
-    if (!updatedEvent) {
+      if (!updatedEvent) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Event not found",
+          },
+          { status: 404 },
+        );
+      }
+
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Event updated successfully",
+          data: updatedEvent,
+        },
+        { status: 200 },
+      );
+    } catch (error: any) {
       return NextResponse.json(
         {
           success: false,
-          message: "Event not found",
+          message: error.message,
         },
-        { status: 404 },
+        { status: 500 },
       );
     }
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Event updated successfully",
-        data: updatedEvent,
-      },
-      { status: 200 },
-    );
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message,
-      },
-      { status: 500 },
-    );
-  }
-}
+  },
+);

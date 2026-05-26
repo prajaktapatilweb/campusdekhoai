@@ -3,11 +3,12 @@
 import {
   createContext,
   useContext,
-  useState,
   useEffect,
+  useState,
   ReactNode,
 } from "react";
-// import { useRouter } from "next/navigation";
+
+import { apiFetch } from "@/lib/api";
 
 interface User {
   id: string;
@@ -19,11 +20,11 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (
-    email: string,
-    password: string,
-  ) => Promise<{ success: boolean; error?: string }>;
+
+  login: (email: string, password: string) => Promise<User>;
+
   logout: () => Promise<void>;
+
   isAdmin: boolean;
 }
 
@@ -31,9 +32,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  // const router = useRouter();
 
+  const [loading, setLoading] = useState(true);
+
+  // CHECK AUTH ON PAGE LOAD
   useEffect(() => {
     if (window.location.pathname.startsWith("/dashboard")) {
       checkAuth();
@@ -44,63 +46,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("/api/auth/me");
-      if (!response.ok) {
-        setLoading(false);
-        return;
-      }
-
-      const contentType = response.headers.get("content-type");
-
-      if (!contentType?.includes("application/json")) {
-        throw new Error("Invalid response type");
-      }
-
-      const data = await response.json();
-
+      const data = await apiFetch<{ success: boolean; user: User }>(
+        "/api/auth/me",
+      );
       if (data.success) {
-        setUser(data.data.user);
+        setUser(data.user);
       }
     } catch (error) {
-      console.error("Auth check failed:", error);
+      setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const login = async (
-    email: string,
-    password: string,
-  ): Promise<{ success: boolean; error?: string }> => {
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+  // LOGIN
+  const login = async (email: string, password: string): Promise<User> => {
+    const data = await apiFetch<{ success: boolean; user: User }>(
+      "/api/auth/login",
+      { method: "POST", body: JSON.stringify({ email, password }) },
+    );
 
-      const data = await response.json();
+    setUser(data.user);
 
-      if (data.success) {
-        setUser(data.data.user);
-        return { success: true };
-      } else {
-        return { success: false, error: data.error || "Login failed" };
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      return { success: false, error: "Network error" };
-    }
+    return data.user;
   };
 
+  // LOGOUT
   const logout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
+      await apiFetch("/api/auth/logout", {
+        method: "POST",
+      });
+
       setUser(null);
+
       window.location.href = "/login";
-      // router.push("/login");
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("Logout Error:", error);
     }
   };
 
@@ -121,8 +103,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+
+  if (!context) {
+    throw new Error("useAuth must be used within AuthProvider");
   }
+
   return context;
 }

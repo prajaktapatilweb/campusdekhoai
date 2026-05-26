@@ -74,7 +74,10 @@ export default function Testimonials() {
   const swiperRef = useRef<SwiperType | null>(null);
 
   return (
-    <section className="bg-gradient-to-b from-slate-50 to-white py-20 md:py-28">
+    <section
+      id="testimonials"
+      className="bg-gradient-to-b from-slate-50 to-white py-20 md:py-28"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div

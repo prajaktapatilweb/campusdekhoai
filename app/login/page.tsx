@@ -22,36 +22,20 @@ export default function LoginPage() {
   const { t } = useLanguage();
   const router = useRouter();
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setError("");
-    setLoading(true);
-
     try {
-      console.log("Attempting login with:", { email, password });
-      const result = await login(email, password);
-      console.log("Login result:", result);
+      setLoading(true);
+      setError("");
 
-      if (result.success) {
-        const response = await fetch("/api/auth/me");
-        const data = await response.json();
-        console.log("User Data:", data);
+      const user = await login(email, password);
 
-        if (data.success) {
-          if (data.data.user.role === "admin") {
-            router.push("/dashboard/admin");
-          } else {
-            router.push("/dashboard/staff");
-          }
-        }
-      } else {
-        setError(result.error || t("login.error"));
-      }
-    } catch (err) {
-      setError("Something went wrong");
+      router.replace(
+        user.role === "admin" ? "/dashboard/events" : "/dashboard/students",
+      );
+    } catch (error: any) {
+      setError(error.message || "Login failed");
     } finally {
       setLoading(false);
     }

@@ -7,6 +7,9 @@ import moment from "moment";
 import { useLanguage } from "@/contexts/LanguageContext";
 import HeadingAndSub from "./headingandsub";
 import { headList2 } from "./constants/headindconst";
+import Image from "next/image";
+import EventIndivCard from "./EventIndivCard";
+import EventCard from "./EventCard";
 
 interface EventType {
   _id: string;
@@ -121,64 +124,14 @@ export default function EventCards() {
     }
   };
 
-  const getEventStatus = (event: EventType) => {
-    const now = new Date();
-
-    const start = new Date(event.startDateTime);
-
-    const end = new Date(event.endDateTime);
-
-    if (now > end) {
-      return {
-        label: "Event Ended",
-        active: false,
-      };
-    }
-
-    if (now >= start && now <= end) {
-      return {
-        label: "Event Live",
-        active: true,
-      };
-    }
-
-    return {
-      label: `Seats Available`,
-      active: true,
-    };
-  };
   const sortedEvents = [...events].sort(
     (a, b) =>
       new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime(),
   );
 
-  const getDisplaySeats = (event: EventType) => {
-    const now = new Date().getTime();
-    const start = new Date(event.startDateTime).getTime();
-    // Assume registration opened 30 days before event
-    const assumedLaunch = start - 30 * 24 * 60 * 60 * 1000;
-    const totalDuration = start - assumedLaunch;
-    const elapsed = now - assumedLaunch;
-    // Progress between 0 and 1
-    const progress = Math.min(Math.max(elapsed / totalDuration, 0), 1);
-    // Reduce up to 85% seats as event approaches
-    const reducedSeats = Math.floor(event.maxAttendees * (1 - progress * 0.85));
-    // Random decrease (0–7)
-    const randomOffset = Math.floor(Math.random() * 8);
-    // Final visible seats
-    const visibleSeats = reducedSeats - randomOffset;
-    // Always minimum 5 seats
-    return Math.max(visibleSeats, 5);
-  };
-
-  const getSeatLabel = (seats: number) => {
-    if (seats <= 10) return "Almost Full";
-    if (seats <= 30) return "Limited Seats";
-    return "Seats Available";
-  };
   return (
     <>
-      <section id="events" className="bg-[#020b2d] px-4 py-16">
+      <section id="events" className="bg-[#e1e8f0] px-4 py-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -188,74 +141,29 @@ export default function EventCards() {
         >
           <HeadingAndSub data={headList2} />
         </motion.div>
-        <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {sortedEvents.map((event, index) => {
-            const status = getEventStatus(event);
-            const displaySeats = getDisplaySeats(event);
-            const seatLabel = getSeatLabel(displaySeats);
-            return (
-              <motion.div
-                key={event._id}
-                initial={{ opacity: 0, y: 80 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                onClick={() => status.active && setSelectedEvent(event)}
-                className="relative cursor-pointer overflow-hidden rounded-3xl border border-cyan-400 bg-[#061547] p-6 shadow-[0_0_25px_rgba(0,200,255,0.15)] transition-all duration-300"
-              >
-                {/* Glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/10" />
-
-                {/* Top */}
-                <div className="relative z-10 mb-6 flex items-start justify-between">
-                  <p className="text-sm font-bold tracking-widest text-cyan-400">
-                    {moment(event.startDateTime).format("DD MMM YYYY")}
-                  </p>
-
-                  <span
-                    className={`rounded-lg ${status.active ? "bg-pink-500/20" : "bg-red-500/20"} px-3 py-1 text-xs font-semibold ${status.active ? "text-green-300" : "text-red-300"}`}
-                  >
-                    {/* {status.label} */}
-                    {seatLabel}
-                  </span>
-                </div>
-
-                {/* City */}
-                <h3 className="relative z-10 text-3xl font-bold text-white">
-                  {language === "en" ? event.city : event.cityMarathi}
-                </h3>
-
-                {/* Venue */}
-                <p className="relative z-10 mt-2 text-sm text-slate-300">
-                  {language === "en" ? event.venue : event.venueMarathi}
-                </p>
-
-                {/* Time */}
-                <p className="relative z-10 mt-1 text-sm text-cyan-300">
-                  {moment(event.startDateTime).format("h:mm A")} -
-                  {moment(event.endDateTime).format("h:mm A")}
-                </p>
-
-                {/* Divider */}
-                <div className="relative z-10 my-6 h-px bg-white/10" />
-
-                {/* Bottom */}
-                <div className="relative z-10 flex items-center justify-between">
-                  <p className="text-sm tracking-wide text-slate-400">
-                    {status.active
-                      ? `${displaySeats} ${t("event.seats")}`
-                      : t("event.closed")}
-                  </p>
-                  <span
-                    className={`rounded-lg border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-lg font-semibold ${status.active ? "text-white/80" : "text-red-500/80"}`}
-                  >
-                    {status.active ? t("form.submit") : t("event.closed")}
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
+        <div
+          // className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3"
+          className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3"
+        >
+          {/* <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-2 lg:grid-cols-3"> */}
+          {sortedEvents.map((event, index) => (
+            // <EventIndivCard
+            //   key={event._id}
+            //   event={event}
+            //   index={index}
+            //   language={language}
+            //   t={t}
+            //   onSelect={(event) => setSelectedEvent(event)}
+            // />
+            <EventCard
+              key={event._id}
+              event={event}
+              index={index}
+              language={language}
+              t={t}
+              onSelect={(event) => setSelectedEvent(event)}
+            />
+          ))}
         </div>
       </section>
 

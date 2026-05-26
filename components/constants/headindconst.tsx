@@ -6,20 +6,9 @@ const headDetails = {
   },
 
   events: {
-    title: (
-      <span
-        style={{
-          color: "#fdc700",
-          border: "none",
-        }}
-      >
-        Select Your City{" "}
-      </span>
-    ),
-    subtitle: (
-      <span style={{ color: "white" }}>Choose Your Nearest City & </span>
-    ),
-    subtitlespan: <span style={{ color: "#fdc700" }}>Register Free </span>,
+    title: "Select Your City",
+    subtitle: "Choose Your Nearest City &",
+    subtitlespan: " Register Free ",
   },
   services: {
     title: "Our Services",

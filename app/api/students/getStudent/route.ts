@@ -5,8 +5,9 @@ import jwt from "jsonwebtoken";
 import Student from "@/models/Student";
 
 import { connectDB } from "@/lib/mongodb";
+import { withAuth } from "@/lib/withAuth";
 
-export async function GET(req: NextRequest) {
+export const GET = withAuth(async (req, user) => {
   try {
     const token = req.cookies.get("token")?.value;
 
@@ -33,4 +34,4 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-}
+});

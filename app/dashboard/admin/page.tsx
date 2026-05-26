@@ -18,6 +18,7 @@ import {
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { apiFetch } from "@/lib/api";
 
 interface Event {
   _id: string;
@@ -69,8 +70,7 @@ export default function AdminDashboard() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("/api/events");
-      const data = await response.json();
+      const data = await apiFetch("/api/events");
 
       if (data.success) {
         setEvents(data.data);
@@ -127,15 +127,10 @@ export default function AdminDashboard() {
 
       const method = editingEvent ? "PUT" : "POST";
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const data = await apiFetch(url, {
+        method: method,
         body: JSON.stringify(formData),
       });
-
-      const data = await response.json();
 
       if (data.success) {
         setSuccess(

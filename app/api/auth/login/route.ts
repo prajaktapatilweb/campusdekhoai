@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-
 import bcrypt from "bcryptjs";
-
 import User from "@/models/User";
-
 import { connectDB } from "@/lib/mongodb";
-
 import { createToken } from "@/lib/jwt";
 
 export async function POST(req: NextRequest) {
@@ -25,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { message: "Invalid credentials" },
+        { success: false, error: "Invalid credentials" },
         { status: 401 },
       );
     }
@@ -34,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     if (!isMatch) {
       return NextResponse.json(
-        { message: "Invalid credentials" },
+        { success: false, message: "Invalid credentials" },
         { status: 401 },
       );
     }
@@ -48,18 +44,17 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       success: true,
-      data: {
-        token,
-        user: {
-          id: user._id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        },
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
       },
     });
 
-    response.cookies.set("auth-token", token, {
+    response.cookies.set({
+      name: "auth-token",
+      value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",

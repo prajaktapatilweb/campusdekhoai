@@ -2,11 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
+import { withAuth } from "@/lib/withAuth";
 
 // ================= CREATE EVENT =================
 
-export async function GET() {
+export const GET = withAuth(async (req, user) => {
   try {
+    if (user.role !== "admin") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthorized",
+        },
+        {
+          status: 403,
+        },
+      );
+    }
     await connectDB();
 
     const data = await User.find().sort({
@@ -30,4 +42,4 @@ export async function GET() {
       { status: 500 },
     );
   }
-}
+});

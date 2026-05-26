@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     // 5 min expiry
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
-    // 60 sec cooldown
+    // 45 sec cooldown
     const cooldownUntil = new Date(Date.now() + 45 * 1000);
 
     // Delete old OTP
@@ -103,12 +103,37 @@ export async function POST(req: NextRequest) {
 
     console.log("OTP:", otp);
 
+    await Axios.post(
+      "https://backend.chatmitra.com/developer/api/send_message",
+      {
+        recipient_mobile_number: `91${phone}`,
+        messages: [
+          {
+            kind: "template",
+            template: {
+              name: "OTP",
+              language: "en",
+              components: [],
+            },
+          },
+        ],
+        // customer_name: "YOUR_CUSTOMER_NAME",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.CHATMITRA_API_KEY}`,
+        },
+      },
+    );
     /*
       CHATMITRA API HERE
     */
 
     // Example:
     /*
+
+    
     await Axios.post(
       "YOUR_CHATMITRA_URL",
       {
