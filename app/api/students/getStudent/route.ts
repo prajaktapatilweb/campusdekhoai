@@ -9,14 +9,14 @@ import { withAuth } from "@/lib/withAuth";
 
 export const GET = withAuth(async (req, user) => {
   try {
-    const token = req.cookies.get("token")?.value;
+    // const token = req.cookies.get("token")?.value;
 
-    if (!token) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
+    // if (!token) {
+    //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    // }
 
-    jwt.verify(token, process.env.JWT_SECRET!);
-
+    // jwt.verify(token, process.env.JWT_SECRET!);
+    console.log("Reached to GET", user);
     await connectDB();
 
     const students = await Student.find().sort({
