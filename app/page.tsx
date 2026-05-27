@@ -14,6 +14,7 @@ import FAQSection from "@/components/faq";
 import SeminarAgenda from "@/components/eventstimeline";
 import CTABanner from "@/components/ctabanner";
 import EventCardsSection from "@/components/Appcard";
+import PartnerColleges from "@/components/partnercolleges";
 
 export default function Page() {
   return (
@@ -25,16 +26,17 @@ export default function Page() {
         <AboutSection />
         <EventCards />
         <ServicesSection />
-        <Gallery />
-        <Colleges />
-        <TestimonialsSection />
+        {/* <Gallery /> */}
+        <PartnerColleges />
+        {/* <Colleges /> */}
+        {/* <TestimonialsSection /> */}
         <ExpertGuidesSection />
         <SeminarAgenda />
         <FAQSection />
         {/* <CTABanner /> */}
         {/* <ContactSection /> */}
         <Footer />
-        <EventCardsSection />
+        {/* <EventCardsSection /> */}
       </main>
     </>
   );

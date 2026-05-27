@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CalendarDays, Users, UserCog, LogOut, Menu, X } from "lucide-react";
 import Image from "next/image";
@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }: Props) {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobileMenu = () => setMobileOpen(false);
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const { language, setLanguage } = useLanguage();
 
   const menuItems = [
@@ -25,30 +25,51 @@ export default function DashboardLayout({ children }: Props) {
       title: "Events",
       icon: CalendarDays,
       href: "/dashboard/events",
-      adminOnly: true,
+      allowedRoles: ["admin"],
     },
     {
       title: "Students",
       icon: Users,
       href: "/dashboard/students",
-      adminOnly: false,
+      allowedRoles: ["admin", "staff", "college"],
     },
     {
       title: "Users",
       icon: UserCog,
       href: "/dashboard/users",
-      adminOnly: true,
+      allowedRoles: ["admin"],
     },
   ];
 
   const filteredMenu = menuItems.filter((item) => {
-    if (item.adminOnly && user?.role !== "admin") {
-      return false;
-    }
-
-    return true;
+    return user && item.allowedRoles.includes(user.role);
   });
+
   console.log("Filtered Menu Items", filteredMenu, user?.role);
+
+  useEffect(() => {
+    if (loading) return;
+    // Not logged in
+    if (!user) {
+      router.replace("/login");
+      return;
+    }
+    const currentRoute = menuItems.find((item) =>
+      pathname.startsWith(item.href),
+    );
+
+    if (currentRoute && !currentRoute.allowedRoles.includes(user.role)) {
+      router.replace("/dashboard/students");
+    }
+  }, [user, pathname, loading]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
   return (
     <div className="flex min-h-screen bg-[#f5f7fa]">
       {/* MOBILE OVERLAY */}

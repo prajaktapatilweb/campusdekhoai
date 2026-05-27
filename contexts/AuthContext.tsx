@@ -39,6 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (window.location.pathname.startsWith("/dashboard")) {
       checkAuth();
+      if (!user) return;
     } else {
       setLoading(false);
     }

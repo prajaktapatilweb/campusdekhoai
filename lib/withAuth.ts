@@ -23,7 +23,7 @@ export function withAuth(handler: RouteHandler) {
     try {
       console.log("Current PathName", req.url);
       // 1. Verify the Token
-      const authResult = verifyToken(req);
+      const authResult = await verifyToken(req);
       console.log("USER in withAuth", authResult);
       // 2. If helper returned an error (Expired or Invalid)
       if (!authResult.success || !authResult.decoded) {

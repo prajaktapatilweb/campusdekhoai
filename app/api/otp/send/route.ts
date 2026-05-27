@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
             kind: "template",
             template: {
               name: "campus2career_otp_20260526185828",
-              language: "en",
+              language: "en_US",
               components: [
                 { type: "body", parameters: [{ type: "text", text: otp }] },
               ],

@@ -7,9 +7,9 @@ import { headList1 } from "./constants/headindconst";
 import HeadingAndSub from "./headingandsub";
 
 const stats = [
-  { icon: Calendar, value: "2022", label: "Established" },
-  { icon: Users, value: "1500+", label: "Students Helped" },
-  { icon: MapPin, value: "10+", label: "Cities Covered" },
+  { icon: MapPin, value: "15+", label: "Cities We’re Reaching’" },
+  { icon: Users, value: "3000+", label: "Students We Aim To Guide" },
+  { icon: Calendar, value: "3", label: "Partner Universities" },
   { icon: Award, value: "100%", label: "Satisfaction" },
 ];
 
@@ -26,7 +26,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative scroll-mt-24 overflow-hidden py-24 md:py-32"
+      className="relative scroll-mt-24 overflow-hidden py-15 md:py-18"
     >
       {/* Background decoration */}
       <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
@@ -45,7 +45,7 @@ export default function AboutSection() {
         </motion.div>
 
         {/* Content grid - info side by side */}
-        <div className="flex flex-col items-center gap-16 lg:flex-row">
+        <div className="flex flex-col items-center gap-10 lg:flex-row">
           {/* Left - Image + Stats */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -57,7 +57,7 @@ export default function AboutSection() {
             <div className="relative">
               <div className="overflow-hidden rounded-2xl border border-[hsl(var(--border))]">
                 <Image
-                  src="/images/Image1.png"
+                  src="/images/Image1.webp"
                   alt="Pudhari Campus To Career connect"
                   width={640}
                   height={440}
@@ -78,7 +78,7 @@ export default function AboutSection() {
             </div>
 
             {/* Stats grid */}
-            <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="mt-7 grid grid-cols-2 gap-3 md:mt-6 md:grid-cols-4">
               {stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -108,7 +108,7 @@ export default function AboutSection() {
             transition={{ duration: 0.7 }}
             className="w-full lg:w-1/2"
           >
-            <h3 className="mb-6 font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-3xl">
+            <h3 className="mt-0 mb-6 font-serif text-2xl font-bold text-[hsl(var(--foreground))] md:text-3xl">
               Complete Guidance After 12th Under One Roof
               <span className="text-[hsl(var(--primary))]"> Across India</span>
             </h3>

@@ -105,7 +105,7 @@ export default function EventCard({
       className="group relative h-[420px] w-full overflow-hidden rounded-3xl shadow-2xl sm:h-[450px] md:h-[470px] lg:h-[500px]"
     >
       <Image
-        src={`/images/city/${event.city}.jpg`}
+        src={`/images/city/${event.city}.webp`}
         alt={event.city}
         fill
         // priority
@@ -115,7 +115,7 @@ export default function EventCard({
       {/* </div> */}
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/65 to-black/40" />
 
       {/* Top Content */}
       <div className="absolute top-4 left-4 flex w-[calc(100%-32px)] items-start justify-between">

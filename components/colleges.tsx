@@ -19,7 +19,11 @@ const categories = [
     name: "Engineering",
     count: "40+ Colleges",
     color: "#3b82f6",
-    colleges: ["IIT Delhi", "NIT Trichy", "BITS Pilani", "VIT Vellore"],
+    colleges: [
+      "Dr. D. Y. Patil University",
+      "Pimpri Chinchwad Education Trust",
+      "Vishwakarma University",
+    ],
   },
   {
     icon: Stethoscope,
@@ -144,7 +148,7 @@ export default function Colleges() {
         </div>
 
         {/* Bottom Stats */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -166,7 +170,7 @@ export default function Colleges() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
