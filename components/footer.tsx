@@ -4,7 +4,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ArrowUp } from "lucide-react";
 import Image from "next/image";
-import { email, mobilenumber1 } from "./constants/contactconst";
+import {
+  email,
+  mobilenumber1,
+  socialMediaLinks,
+} from "./constants/contactconst";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
@@ -162,7 +166,7 @@ export default function Footer() {
             {/* SOCIAL MEDIA */}
             <div className="mt-6 flex items-center gap-4">
               <a
-                href="https://instagram.com"
+                href={socialMediaLinks.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
@@ -171,7 +175,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://facebook.com"
+                href={socialMediaLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
@@ -179,14 +183,14 @@ export default function Footer() {
                 <FaFacebookF className="h-5 w-5" />
               </a>
 
-              <a
-                href="https://twitter.com"
+              {/* <a
+                href={socialMediaLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
               >
                 <FaTwitter className="h-5 w-5" />
-              </a>
+              </a> */}
             </div>
           </motion.div>
         </div>

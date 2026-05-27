@@ -4,8 +4,8 @@ export const email = " info@campusdekho.ai";
 export const address = "123 Main Street, Pune, Maharashtra, India";
 
 export const socialMediaLinks = {
-  facebook: "https://www.facebook.com/facebook.com/campusdekhoo",
+  facebook: "https://www.facebook.com/campusdekhoo",
   twitter: "https://www.twitter.com/campusdekhoo",
-  instagram: "https://www.instagram.com/campusdekhoo",
+  instagram: "https://www.instagram.com/campusdekho.ai",
   linkedin: "https://www.linkedin.com/in/campusdekhoo",
 };

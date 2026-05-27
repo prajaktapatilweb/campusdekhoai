@@ -149,7 +149,7 @@ export default function Navbar() {
                 </button>
               ))}
               <a
-                href="tel:9175932227"
+                href={`tel:${mobilenumber1}`}
                 className="mt-2 flex items-center justify-center gap-2 rounded-full bg-[hsl(var(--primary))] px-5 py-3 text-sm font-semibold text-[hsl(var(--primary-foreground))]"
               >
                 <Phone className="h-4 w-4" />
