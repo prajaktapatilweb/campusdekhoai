@@ -83,13 +83,14 @@ export default function OTPPhoneInput({
         email,
         phone,
       });
-
+      console.log("RRRR", response);
       if (response.data.success) {
         setOtpSent(true);
         setCountdown(45);
         setMessage("OTP sent successfully");
       }
     } catch (error: any) {
+      console.log("EERRR", error);
       setMessage(error?.response?.data?.message || "Failed to send OTP");
     } finally {
       setLoading(false);

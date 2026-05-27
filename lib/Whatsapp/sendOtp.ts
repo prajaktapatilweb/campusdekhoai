@@ -51,7 +51,7 @@ export async function sendOtpViaChatMitra({ phone, otp }: SendOtpParams) {
         },
       },
     );
-
+    console.log("rRRR", response.data);
     return {
       success: true,
       data: response.data,

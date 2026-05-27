@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     const body = await req.json();
-
-    const phone = body.phone;
+    console.log("RRRR", body);
+    const { fullname, email, phone } = body;
 
     if (!phone) {
       return NextResponse.json(
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     const ip = req.headers.get("x-forwarded-for") || "unknown-ip";
 
     const { success } = await otpRateLimit.limit(ip);
-
+    console.log("RREacher 1");
     if (!success) {
       return NextResponse.json(
         {
@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
         },
       );
     }
+    console.log("RREacher 2");
 
     // =========================
     // CHECK EXISTING OTP
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest) {
     // =========================
     // OTP COOLDOWN
     // =========================
+    console.log("RREacher 3", existingOtp);
 
     if (
       existingOtp &&
@@ -72,6 +74,7 @@ export async function POST(req: NextRequest) {
         },
       );
     }
+    console.log("RREacher 4");
 
     // =========================
     // GENERATE OTP
@@ -84,6 +87,7 @@ export async function POST(req: NextRequest) {
 
     // 45 sec cooldown
     const cooldownUntil = new Date(Date.now() + 45 * 1000);
+    console.log("RREacher 5");
 
     // Delete old OTP
     await Otp.deleteMany({ phone });
@@ -91,12 +95,15 @@ export async function POST(req: NextRequest) {
     // Save new OTP
     await Otp.create({
       phone,
+      name: fullname,
+      email,
       otp,
       verified: false,
       attempts: 0,
       expiresAt,
       cooldownUntil,
     });
+    console.log("RREacher 6");
 
     // =========================
     // SEND WHATSAPP OTP
@@ -104,10 +111,10 @@ export async function POST(req: NextRequest) {
 
     console.log("OTP:", otp);
 
-    const result = await sendOtpViaMeta({ phone, otp });
-    // const result = await sendOtpViaChatMitra({ phone, otp });
+    // const result = await sendOtpViaMeta({ phone, otp });
+    const result = await sendOtpViaChatMitra({ phone, otp });
 
-    console.log(result?.data);
+    // console.log(result?.data);
 
     if (!result.success) {
       return NextResponse.json(

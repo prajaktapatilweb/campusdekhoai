@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Student from "@/models/Student";
 import Otp from "@/models/otp";
+import { sendRegistrationConfirmationViaChatMitra } from "@/lib/Whatsapp/sendRegConfirm";
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,10 +11,10 @@ export async function POST(req: NextRequest) {
     if (origin !== process.env.NEXT_PUBLIC_WEB_BASE_URL) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     }
-
     const body = await req.json();
+    console.log("RRRRREE", body, body.whatsapp !== "");
     // Honeypot
-    if (body.website) {
+    if (body.whatsapp !== "") {
       return NextResponse.json({ message: "Spam detected" }, { status: 400 });
     }
 
@@ -55,10 +56,29 @@ export async function POST(req: NextRequest) {
 
       ipAddress: req.headers.get("x-forwarded-for") || "unknown",
     });
+
+    // const result = await sendRegistrationConfirmationViaChatMitra({
+    //   phone: body.phone,
+    //   imageUrl: "https://pudhariedudisha.com/favicon.png",
+    //   name: body.fullname,
+    //   venue: body.evenetLocation,
+    //   date: "12 June 2026",
+    //   day: "Monday",
+    //   contactName: "Atul",
+    //   contactPhone: "99",
+    // });
+
+    // if (!result.success) {
+    //   return NextResponse.json(
+    //     { success: false, error: result.error },
+    //     { status: 500 },
+    //   );
+    // }
+
     await Otp.deleteMany({ phone: body.phone });
     return NextResponse.json({
       success: true,
-      insertedId: student.insertedId,
+      insertedId: student._id,
       message: "Registration successful",
     });
   } catch (error) {

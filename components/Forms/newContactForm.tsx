@@ -38,7 +38,7 @@ interface FormValues {
   fullname: string;
   email: string;
   phone: string;
-  whatsapp: string;
+  whatsapp: string | null | undefined;
   education: string;
   targetStream: string;
   attendingSeminar: boolean | string;
@@ -65,11 +65,10 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
     .matches(/^[0-9]+$/, "Only digits allowed")
     .length(10, "Enter 10 digit number"),
 
-  whatsapp: yup
-    .string()
-    .required("Required")
-    .matches(/^[0-9]+$/, "Only digits allowed")
-    .length(10, "Enter 10 digit number"),
+  whatsapp: yup.string().nullable().notRequired(),
+  // .required("Required")
+  // .matches(/^[0-9]+$/, "Only digits allowed")
+  // .length(10, "Enter 10 digit number"),
 
   education: yup.string().required("Required"),
   targetStream: yup.string().required("Required"),
@@ -117,10 +116,15 @@ export default function NewContactForm({ selectedEvent }: Props) {
       setSubmitted(true);
 
       helpers.resetForm();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log("API ERROR:", error);
 
-      alert("Error in submission. Please resubmit.");
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        "Error in submission. Please resubmit.";
+
+      alert(message);
     } finally {
       helpers.setSubmitting(false);
     }
@@ -181,15 +185,15 @@ export default function NewContactForm({ selectedEvent }: Props) {
           >
             <Formik<FormValues>
               initialValues={{
-                fullname: "BJP",
-                email: "am@g.com",
-                phone: "0000000000",
-                whatsapp: "0000000000",
-                education: "12th",
-                targetStream: "Engineering",
-                attendingSeminar: "yes",
-                reference: "Daily Pudhari",
-                district: "Pune",
+                fullname: "",
+                email: "",
+                phone: "",
+                whatsapp: "",
+                education: "",
+                targetStream: "",
+                attendingSeminar: "",
+                reference: "",
+                district: "",
                 helpNeeded: [],
                 evenetLocation: selectedEvent?.city || "",
                 phoneVerified: false,
@@ -283,14 +287,16 @@ export default function NewContactForm({ selectedEvent }: Props) {
                         icon={<Phone size={18} />}
                       />
 
+                    
+                    </div> */}
+                    <div className="hidden">
                       <FormInput
                         name="whatsapp"
                         label={t("form.whatsapp")}
                         placeholder={t("form.phone.placeholder")}
                         icon={<MessageSquare size={18} />}
                       />
-                    </div> */}
-
+                    </div>
                     {/* EDUCATION */}
 
                     <FormInput

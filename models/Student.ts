@@ -1,35 +1,37 @@
 import mongoose from "mongoose";
 
-const StudentSchema = new mongoose.Schema(
+const studentSchema = new mongoose.Schema(
   {
-    fullname: String,
-    email: String,
-    phone: String,
-    whatsapp: String,
-    district: String,
+    fullname: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
 
-    college: String,
-    address: String,
-    helpNeeded: String,
-    education: String,
-    targetStream: String,
-    attendedSeminar: String,
+    whatsapp: { type: String },
 
-    eventCity: String,
+    education: { type: String, required: true },
+    targetStream: { type: String, required: true },
+    attendingSeminar: { type: String, required: true },
+    reference: { type: String, required: true },
+    district: { type: String, required: true },
 
-    reference: String,
-
-    verified: {
-      type: Boolean,
-      default: false,
+    // ✅ ARRAY FIELD
+    helpNeeded: {
+      type: [String], // 👈 important
+      required: true,
+      default: [],
     },
 
-    ipAddress: String,
+    evenetLocation: { type: String },
+
+    phoneVerified: { type: Boolean, default: false },
+
+    verified: { type: Boolean, default: false },
+
+    ipAddress: { type: String },
+    createdAt: { type: Date, default: Date.now },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 
 export default mongoose.models.Student ||
-  mongoose.model("Student", StudentSchema);
+  mongoose.model("Student", studentSchema);

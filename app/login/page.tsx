@@ -191,7 +191,7 @@ export default function LoginPage() {
             </div>
 
             {/* Demo Credentials */}
-            <div className="mt-8 rounded-2xl border border-dashed border-[#1a237e]/30 bg-[#1a237e]/5 p-4">
+            {/* <div className="mt-8 rounded-2xl border border-dashed border-[#1a237e]/30 bg-[#1a237e]/5 p-4">
               <p className="mb-2 text-xs text-gray-500">
                 Demo Credentials (after setup):
               </p>
@@ -203,7 +203,7 @@ export default function LoginPage() {
               <p className="mt-1 text-xs text-[#1a237e]">
                 Staff: staff@campusdekho.ai / staff123
               </p>
-            </div>
+            </div> */}
           </div>
         </motion.div>
       </div>
