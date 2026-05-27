@@ -6,6 +6,7 @@ import { Field, useFormikContext } from "formik";
 import { motion, AnimatePresence } from "motion/react";
 
 import { Phone, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Props {
   name: string;
@@ -21,20 +22,18 @@ export default function OTPPhoneInput({
   placeholder = "Enter phone number",
   onVerified,
 }: Props) {
-  const { values, errors, touched, setFieldValue } = useFormikContext<any>();
+  const { values, errors, touched, setFieldValue, setFieldTouched } =
+    useFormikContext<any>();
 
   const phone = values[name];
+  const fullname = values["fullname"];
+  const email = values["email"];
 
   const [otp, setOtp] = useState("");
-
   const [otpSent, setOtpSent] = useState(false);
-
   const [verified, setVerified] = useState(false);
-
   const [loading, setLoading] = useState(false);
-
   const [message, setMessage] = useState("");
-
   const [countdown, setCountdown] = useState(0);
 
   // =========================
@@ -43,13 +42,11 @@ export default function OTPPhoneInput({
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-
     if (countdown > 0) {
       timer = setInterval(() => {
         setCountdown((prev) => prev - 1);
       }, 1000);
     }
-
     return () => clearInterval(timer);
   }, [countdown]);
 
@@ -61,6 +58,18 @@ export default function OTPPhoneInput({
     try {
       setMessage("");
 
+      // 1. Force Formik to evaluate and mark fields as touched
+      setFieldTouched("fullname", true);
+      setFieldTouched("email", true);
+      setFieldTouched(name, true);
+
+      // 2. Local block check to stop API call if name or email are missing
+      if (!fullname || !email) {
+        setMessage("Please fill out your Full Name and Email first.");
+        return;
+      }
+
+      // 3. Phone validation
       if (!phone || phone.length !== 10) {
         setMessage("Enter valid phone number");
         return;
@@ -68,15 +77,16 @@ export default function OTPPhoneInput({
 
       setLoading(true);
 
+      // 4. Send name, email, and phone to the backend
       const response = await Axios.post("/api/otp/send", {
+        fullname,
+        email,
         phone,
       });
 
       if (response.data.success) {
         setOtpSent(true);
-
-        setCountdown(60);
-
+        setCountdown(45);
         setMessage("OTP sent successfully");
       }
     } catch (error: any) {
@@ -93,30 +103,20 @@ export default function OTPPhoneInput({
   const verifyOtp = async () => {
     try {
       setLoading(true);
-
       setMessage("");
 
-      const response = await Axios.post("/api/otp/verify", {
-        phone,
-        otp,
-      });
+      const response = await Axios.post("/api/otp/verify", { phone, otp });
 
       if (response.data.success) {
         setVerified(true);
-
         setOtpSent(false);
-
         setMessage("Phone verified successfully");
-
         setFieldValue("phoneVerified", true);
-
         onVerified?.(true);
       }
     } catch (error: any) {
       setMessage(error?.response?.data?.message || "OTP verification failed");
-
       setFieldValue("phoneVerified", false);
-
       onVerified?.(false);
     } finally {
       setLoading(false);
@@ -138,14 +138,14 @@ export default function OTPPhoneInput({
     }
     setPreviousPhone(phone);
   }, [phone]);
-
+  const { t } = useLanguage();
   const hasError = touched[name] && errors[name];
   const verificationError = touched.phoneVerified && errors.phoneVerified;
 
   return (
     <div className="space-y-3">
       {/* LABEL */}
-      <label className="block text-sm font-medium">{label}</label>
+      <label className="block text-sm font-semibold">{label}</label>
 
       {/* PHONE FIELD */}
       <div className="flex gap-3">
@@ -248,7 +248,7 @@ export default function OTPPhoneInput({
                 value={otp}
                 maxLength={6}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                placeholder="Enter 6 digit OTP"
+                placeholder={t("otp.received")}
                 className="border-border focus:border-primary w-full rounded-2xl border py-3.5 pr-4 pl-12 text-sm transition-all outline-none"
               />
             </div>

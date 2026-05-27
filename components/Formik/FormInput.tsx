@@ -41,7 +41,7 @@ export default function FormInput({
             className="space-y-2"
           >
             {/* LABEL */}
-            <label className="block text-sm font-medium text-[hsl(var(--foreground))]">
+            <label className="block text-sm font-semibold text-[hsl(var(--foreground))]">
               {label}
             </label>
 

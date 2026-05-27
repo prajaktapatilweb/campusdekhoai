@@ -10,7 +10,7 @@ const StudentSchema = new mongoose.Schema(
 
     college: String,
     address: String,
-
+    helpNeeded: String,
     education: String,
     targetStream: String,
     attendedSeminar: String,

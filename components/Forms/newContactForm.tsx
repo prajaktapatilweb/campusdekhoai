@@ -15,6 +15,11 @@ import {
   Send,
   CheckCircle2,
   GraduationCap,
+  BookOpen,
+  BriefcaseBusiness,
+  BadgeIndianRupee,
+  House,
+  Compass,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import FormInput from "../Formik/FormInput";
@@ -27,6 +32,7 @@ import {
   getTargetStreamOptions,
 } from "@/components/constants/formOptions";
 import OTPPhoneInput from "../Formik/OTPPhoneInput";
+import FormCheckboxGroup from "../Formik/FormCheckboxGroup";
 
 interface FormValues {
   fullname: string;
@@ -38,6 +44,7 @@ interface FormValues {
   attendingSeminar: boolean | string;
   reference: string;
   district: string;
+  helpNeeded: string[];
   evenetLocation: string;
   phoneVerified: boolean;
 }
@@ -69,6 +76,10 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
   attendingSeminar: yup.string().required("Required"),
   reference: yup.string().required("Required"),
   district: yup.string().required("Required"),
+  helpNeeded: yup
+    .array()
+    .min(1, "Please select at least one option")
+    .required("Required"),
   evenetLocation: yup.string().required("Required"),
   phoneVerified: yup
     .boolean()
@@ -179,6 +190,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                 attendingSeminar: "yes",
                 reference: "Daily Pudhari",
                 district: "Pune",
+                helpNeeded: [],
                 evenetLocation: selectedEvent?.city || "",
                 phoneVerified: false,
               }}
@@ -227,7 +239,42 @@ export default function NewContactForm({ selectedEvent }: Props) {
                       placeholder={t("form.phone.placeholder")}
                     />
                     {/* PHONE + WHATSAPP */}
-
+                    <FormCheckboxGroup
+                      name="helpNeeded"
+                      label={t("form.help")}
+                      options={[
+                        {
+                          label: "Best College Selection",
+                          value: "college_selection",
+                          icon: <GraduationCap size={20} />,
+                        },
+                        {
+                          label: "Admission Guidance",
+                          value: "admission_guidance",
+                          icon: <BookOpen size={20} />,
+                        },
+                        {
+                          label: "Placement Support",
+                          value: "placement_support",
+                          icon: <BriefcaseBusiness size={20} />,
+                        },
+                        {
+                          label: "Scholarship / Loan Guidance",
+                          value: "scholarship_guidance",
+                          icon: <BadgeIndianRupee size={20} />,
+                        },
+                        {
+                          label: "Hostel / Accommodation",
+                          value: "hostel_support",
+                          icon: <House size={20} />,
+                        },
+                        {
+                          label: "Career Counselling",
+                          value: "career_counselling",
+                          icon: <Compass size={20} />,
+                        },
+                      ]}
+                    />
                     {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                       <FormInput
                         name="phone"

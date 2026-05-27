@@ -50,9 +50,9 @@ export default function UserForm({
       enableReinitialize
       onSubmit={onSubmit}
     >
-      {({ handleSubmit, errors }) => (
+      {({ handleSubmit, errors, values }) => (
         <form onSubmit={handleSubmit}>
-          <pre>{JSON.stringify(errors, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormInput
               name="name"
@@ -80,6 +80,7 @@ export default function UserForm({
               options={[
                 { label: "Admin", value: "admin" },
                 { label: "Staff", value: "staff" },
+                { label: "College", value: "college" },
               ]}
             />
           </div>

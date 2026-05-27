@@ -5,6 +5,7 @@ import { connectDB } from "@/lib/mongodb";
 import Otp from "@/models/otp";
 
 import { otpRateLimit } from "@/lib/rateLimit";
+import { sendOtpViaChatMitra, sendOtpViaMeta } from "@/lib/Whatsapp/sendOtp";
 
 export async function POST(req: NextRequest) {
   try {
@@ -103,39 +104,26 @@ export async function POST(req: NextRequest) {
 
     console.log("OTP:", otp);
 
-    const response = await Axios.post(
-      "https://backend.chatmitra.com/developer/api/send_message",
-      {
-        recipient_mobile_number: `91${phone}`,
-        messages: [
-          {
-            kind: "template",
-            template: {
-              name: "campus2career_otp_20260526185828",
-              language: "en_US",
-              components: [
-                { type: "body", parameters: [{ type: "text", text: otp }] },
-              ],
-            },
-          },
-        ],
-        // customer_name: "YOUR_CUSTOMER_NAME",
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.CHATMITRA_API_KEY}`,
-        },
-      },
-    );
-    console.log(response.data);
+    const result = await sendOtpViaMeta({ phone, otp });
+    // const result = await sendOtpViaChatMitra({ phone, otp });
+
+    console.log(result?.data);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: result.error },
+        { status: 500 },
+      );
+    }
     return NextResponse.json({
       success: true,
       message: "OTP sent successfully",
     });
-  } catch (error) {
-    console.log("Error in sending Whatsappmessage", error);
-
+  } catch (error: any) {
+    console.log(
+      "ChatMitra Error:",
+      JSON.stringify(error.response?.data, null, 2),
+    );
     return NextResponse.json(
       {
         success: false,

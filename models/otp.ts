@@ -6,7 +6,19 @@ const OtpSchema = new Schema(
       type: String,
       required: true,
     },
-
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    purpose: {
+      type: String,
+      default: "Event Registration",
+      enum: ["Event Registration", "College Predictor"],
+    },
     otp: {
       type: String,
       required: true,
@@ -33,7 +45,7 @@ const OtpSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default models.Otp || model("Otp", OtpSchema);
