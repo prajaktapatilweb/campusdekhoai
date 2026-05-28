@@ -14,6 +14,7 @@ import SeminarAgenda from "@/components/eventstimeline";
 import CTABanner from "@/components/ctabanner";
 import EventCardsSection from "@/components/Appcard";
 import PartnerColleges from "@/components/partnercolleges";
+import Partnerstrip from "@/components/partnerstrip";
 
 export default function Page() {
   return (
@@ -22,6 +23,7 @@ export default function Page() {
         <AppThemeSetting />
         <Navbar />
         <HeroSlider />
+        <Partnerstrip />
         <AboutSection />
         <EventCards />
         <ServicesSection />

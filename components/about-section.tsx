@@ -21,12 +21,29 @@ const highlights = [
   "Complete admission process support",
   "Documentation guidance and review",
 ];
+const colleges = [
+  {
+    code: "DPU",
+    name: "Dr. D. Y. Patil University",
+    logo: "/images/univercity/dyp.webp",
+  },
+  {
+    code: "PCET",
+    name: "Pimpri Chinchwad Education Trust",
+    logo: "/images/univercity/pcet.jpg",
+  },
+  {
+    code: "VU",
+    name: "Vishwakarma University",
+    logo: "/images/univercity/vu.jpg",
+  },
+];
 
 export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative scroll-mt-24 overflow-hidden py-15 md:py-18"
+      className="relative scroll-mt-24 overflow-hidden py-13 md:py-18"
     >
       {/* Background decoration */}
       <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
@@ -34,15 +51,8 @@ export default function AboutSection() {
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
-        >
-          <HeadingAndSub data={headList1} />
-        </motion.div>
+
+        <HeadingAndSub data={headList1} />
 
         {/* Content grid - info side by side */}
         <div className="flex flex-col items-center gap-10 lg:flex-row">
@@ -120,7 +130,7 @@ export default function AboutSection() {
               gap between students and their dream institutions through expert
               guidance, personalized counselling, and comprehensive support.
               With a team of experienced counsellors and partnerships with over
-              100+ prestigious institutions, we provide end-to-end admission
+              3 prestigious univercities, we provide end-to-end admission
               assistance tailored to each student's unique aspirations and
               capabilities.
             </p>

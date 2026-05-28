@@ -68,15 +68,8 @@ export default function SeminarAgenda() {
     <section className="relative overflow-hidden bg-[#020b2d] px-4 py-20 text-white">
       <div className="mx-auto max-w-6xl">
         {/* HEADING */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="mb-14 text-center"
-        >
-          <HeadingAndSub data={headList9} />
-        </motion.div>
+
+        <HeadingAndSub data={headList9} />
 
         {/* CARD */}
         <motion.div

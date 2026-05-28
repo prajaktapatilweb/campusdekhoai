@@ -130,7 +130,7 @@ export default function EventCard({
           </div>
 
           <div className="bg-[#1a237e] px-4 py-3 text-center text-white">
-            <h3 className="text-3xl leading-none font-bold">
+            <h3 className="text-2xl leading-none font-bold">
               {moment(event.startDateTime).format("DD")}
             </h3>
             <p className="mt-1 text-sm tracking-wide uppercase">
@@ -196,7 +196,7 @@ export default function EventCard({
             <motion.button
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.03 }}
-              className={`w-fit rounded-2xl border-2 border-white bg-blue-950 px-6 py-3 text-lg font-semibold shadow-lg transition-all duration-300 hover:bg-[#0d1830] ${
+              className={`w-fit rounded-2xl border-2 border-white bg-blue-950 px-6 py-3 text-sm font-semibold shadow-lg transition-all duration-300 hover:bg-[#0d1830] md:text-lg ${
                 status.active ? "text-white" : "text-red-400"
               }`}
             >

@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import HeadingAndSub from "./headingandsub";
+import { headList6 } from "./constants/headindconst";
 
 const colleges = [
   {
@@ -27,15 +29,7 @@ const colleges = [
 export default function PartnerColleges() {
   return (
     <section className="w-full bg-gradient-to-b from-white to-slate-100 px-4 py-16 md:px-10">
-      <div className="mx-auto mb-12 max-w-6xl text-center">
-        <h2 className="text-3xl font-bold text-gray-800 md:text-4xl">
-          Our Partner Institutions
-        </h2>
-        <p className="mt-2 text-gray-500">
-          Collaborating with leading universities in Pune for academic
-          excellence
-        </p>
-      </div>
+      <HeadingAndSub data={headList6}></HeadingAndSub>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {colleges.map((item, index) => (

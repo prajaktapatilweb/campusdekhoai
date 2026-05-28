@@ -5,6 +5,23 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 export default function HeroSection() {
+  const colleges = [
+    {
+      code: "DPU",
+      name: "Dr. D. Y. Patil University",
+      logo: "/images/univercity/dyp.webp",
+    },
+    {
+      code: "PCET",
+      name: "Pimpri Chinchwad Education Trust",
+      logo: "/images/univercity/pcet.jpg",
+    },
+    {
+      code: "VU",
+      name: "Vishwakarma University",
+      logo: "/images/univercity/vu.jpg",
+    },
+  ];
   return (
     <section
       id="home"
@@ -164,6 +181,32 @@ export default function HeroSection() {
           <div className="h-10 w-px bg-gradient-to-b from-[hsl(var(--primary))] to-transparent" />
         </div>
       </motion.div>
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+        {colleges.map((item, index) => (
+          <motion.div
+            key={item.code}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.15 }}
+            whileHover={{ scale: 1.05 }}
+            className="relative flex flex-col items-center rounded-2xl border border-gray-200 bg-white/70 p-1 text-center shadow-xl backdrop-blur-xl"
+          >
+            {/* Logo */}
+            <div className="relative mb-4 h-18 w-18">
+              <Image
+                src={item.logo}
+                alt={item.name}
+                fill
+                className="object-contain"
+              />
+            </div>
+
+            {/* Name */}
+            <h3 className="text-xs font-semibold text-gray-800">{item.name}</h3>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 }

@@ -132,15 +132,8 @@ export default function EventCards() {
   return (
     <>
       <section id="events" className="bg-[#e1e8f0] px-4 py-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
-        >
-          <HeadingAndSub data={headList2} />
-        </motion.div>
+        <HeadingAndSub data={headList2} />
+
         <div
           // className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3"
           className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3"

@@ -81,44 +81,42 @@ function ExpertCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+      className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
     >
       {/* Glow */}
       <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-blue-100 blur-3xl transition-all duration-500 group-hover:bg-blue-200" />
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="flex items-center gap-4">
-          {/* Avatar */}
+        <div className="grid grid-cols-12 items-center gap-2">
+          {/* IMAGE - 3 columns */}
+          <div className="col-span-4">
+            {img ? (
+              <div className="relative h-24 w-full overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+                <Image
+                  src={img}
+                  alt={name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : (
+              <div className="flex h-24 w-full items-center justify-center rounded-2xl bg-blue-700 text-sm font-semibold text-white">
+                {initials}
+              </div>
+            )}
+          </div>
 
-          {/* Avatar */}
-          {/* Avatar / Image */}
-          {img ? (
-            <div className="relative mb-4 h-15 w-15 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-              <Image
-                src={img}
-                alt={name}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          ) : (
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-700 text-sm font-semibold text-white">
-              {initials}
-            </div>
-          )}
-
-          {/* Name */}
-          <div>
+          {/* NAME - 9 columns */}
+          <div className="col-span-8">
             <h3 className="text-xl font-bold text-slate-800">{name}</h3>
-
             {/* <p className="text-sm font-medium text-blue-700">{designation}</p> */}
           </div>
         </div>
 
         {/* Divider */}
-        <div className="my-5 h-px bg-gradient-to-r from-blue-100 via-slate-200 to-transparent" />
+        <div className="my-3 h-px bg-gradient-to-r from-blue-100 via-slate-200 to-transparent" />
 
         {/* Details */}
         <div className="space-y-4">
@@ -152,15 +150,8 @@ export default function ExpertGuidesSection() {
     <section id="mentors" className="bg-slate-50 py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
-        >
-          <HeadingAndSub data={headList7} />
-        </motion.div>
+
+        <HeadingAndSub data={headList7} />
 
         {/* Cards */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">

@@ -93,20 +93,13 @@ export default function ServicesSection() {
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
-        >
-          <HeadingAndSub data={headList3} />
 
-          {/* <p className="mx-auto mt-4 max-w-2xl text-[hsl(var(--muted-foreground))]">
+        <HeadingAndSub data={headList3} />
+
+        {/* <p className="mx-auto mt-4 max-w-2xl text-[hsl(var(--muted-foreground))]">
             Comprehensive IT solutions tailored to meet the demands of modern
             businesses. From rentals to infrastructure, we{"'"}ve got you covered.
           </p> */}
-        </motion.div>
 
         {/* Tabs */}
         <motion.div

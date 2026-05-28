@@ -18,7 +18,7 @@ function HeadingAndSub({ data: { title, subtitle, subtitlespan } }: Props) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="mb-16 text-center"
+        className="pt-7 pb-13 text-center"
       >
         <>
           <p className="mb-4 inline-block rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-[hsl(var(--primary))] uppercase">

@@ -95,15 +95,8 @@ export default function FAQSection() {
     <section className="bg-gradient-to-b from-white to-slate-50 py-20 md:py-28">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-14 text-center"
-        >
-          <HeadingAndSub data={headList10} />
-        </motion.div>
+
+        <HeadingAndSub data={headList10} />
 
         {/* FAQ List */}
         <div className="space-y-4">
