@@ -2,21 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Student from "@/models/Student";
 import Otp from "@/models/otp";
-import { sendRegistrationConfirmationViaChatMitra } from "@/lib/Whatsapp/sendRegConfirm";
+import { sendRegistrationConfirmationViaCM } from "@/lib/Whatsapp/sendRegConfirm";
 
 export async function POST(req: NextRequest) {
   try {
     const origin = req.headers.get("origin");
     console.log("Origin:", origin);
-    if (origin !== process.env.NEXT_PUBLIC_WEB_BASE_URL) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
-    }
+    // if (origin !== process.env.NEXT_PUBLIC_WEB_BASE_URL) {
+    //   return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+    // }
     const body = await req.json();
-    console.log("RRRRREE", body, body.whatsapp !== "");
-    // Honeypot
-    if (body.whatsapp !== "") {
-      return NextResponse.json({ message: "Spam detected" }, { status: 400 });
-    }
+    // console.log("RRRRREE", body, body.whatsapp !== "");
+    // // Honeypot
+    // if (body.whatsapp !== "") {
+    //   return NextResponse.json({ message: "Spam detected" }, { status: 400 });
+    // }
 
     await connectDB();
 
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       ipAddress: req.headers.get("x-forwarded-for") || "unknown",
     });
 
-    // const result = await sendRegistrationConfirmationViaChatMitra({
+    // const result = await sendRegistrationConfirmationViaCM({
     //   phone: body.phone,
     //   imageUrl: "https://pudhariedudisha.com/favicon.png",
     //   name: body.fullname,

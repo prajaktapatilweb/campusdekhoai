@@ -11,7 +11,7 @@ export interface SendRegistrationParams {
   contactPhone: string; // {{6}} - Contact number
 }
 
-export async function sendRegistrationConfirmationViaChatMitra({
+export async function sendRegistrationConfirmationViaCM({
   phone,
   imageUrl,
   name,
@@ -22,6 +22,7 @@ export async function sendRegistrationConfirmationViaChatMitra({
   contactPhone,
 }: SendRegistrationParams) {
   try {
+    console.log("Reached Function");
     const response = await Axios.post(
       "https://backend.chatmitra.com/developer/api/send_message",
       {
@@ -34,19 +35,19 @@ export async function sendRegistrationConfirmationViaChatMitra({
               language: "en_US",
               category: "utility",
               components: [
-                // {
-                //   type: "header",
-                //   parameters: [
-                //     {
-                //       type: "image",
-                //       image: {
-                //         link: imageUrl,
-                //       },
-                //     },
-                //   ],
-                // },
                 {
-                  ttype: "body",
+                  type: "header",
+                  parameters: [
+                    {
+                      type: "image",
+                      image: {
+                        link: imageUrl,
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: "body",
                   parameters: [
                     { type: "text", text: name }, // {{1}}
                     { type: "text", text: venue }, // {{2}}
