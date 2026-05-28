@@ -14,19 +14,22 @@ import { EVENT_WHATSAPP_GROUPS } from "@/components/constants/eventWhatsappGroup
  */
 
 function verifyWebhookSignature(body: string, signature: string | null) {
-  if (!signature) return false;
+  const secret = process.env.CHATMITRA_WEBHOOK_SECRET;
 
-  const secret = process.env.CHATMITRA_WEBHOOK_SECRET!;
+  console.log("SECRET VALUE:", secret);
+
+  if (!secret) {
+    throw new Error("CHATMITRA_WEBHOOK_SECRET is missing");
+  }
+
+  if (!signature) {
+    return false;
+  }
 
   const expectedSignature = crypto
     .createHmac("sha256", secret)
     .update(body)
     .digest("hex");
-
-  /**
-   * ChatMitra sends:
-   * x-webhook-signature
-   */
 
   return crypto.timingSafeEqual(
     Buffer.from(signature),
