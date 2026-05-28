@@ -5,19 +5,18 @@ const studentSchema = new mongoose.Schema(
     fullname: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-
+    regId: { type: String, required: true },
     whatsapp: { type: String },
-
-    education: { type: String, required: true },
-    targetStream: { type: String, required: true },
-    attendingSeminar: { type: String, required: true },
-    reference: { type: String, required: true },
+    education: { type: String },
+    targetStream: { type: String },
+    attendingSeminar: { type: String },
+    reference: { type: String },
     district: { type: String, required: true },
 
     // ✅ ARRAY FIELD
     helpNeeded: {
       type: [String], // 👈 important
-      required: true,
+      // required: true,
       default: [],
     },
 

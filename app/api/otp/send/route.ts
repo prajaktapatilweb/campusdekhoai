@@ -114,8 +114,6 @@ export async function POST(req: NextRequest) {
     // const result = await sendOtpViaMeta({ phone, otp });
     const result = await sendOtpViaChatMitra({ phone, otp });
 
-    // console.log(result?.data);
-
     if (!result.success) {
       return NextResponse.json(
         { success: false, error: result.error },

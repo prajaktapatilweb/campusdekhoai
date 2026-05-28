@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/mongodb";
 import Student from "@/models/Student";
 import Otp from "@/models/otp";
 import { sendRegistrationConfirmationViaCM } from "@/lib/Whatsapp/sendRegConfirm";
+import { generateSeqId } from "@/lib/GenerateIds";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,17 +21,17 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
 
-    const existing = await Student.findOne({
-      phone: body.phone,
-    });
-    if (existing) {
-      return NextResponse.json(
-        {
-          message: "Phone already registered",
-        },
-        { status: 400 },
-      );
-    }
+    // const existing = await Student.findOne({
+    //   phone: body.phone,
+    // });
+    // if (existing) {
+    //   return NextResponse.json(
+    //     {
+    //       message: "Phone already registered",
+    //     },
+    //     { status: 400 },
+    //   );
+    // }
     const verifiedOtp = await Otp.findOne({
       phone: body.phone,
       verified: true,
@@ -48,12 +49,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    body.regId = await generateSeqId("StudRegistration", "PudhariC2C");
+    console.log("Body to submit", body);
+
     const student = await Student.create({
       ...body,
-
       verified: true,
       createdAt: new Date(),
-
       ipAddress: req.headers.get("x-forwarded-for") || "unknown",
     });
 
