@@ -134,10 +134,7 @@ export default function EventCards() {
       <section id="events" className="bg-[#e1e8f0] px-4 py-10">
         <HeadingAndSub data={headList2} />
 
-        <div
-          // className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3"
-          className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3"
-        >
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
           {/* <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-2 lg:grid-cols-3"> */}
           {sortedEvents.map((event, index) => (
             // <EventIndivCard

@@ -65,8 +65,8 @@ const agendaData = [
 
 export default function SeminarAgenda() {
   return (
-    <section className="relative overflow-hidden bg-[#020b2d] px-4 py-20 text-white">
-      <div className="mx-auto max-w-6xl">
+    <section className="relative overflow-hidden bg-[#020b2d] px-4 py-10 text-white">
+      <div className="mx-auto max-w-7xl">
         {/* HEADING */}
 
         <HeadingAndSub data={headList9} />

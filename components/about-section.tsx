@@ -41,15 +41,8 @@ const colleges = [
 
 export default function AboutSection() {
   return (
-    <section
-      id="about"
-      className="relative scroll-mt-24 overflow-hidden py-13 md:py-18"
-    >
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
-      <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[hsl(var(--primary))]/3 blur-3xl" />
-
-      <div className="relative mx-auto max-w-7xl px-6">
+    <section id="about" className="relative scroll-mt-24 overflow-hidden py-10">
+      <div className="relative mx-auto max-w-7xl px-4">
         {/* Section header */}
 
         <HeadingAndSub data={headList1} />

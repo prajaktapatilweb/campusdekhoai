@@ -85,13 +85,9 @@ export default function ServicesSection() {
   return (
     <section
       id="services"
-      className="relative scroll-mt-24 overflow-hidden bg-[hsl(var(--card))] py-15 md:py-15"
+      className="relative scroll-mt-24 overflow-hidden bg-[hsl(var(--card))] py-10"
     >
-      {/* Background accents */}
-      <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/3 blur-3xl" />
-      <div className="absolute right-0 bottom-0 h-64 w-64 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
-
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-4">
         {/* Section header */}
 
         <HeadingAndSub data={headList3} />

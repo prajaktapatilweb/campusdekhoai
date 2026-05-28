@@ -15,6 +15,7 @@ import CTABanner from "@/components/ctabanner";
 import EventCardsSection from "@/components/Appcard";
 import PartnerColleges from "@/components/partnercolleges";
 import Partnerstrip from "@/components/partnerstrip";
+import UniversityCards from "@/components/Slider";
 
 export default function Page() {
   return (
@@ -28,7 +29,8 @@ export default function Page() {
         <EventCards />
         <ServicesSection />
         {/* <Gallery /> */}
-        <PartnerColleges />
+        {/* <UniversityCards /> */}
+        {/* <PartnerColleges /> */}
         {/* <Colleges /> */}
         {/* <TestimonialsSection /> */}
         <ExpertGuidesSection />

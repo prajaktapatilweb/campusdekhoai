@@ -147,8 +147,8 @@ function ExpertCard({
 
 export default function ExpertGuidesSection() {
   return (
-    <section id="mentors" className="bg-slate-50 py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="mentors" className="bg-[#e1e8f0] py-10">
+      <div className="mx-auto max-w-7xl px-4">
         {/* Heading */}
 
         <HeadingAndSub data={headList7} />
