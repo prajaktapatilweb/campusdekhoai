@@ -6,25 +6,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Student from "@/models/Student";
 import { EVENT_WHATSAPP_GROUPS } from "@/components/constants/eventWhatsappGroups";
-
-/**
- * --------------------------------------------------------
- * VERIFY CHATMITRA WEBHOOK SIGNATURE
- * --------------------------------------------------------
- */
+import { defaultReply, QUICK_REPLY_MESSAGES } from "@/lib/Whatsapp/chatReplies";
+type ReplyKey = keyof typeof QUICK_REPLY_MESSAGES;
 
 function verifyWebhookSignature(body: string, signature: string | null) {
   const secret = process.env.CHATMITRA_WEBHOOK_SECRET;
-
   console.log("SECRET VALUE:", secret);
-
   if (!secret) {
     throw new Error("CHATMITRA_WEBHOOK_SECRET is missing");
   }
-
-  if (!signature) {
-    return false;
-  }
+  if (!signature) return false;
 
   const expectedSignature = crypto
     .createHmac("sha256", secret)
@@ -39,66 +30,27 @@ function verifyWebhookSignature(body: string, signature: string | null) {
 
 export async function POST(req: NextRequest) {
   try {
-    /**
-     * --------------------------------------------------------
-     * RAW BODY REQUIRED FOR HMAC
-     * --------------------------------------------------------
-     */
-
+    //  * RAW BODY REQUIRED FOR HMAC
     const rawBody = await req.text();
-
-    /**
-     * --------------------------------------------------------
-     * GET SIGNATURE HEADER
-     * --------------------------------------------------------
-     */
-
+    //  * GET SIGNATURE HEADER
     const signature = req.headers.get("x-webhook-signature");
-
-    /**
-     * --------------------------------------------------------
-     * VERIFY SIGNATURE
-     * --------------------------------------------------------
-     */
-
+    //  * VERIFY SIGNATURE
     const isValid = verifyWebhookSignature(rawBody, signature);
 
     if (!isValid) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid webhook signature",
-        },
+        { success: false, message: "Invalid webhook signature" },
         { status: 401 },
       );
     }
-
-    /**
-     * --------------------------------------------------------
-     * PARSE BODY AFTER VERIFICATION
-     * --------------------------------------------------------
-     */
-
+    //  * PARSE BODY AFTER VERIFICATION
     const body = JSON.parse(rawBody);
-
-    console.log("CHATMITRA VERIFIED WEBHOOK:", JSON.stringify(body, null, 2));
-
     await connectDB();
-
-    /**
-     * --------------------------------------------------------
-     * GET SENDER NUMBER
-     * --------------------------------------------------------
-     */
-
     const senderNumber =
       body?.sender_mobile_number ||
       body?.mobile ||
       body?.from ||
       body?.data?.mobile;
-
-    const incomingMessage = body?.message?.text || body?.text || "";
-
     const quickReply =
       body?.quick_reply ||
       body?.button_reply ||
@@ -107,31 +59,16 @@ export async function POST(req: NextRequest) {
 
     if (!senderNumber) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Sender number missing",
-        },
+        { success: false, message: "Sender number missing" },
         { status: 400 },
       );
     }
 
-    /**
-     * --------------------------------------------------------
-     * CLEAN NUMBER
-     * --------------------------------------------------------
-     */
-
     let cleanNumber = senderNumber.replace(/\D/g, "");
-
     if (cleanNumber.startsWith("91")) {
       cleanNumber = cleanNumber.slice(2);
     }
     console.log("Numbers", senderNumber, cleanNumber);
-    /**
-     * --------------------------------------------------------
-     * FIND STUDENT
-     * --------------------------------------------------------
-     */
 
     const student = await Student.findOne({
       $or: [{ phone: cleanNumber }, { whatsapp: cleanNumber }],
@@ -144,49 +81,24 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    /**
-     * --------------------------------------------------------
-     * EVENT LOCATION + GROUP LINK
-     * --------------------------------------------------------
-     */
-
     const eventLocation = student?.evenetLocation;
 
     const whatsappGroupLink = EVENT_WHATSAPP_GROUPS[eventLocation] || "";
     console.log("Links and city", eventLocation, whatsappGroupLink);
-    /**
-     * --------------------------------------------------------
-     * CREATE REPLY
-     * --------------------------------------------------------
-     */
 
-    let replyMessage = "";
+    const incomingMessage = (body?.message?.text || body?.text || "")
+      .trim()
+      .toUpperCase();
 
-    if (quickReply) {
-      replyMessage = `Hello ${student.fullname},
+    const messageKey = incomingMessage as ReplyKey;
 
-You selected: ${quickReply}
-
-Seminar Location: ${eventLocation}
-
-Join WhatsApp Group:
-${whatsappGroupLink}`;
-    } else {
-      replyMessage = `Hello ${student.fullname},
-
-Thank you for your message.
-
-Seminar Location: ${eventLocation}
-
-Join WhatsApp Group:
-${whatsappGroupLink}`;
-    }
-
-    /**
-     * --------------------------------------------------------
-     * SEND MESSAGE
-     * --------------------------------------------------------
-     */
+    const replyMessage = QUICK_REPLY_MESSAGES[messageKey]
+      ? QUICK_REPLY_MESSAGES[messageKey]({
+          fullname: student.fullname,
+          eventLocation,
+          whatsappGroupLink,
+        })
+      : defaultReply({ fullname: student.fullname });
 
     const response = await fetch(
       "https://backend.chatmitra.com/developer/api/send_message",

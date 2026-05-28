@@ -25,16 +25,16 @@ export default function Page() {
         <Navbar />
         <HeroSlider />
         <Partnerstrip />
-        <AboutSection />
+        {/* <AboutSection /> */}
         <EventCards />
-        <ServicesSection />
+        {/* <ServicesSection /> */}
         {/* <Gallery /> */}
         {/* <UniversityCards /> */}
         {/* <PartnerColleges /> */}
         {/* <Colleges /> */}
         {/* <TestimonialsSection /> */}
-        <ExpertGuidesSection />
         <SeminarAgenda />
+        <ExpertGuidesSection />
         <FAQSection />
         {/* <CTABanner /> */}
         <Footer />

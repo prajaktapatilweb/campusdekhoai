@@ -7,7 +7,7 @@ import { mobilenumber1 } from "@/components/constants/contactconst";
 
 const AppThemeSetting: React.FC = () => {
   return (
-    <div className="fixed right-0 bottom-[50px] z-[1110] flex flex-col items-end gap-3 xl:bottom-[125px]">
+    <div className="fixed right-0 bottom-[100px] z-[1110] flex flex-col items-end gap-3 xl:bottom-[200px]">
       {/* WhatsApp Button */}
       <a
         href={`https://wa.me/${mobilenumber1}`}

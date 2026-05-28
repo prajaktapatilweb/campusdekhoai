@@ -9,9 +9,9 @@ import { mobilenumber1 } from "./constants/contactconst";
 
 const navLinks = [
   { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
+  // { label: "About", href: "#about" },
   { label: "Event Registration", href: "#events" },
-  { label: "Services", href: "#services" },
+  // { label: "Services", href: "#services" },
   { label: "Mentors", href: "#mentors" },
   { label: "Contact", href: "#contact" },
 ];
