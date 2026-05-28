@@ -153,7 +153,7 @@ export async function POST(req: NextRequest) {
     const eventLocation = student?.evenetLocation;
 
     const whatsappGroupLink = EVENT_WHATSAPP_GROUPS[eventLocation] || "";
-
+    console.log("Links and city", eventLocation, whatsappGroupLink);
     /**
      * --------------------------------------------------------
      * CREATE REPLY
@@ -209,7 +209,7 @@ ${whatsappGroupLink}`;
     );
 
     const responseData = await response.json();
-
+    console.log("RRRR", responseData);
     return NextResponse.json({
       success: true,
       responseData,
