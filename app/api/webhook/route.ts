@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
     if (cleanNumber.startsWith("91")) {
       cleanNumber = cleanNumber.slice(2);
     }
-
+    console.log("Numbers", senderNumber, cleanNumber);
     /**
      * --------------------------------------------------------
      * FIND STUDENT
@@ -136,7 +136,7 @@ export async function POST(req: NextRequest) {
     const student = await Student.findOne({
       $or: [{ phone: cleanNumber }, { whatsapp: cleanNumber }],
     });
-
+    console.log("DAta found", student);
     if (!student) {
       return NextResponse.json({
         success: false,
