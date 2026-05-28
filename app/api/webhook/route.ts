@@ -201,9 +201,9 @@ ${whatsappGroupLink}`;
           messages: [
             {
               kind: "raw",
-              raw: {
+              payload: {
                 type: "text",
-                text: replyMessage,
+                body: replyMessage,
               },
             },
           ],
