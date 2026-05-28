@@ -200,8 +200,11 @@ ${whatsappGroupLink}`;
           recipient_mobile_number: `91${cleanNumber}`,
           messages: [
             {
-              kind: "text",
-              text: replyMessage,
+              kind: "raw",
+              raw: {
+                type: "text",
+                text: replyMessage,
+              },
             },
           ],
         }),
