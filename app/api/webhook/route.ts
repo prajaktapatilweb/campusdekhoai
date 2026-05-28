@@ -203,7 +203,9 @@ ${whatsappGroupLink}`;
               kind: "raw",
               payload: {
                 type: "text",
-                body: replyMessage,
+                text: {
+                  body: String(replyMessage),
+                },
               },
             },
           ],
