@@ -23,11 +23,19 @@ interface Student {
   fullname: string;
   email: string;
   phone: string;
-  course: string;
-  city: string;
+  evenetLocation: string;
+  district: string;
   createdAt: string;
+  // New fields matching your backend response format:
+  attendingSeminar?: string;
+  education?: string;
+  helpNeeded?: string[];
+  reference?: string;
+  targetStream?: string;
+  whatsapp?: string;
+  phoneVerified?: boolean;
+  verified?: boolean;
 }
-
 export default function StudentPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
@@ -69,8 +77,8 @@ export default function StudentPage() {
         student.fullname,
         student.email,
         student.phone,
-        student.city,
-        student.course,
+        student.district,
+        student.evenetLocation,
       ]
         .filter(Boolean)
         .some((field) => String(field).toLowerCase().includes(search));
@@ -87,7 +95,7 @@ export default function StudentPage() {
   const totalPages = Math.ceil(filteredStudents.length / rowsPerPage);
 
   const stats = useMemo(() => {
-    const cities = [...new Set(students.map((s) => s.city))];
+    const cities = [...new Set(students.map((s) => s.district))];
 
     const today = new Date().toDateString();
 
@@ -103,45 +111,67 @@ export default function StudentPage() {
   }, [students]);
 
   const handleExportCSV = () => {
+    // 1. Defined all available data columns as headers
     const headers = [
       "Name",
       "Email",
       "Phone",
-      "Course",
-      "City",
+      "WhatsApp",
+      "Course/Event Location",
+      "City/District",
+      "Education",
+      "Target Stream",
+      "Attending Seminar",
+      "Help Needed",
+      "Reference Source",
+      "Phone Verified",
       "Registration Date",
     ];
 
-    const csvData = filteredStudents.map((student) => [
-      student.fullname,
-      student.email,
-      student.phone,
-      student.course,
-      student.city,
-      new Date(student.createdAt).toLocaleDateString(),
-    ]);
+    // 2. Map through the complete raw backend data array
+    const csvData = students.map((student) => {
+      // Process the array fields safely so they don't break CSV formatting
+      const helpNeededStr = Array.isArray(student.helpNeeded)
+        ? student.helpNeeded.join("; ")
+        : "";
 
+      return [
+        `"${student.fullname?.replace(/"/g, '""') || ""}"`,
+        `"${student.email || ""}"`,
+        `"${student.phone || ""}"`,
+        `"${student.whatsapp || ""}"`,
+        `"${student.evenetLocation?.replace(/"/g, '""') || ""}"`,
+        `"${student.district?.replace(/"/g, '""') || ""}"`,
+        `"${student.education || ""}"`,
+        `"${student.targetStream || ""}"`,
+        `"${student.attendingSeminar || ""}"`,
+        `"${helpNeededStr.replace(/"/g, '""')}"`,
+        `"${student.reference?.replace(/"/g, '""') || ""}"`,
+        `"${student.phoneVerified ? "Yes" : "No"}"`,
+        `"${new Date(student.createdAt).toLocaleDateString()}"`,
+      ];
+    });
+
+    // 3. Construct CSV String layout
     const csvContent = [
       headers.join(","),
       ...csvData.map((row) => row.join(",")),
     ].join("\n");
 
-    const blob = new Blob([csvContent], {
-      type: "text/csv",
+    // 4. Create and trigger download payload with UTF-8 BOM encoding for Excel support
+    const blob = new Blob(["\uFEFF" + csvContent], {
+      type: "text/csv;charset=utf-8;",
     });
 
     const url = window.URL.createObjectURL(blob);
-
     const a = document.createElement("a");
 
     a.href = url;
-    a.download = `students_${new Date().toISOString().split("T")[0]}.csv`;
-
+    a.download = `complete_students_report_${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
 
     window.URL.revokeObjectURL(url);
   };
-
   const handleLanguageChange = (lang: "en" | "mr") => {
     setLanguage(lang);
   };
@@ -298,13 +328,13 @@ export default function StudentPage() {
 
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="rounded-full bg-[#f9a825]/20 px-3 py-1 text-xs font-semibold text-[#f57f17]">
-                          {student.course}
+                          {student.evenetLocation}
                         </span>
                       </td>
 
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="rounded-full bg-[#1a237e]/10 px-3 py-1 text-xs font-semibold text-[#1a237e]">
-                          {student.city}
+                          {student.district}
                         </span>
                       </td>
 
