@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
     });
 
     const eventDetails = await Event.findOne({ city: body.eventLocation });
-
+    console.log("Event details found", eventDetails);
     const result = await sendRegistrationConfirmationViaCM({
       phone: body.phone,
       name: body.fullname,
