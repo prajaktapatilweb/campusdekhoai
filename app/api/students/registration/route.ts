@@ -86,13 +86,13 @@ export async function POST(req: NextRequest) {
     const result = await sendRegistrationConfirmationViaCM({
       phone: body.phone,
       name: body.fullname,
-      regNo: body.regId,
+      regNo: String(body.regId),
       venue: eventDetails
         ? `${eventDetails.venue}, ${eventDetails.city}`
         : body.eventLocation,
       dayDate: eventDetails
         ? moment(eventDetails.startDateTime).format("dddd, DD MMMM YYYY")
-        : "",
+        : " ",
       time: eventDetails
         ? `${moment(eventDetails.startDateTime).format("h:mm A")} to ${moment(eventDetails.endDateTime).format("h:mm A")}`
         : "04:00 PM to 06:00 PM",
