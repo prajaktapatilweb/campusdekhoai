@@ -40,19 +40,19 @@ export async function POST(req: NextRequest) {
     }
 
     // Allow maximum 2 registrations per phone
-    // const registrationCount = await Student.countDocuments({
-    //   phone: body.phone,
-    // });
+    const registrationCount = await Student.countDocuments({
+      phone: body.phone,
+    });
 
-    // if (registrationCount >= 2) {
-    //   return NextResponse.json(
-    //     {
-    //       success: false,
-    //       message: "Maximum 2 registrations are allowed per mobile number.",
-    //     },
-    //     { status: 400 },
-    //   );
-    // }
+    if (registrationCount >= 2) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Maximum 2 registrations are allowed per mobile number.",
+        },
+        { status: 400 },
+      );
+    }
 
     const verifiedOtp = await Otp.findOne({
       phone: body.phone,
@@ -83,6 +83,22 @@ export async function POST(req: NextRequest) {
 
     const eventDetails = await Event.findOne({ city: body.evenetLocation });
     console.log("Event details found", eventDetails);
+    const startTime = eventDetails
+      ? moment(eventDetails.startDateTime).utcOffset("+05:30")
+      : null;
+
+    const endTime = eventDetails
+      ? moment(eventDetails.endDateTime).utcOffset("+05:30")
+      : null;
+
+    const dayDate = startTime ? startTime.format("dddd, DD MMMM YYYY") : "";
+
+    const time =
+      startTime && endTime
+        ? `${startTime.format("h:mm A")} to ${endTime.format("h:mm A")}`
+        : "04:00 PM to 06:00 PM";
+
+    console.log("Formatted date and time", dayDate, time);
 
     const result = await sendRegistrationConfirmationViaCM({
       phone: body.phone,
@@ -91,12 +107,8 @@ export async function POST(req: NextRequest) {
       venue: eventDetails
         ? `${eventDetails.venue}, ${eventDetails.city}`
         : body.evenetLocation,
-      dayDate: eventDetails
-        ? moment(eventDetails.startDateTime).format("dddd, DD MMMM YYYY")
-        : " ",
-      time: eventDetails
-        ? `${moment(eventDetails.startDateTime).format("h:mm A")} to ${moment(eventDetails.endDateTime).format("h:mm A")}`
-        : "04:00 PM to 06:00 PM",
+      dayDate: String(dayDate),
+      time: String(time),
       // imageUrl: "https://pudhariedudisha.com/favicon.png",
       // contactName: "Atul",
       // contactPhone: "99",
