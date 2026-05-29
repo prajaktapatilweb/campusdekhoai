@@ -71,7 +71,7 @@ export default function Footer() {
                   alt="Pudhari Campus 2 Career Logo"
                 ></Image>
               </div>
-              <p className="mb-6 text-sm leading-relaxed text-[hsl(var(--muted-foreground))] text-white/60">
+              <p className="mb-6 text-justify text-sm leading-relaxed text-[hsl(var(--muted-foreground))] text-white/60">
                 Pudhari Edu-Disha is the dedicated education vertical of Pudhari
                 Media Group, built in partnership with CampusDekho.AI to deliver
                 Marathi-language career guidance, college coverage and
