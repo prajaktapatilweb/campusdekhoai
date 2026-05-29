@@ -21,17 +21,37 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
 
-    // const existing = await Student.findOne({
-    //   phone: body.phone,
-    // });
-    // if (existing) {
-    //   return NextResponse.json(
-    //     {
-    //       message: "Phone already registered",
-    //     },
-    //     { status: 400 },
-    //   );
-    // }
+    // Check same student duplicate
+    const existingStudent = await Student.findOne({
+      phone: body.phone,
+      fullname: body.fullname,
+    });
+
+    if (existingStudent) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Student already registered with this phone number.",
+        },
+        { status: 400 },
+      );
+    }
+
+    // Allow maximum 2 registrations per phone
+    const registrationCount = await Student.countDocuments({
+      phone: body.phone,
+    });
+
+    if (registrationCount >= 2) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Maximum 2 registrations are allowed per mobile number.",
+        },
+        { status: 400 },
+      );
+    }
+
     const verifiedOtp = await Otp.findOne({
       phone: body.phone,
       verified: true,
@@ -59,16 +79,16 @@ export async function POST(req: NextRequest) {
       ipAddress: req.headers.get("x-forwarded-for") || "unknown",
     });
 
-    // const result = await sendRegistrationConfirmationViaCM({
-    //   phone: body.phone,
-    //   imageUrl: "https://pudhariedudisha.com/favicon.png",
-    //   name: body.fullname,
-    //   venue: body.evenetLocation,
-    //   date: "12 June 2026",
-    //   day: "Monday",
-    //   contactName: "Atul",
-    //   contactPhone: "99",
-    // });
+    const result = await sendRegistrationConfirmationViaCM({
+      phone: body.phone,
+      name: `${body.fullname} Reg No:(${body.regId})`,
+      venue: body.evenetLocation,
+      day: "Monday",
+      date: "12 June 2026",
+      // imageUrl: "https://pudhariedudisha.com/favicon.png",
+      // contactName: "Atul",
+      // contactPhone: "99",
+    });
 
     // if (!result.success) {
     //   return NextResponse.json(

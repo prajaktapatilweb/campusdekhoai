@@ -2,24 +2,24 @@ import Axios from "axios";
 
 export interface SendRegistrationParams {
   phone: string;
-  imageUrl: string; // URL of the header image to display
   name: string; // {{1}} - User's name
   venue: string; // {{2}} - Location / Venue
   date: string; // {{3}} - Day/Date
   day: string; // {{4}} - Day string or extra date info
-  contactName: string; // {{5}} - Contact person
-  contactPhone: string; // {{6}} - Contact number
+  // imageUrl: string; // URL of the header image to display
+  // contactName: string; // {{5}} - Contact person
+  // contactPhone: string; // {{6}} - Contact number
 }
 
 export async function sendRegistrationConfirmationViaCM({
   phone,
-  imageUrl,
   name,
   venue,
-  date,
   day,
-  contactName,
-  contactPhone,
+  date,
+  // imageUrl,
+  // contactName,
+  // contactPhone,
 }: SendRegistrationParams) {
   try {
     console.log("Reached Function");
@@ -31,36 +31,24 @@ export async function sendRegistrationConfirmationViaCM({
           {
             kind: "template",
             template: {
-              name: "c2c_reg_confirmation1_20260527164751",
+              name: "reg_cnfm_20260529172112",
               language: "en_US",
-              category: "utility",
+              // category: "utility",
               components: [
-                {
-                  type: "header",
-                  parameters: [
-                    {
-                      type: "image",
-                      image: {
-                        link: imageUrl,
-                      },
-                    },
-                  ],
-                },
                 {
                   type: "body",
                   parameters: [
                     { type: "text", text: name }, // {{1}}
                     { type: "text", text: venue }, // {{2}}
-                    { type: "text", text: date }, // {{3}}
-                    { type: "text", text: day }, // {{4}}
-                    { type: "text", text: contactName }, // {{5}}
-                    { type: "text", text: contactPhone }, // {{6}}
+                    { type: "text", text: day }, // {{3}}
+                    { type: "text", text: date }, // {{4}}
                   ],
                 },
               ],
             },
           },
         ],
+        customer_name: name,
       },
       {
         headers: {
