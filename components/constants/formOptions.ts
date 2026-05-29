@@ -7,7 +7,7 @@ export const getTargetStreamOptions = (t: TranslateFunction) => [
   { label: t("stream.engineering"), value: "Engineering" },
   { label: t("stream.medical"), value: "Medical" },
   { label: t("stream.pharmacy"), value: "Pharmacy" },
-  { label: t("stream.management"), value: "Management" },
+  { label: t("stream.commerce"), value: "Commerce" },
   { label: t("stream.law"), value: "Law" },
   { label: t("stream.arts"), value: "Arts/Science" },
   { label: t("stream.other"), value: "Other" },

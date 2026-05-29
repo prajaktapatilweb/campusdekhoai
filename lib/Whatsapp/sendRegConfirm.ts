@@ -3,9 +3,10 @@ import Axios from "axios";
 export interface SendRegistrationParams {
   phone: string;
   name: string; // {{1}} - User's name
-  venue: string; // {{2}} - Location / Venue
-  date: string; // {{3}} - Day/Date
-  day: string; // {{4}} - Day string or extra date info
+  regNo: string; // {{2}} - Registration number
+  venue: string; // {{3}} - Location / Venue
+  dayDate: string; // {{4}} - Day/Date
+  time: string; // {{5}} - Day string or extra date info
   // imageUrl: string; // URL of the header image to display
   // contactName: string; // {{5}} - Contact person
   // contactPhone: string; // {{6}} - Contact number
@@ -14,9 +15,10 @@ export interface SendRegistrationParams {
 export async function sendRegistrationConfirmationViaCM({
   phone,
   name,
+  regNo,
   venue,
-  day,
-  date,
+  dayDate,
+  time,
   // imageUrl,
   // contactName,
   // contactPhone,
@@ -31,7 +33,7 @@ export async function sendRegistrationConfirmationViaCM({
           {
             kind: "template",
             template: {
-              name: "reg_cnfm_20260529172112",
+              name: "reg_cnfm_20260529213441",
               language: "en_US",
               // category: "utility",
               components: [
@@ -39,9 +41,10 @@ export async function sendRegistrationConfirmationViaCM({
                   type: "body",
                   parameters: [
                     { type: "text", text: name }, // {{1}}
-                    { type: "text", text: venue }, // {{2}}
-                    { type: "text", text: day }, // {{3}}
-                    { type: "text", text: date }, // {{4}}
+                    { type: "text", text: regNo }, // {{2}}
+                    { type: "text", text: venue }, // {{3}}
+                    { type: "text", text: dayDate }, // {{4}}
+                    { type: "text", text: time }, // {{5}}
                   ],
                 },
               ],

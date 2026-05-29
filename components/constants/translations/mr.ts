@@ -91,6 +91,7 @@ const mr = {
   "colleges.engineering": "अभियांत्रिकी",
   "colleges.medical": "वैद्यकीय",
   "colleges.management": "व्यवस्थापन",
+  "stream.commerce": "वाणिज्य",
   "colleges.pharmacy": "फार्मसी",
   "colleges.law": "कायदा",
   "colleges.design": "डिझाइन",

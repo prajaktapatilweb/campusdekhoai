@@ -39,12 +39,12 @@ interface FormValues {
   email: string;
   phone: string;
   whatsapp: string | null | undefined;
-  education: string;
+  // education: string;
   targetStream: string;
   attendingSeminar: boolean | string;
   reference: string;
   district: string;
-  helpNeeded: string[];
+  // helpNeeded: string[];
   evenetLocation: string;
   phoneVerified: boolean;
 }
@@ -70,15 +70,15 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
   // .matches(/^[0-9]+$/, "Only digits allowed")
   // .length(10, "Enter 10 digit number"),
 
-  education: yup.string().required("Required"),
+  // education: yup.string().required("Required"),
   targetStream: yup.string().required("Required"),
   attendingSeminar: yup.string().required("Required"),
   reference: yup.string().required("Required"),
   district: yup.string().required("Required"),
-  helpNeeded: yup
-    .array()
-    .min(1, "Please select at least one option")
-    .required("Required"),
+  // helpNeeded: yup
+  //   .array()
+  //   .min(1, "Please select at least one option")
+  //   .required("Required"),
   evenetLocation: yup.string().required("Required"),
   phoneVerified: yup
     .boolean()
@@ -189,12 +189,12 @@ export default function NewContactForm({ selectedEvent }: Props) {
                 email: "",
                 phone: "",
                 whatsapp: "",
-                education: "",
+                // education: "",
                 targetStream: "",
                 attendingSeminar: "",
                 reference: "",
                 district: "",
-                helpNeeded: [],
+                // helpNeeded: [],
                 evenetLocation: selectedEvent?.city || "",
                 phoneVerified: false,
               }}
@@ -243,7 +243,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                       placeholder={t("form.phone.placeholder")}
                     />
                     {/* PHONE + WHATSAPP */}
-                    <FormCheckboxGroup
+                    {/* <FormCheckboxGroup
                       name="helpNeeded"
                       label={t("form.help")}
                       options={[
@@ -278,7 +278,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                           icon: <Compass size={20} />,
                         },
                       ]}
-                    />
+                    /> */}
                     {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                       <FormInput
                         name="phone"
@@ -299,12 +299,12 @@ export default function NewContactForm({ selectedEvent }: Props) {
                     </div>
                     {/* EDUCATION */}
 
-                    <FormInput
+                    {/* <FormInput
                       name="education"
                       label={t("form.education")}
                       placeholder={t("form.education.placeholder")}
                       icon={<GraduationCap size={18} />}
-                    />
+                    /> */}
 
                     {/* TARGET STREAM */}
                     <FormSelect

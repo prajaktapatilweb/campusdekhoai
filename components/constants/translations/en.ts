@@ -216,6 +216,7 @@ const en = {
   "stream.medical": "Medical",
   "stream.pharmacy": "Pharmacy",
   "stream.management": "Management",
+  "stream.commerce": "Commerce",
   "stream.law": "Law",
   "stream.arts": "Arts / Science",
   "stream.other": "Other",

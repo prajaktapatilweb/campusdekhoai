@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Student from "@/models/Student";
 import Otp from "@/models/otp";
+import Event from "@/models/Event";
 import { sendRegistrationConfirmationViaCM } from "@/lib/Whatsapp/sendRegConfirm";
 import { generateSeqId } from "@/lib/GenerateIds";
+import moment from "moment";
 
 export async function POST(req: NextRequest) {
   try {
@@ -79,12 +81,15 @@ export async function POST(req: NextRequest) {
       ipAddress: req.headers.get("x-forwarded-for") || "unknown",
     });
 
+    const eventDetails = await Event.findOne({ name: body.eventLocation });
+
     const result = await sendRegistrationConfirmationViaCM({
       phone: body.phone,
-      name: `${body.fullname} Reg No:(${body.regId})`,
-      venue: body.evenetLocation,
-      day: "Monday",
-      date: "12 June 2026",
+      name: body.fullname,
+      regNo: body.regId,
+      venue: `$${eventDetails.venue} {eventDetails.city}`,
+      dayDate: moment(eventDetails.startDateTime).format("dddd, DD MMMM YYYY"),
+      time: `${moment(eventDetails.startDateTime).format("h:mm A")} to ${moment(eventDetails.endDateTime).format("h:mm A")}`,
       // imageUrl: "https://pudhariedudisha.com/favicon.png",
       // contactName: "Atul",
       // contactPhone: "99",
