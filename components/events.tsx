@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import NewContactForm from "./Forms/newContactForm";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useLanguage } from "@/contexts/LanguageContext";
 import HeadingAndSub from "./headingandsub";
@@ -129,9 +129,21 @@ export default function EventCards() {
       new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime(),
   );
 
+  const secondSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    secondSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <>
-      <section id="events" className="bg-[#e1e8f0] px-4 py-10">
+      <section
+        id="events"
+        ref={secondSectionRef}
+        className="bg-[#e1e8f0] px-4 py-10"
+      >
         <HeadingAndSub data={headList2} />
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">

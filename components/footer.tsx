@@ -25,10 +25,10 @@ const services = [
 
 const quickLinks = [
   { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Events", href: "#events" },
+  { label: "Mentors", href: "#mentors" },
+  { label: "Partnerships", href: "#home" },
+  // { label: "Contact", href: "#contact" },
 ];
 
 const locations = [
@@ -55,69 +55,78 @@ export default function Footer() {
       <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[hsl(var(--primary))] to-transparent" />
 
       <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="mb-4 flex items-center gap-2">
-              <Image
-                src="/images/pudharilogo.png"
-                width="300"
-                height="100"
-                alt="Pudhari Campus 2 Career Logo"
-              ></Image>
-            </div>
-            <p className="mb-6 text-sm leading-relaxed text-[hsl(var(--muted-foreground))] text-white/60">
-              Your trusted counselling partner for Engineering, Pharmacy &
-              Management admissions in Maharashtra.
-            </p>
-            <div className="flex flex-col gap-2">
-              <a
-                href={`tel:${mobilenumber1}`}
-                className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
-              >
-                <Phone className="h-4 w-4 text-white/60" />
-                +91 7498528125
-              </a>
-              <a
-                href={`mailto:${email}`}
-                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
-              >
-                <Mail className="h-4 w-4 text-white/60" />
-                {email}
-              </a>
-            </div>
-          </motion.div>
-
+        <div className="grid gap-15 md:grid-cols-12">
+          <div className="md:col-span-5">
+            {/* Brand */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="mb-4 flex items-center gap-2">
+                <Image
+                  src="/images/pudharilogo.png"
+                  width="300"
+                  height="100"
+                  alt="Pudhari Campus 2 Career Logo"
+                ></Image>
+              </div>
+              <p className="mb-6 text-sm leading-relaxed text-[hsl(var(--muted-foreground))] text-white/60">
+                Pudhari Edu-Disha is the dedicated education vertical of Pudhari
+                Media Group, built in partnership with CampusDekho.AI to deliver
+                Marathi-language career guidance, college coverage and
+                scholarship awareness to Maharashtra’s students and parents.
+                Campus 2 Career 2026 is the flagship on-ground outreach
+                programme of Pudhari Edu-Disha — taking trusted guidance
+                directly into 14 cities across 6 districts of Maharashtra
+                through free seminars, digital webinars and university
+                partnerships.
+              </p>
+              <div className="flex flex-col gap-2">
+                <a
+                  href={`tel:${mobilenumber1}`}
+                  className="flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
+                >
+                  <Phone className="h-4 w-4 text-white/60" />
+                  +91 7498528125
+                </a>
+                <a
+                  href={`mailto:${email}`}
+                  className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
+                >
+                  <Mail className="h-4 w-4 text-white/60" />
+                  {email}
+                </a>
+              </div>
+            </motion.div>
+          </div>
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            <h4 className="mb-5 font-serif text-lg font-bold text-white">
-              Quick Links
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-white/60 transition-colors hover:text-[hsl(var(--primary))]"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
+          <div className="md:col-span-3">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <h4 className="mb-5 font-serif text-lg font-bold text-white">
+                Quick Links
+              </h4>
+              <ul className="flex flex-col gap-5">
+                {quickLinks.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-md text-underline text-white/60 underline underline-offset-2 transition-colors hover:text-[hsl(var(--primary))]"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
           {/* Services */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -138,52 +147,52 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </motion.div> */}
+          <div className="md:col-span-4">
+            {/* Locations */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <h4 className="mb-5 font-serif text-lg font-bold text-white">
+                Service Locations
+              </h4>
 
-          {/* Locations */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-          >
-            <h4 className="mb-5 font-serif text-lg font-bold text-white">
-              Service Locations
-            </h4>
+              <ul className="flex flex-col gap-3">
+                {locations.map((loc) => (
+                  <li
+                    key={loc}
+                    className="flex items-center gap-2 text-sm text-white/60"
+                  >
+                    <MapPin className="h-3 w-3 text-[hsl(var(--primary))]" />
+                    {loc}
+                  </li>
+                ))}
+              </ul>
 
-            <ul className="flex flex-col gap-3">
-              {locations.map((loc) => (
-                <li
-                  key={loc}
-                  className="flex items-center gap-2 text-sm text-white/60"
+              {/* SOCIAL MEDIA */}
+              <div className="mt-6 flex items-center gap-4">
+                <a
+                  href={socialMediaLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
                 >
-                  <MapPin className="h-3 w-3 text-[hsl(var(--primary))]" />
-                  {loc}
-                </li>
-              ))}
-            </ul>
+                  <FaInstagram className="h-5 w-5" />
+                </a>
 
-            {/* SOCIAL MEDIA */}
-            <div className="mt-6 flex items-center gap-4">
-              <a
-                href={socialMediaLinks.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
-              >
-                <FaInstagram className="h-5 w-5" />
-              </a>
+                <a
+                  href={socialMediaLinks.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
+                >
+                  <FaFacebookF className="h-5 w-5" />
+                </a>
 
-              <a
-                href={socialMediaLinks.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all duration-300 hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-black"
-              >
-                <FaFacebookF className="h-5 w-5" />
-              </a>
-
-              {/* <a
+                {/* <a
                 href={socialMediaLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -191,8 +200,9 @@ export default function Footer() {
               >
                 <FaTwitter className="h-5 w-5" />
               </a> */}
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 

@@ -77,7 +77,7 @@ export default function SeminarAgenda() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="overflow-hidden rounded-[28px] border border-blue-900 bg-[#06133d]"
+          className="overflow-hidden rounded-[28px] border border-blue-900 bg-[#1a237e]/70"
         >
           {/* TOP BAR */}
           <div className="flex flex-col items-start justify-between gap-4 border-b border-blue-900 px-6 py-5 md:flex-row md:items-center">
