@@ -11,7 +11,7 @@ export const QUICK_REPLY_MESSAGES: Record<
   (payload: QuickReplyPayload) => string
 > = {
   // ------------------------------------------------------------------------------------------------
-  "Join Event Group": ({
+  "JOIN EVENT GROUP": ({
     fullname,
     eventLocation,
     whatsappGroupLink,
