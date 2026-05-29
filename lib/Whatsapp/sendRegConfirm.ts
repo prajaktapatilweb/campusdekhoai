@@ -24,7 +24,7 @@ export async function sendRegistrationConfirmationViaCM({
   // contactPhone,
 }: SendRegistrationParams) {
   try {
-    console.log("Reached Function");
+    console.log("Reached Function", name, regNo, venue, dayDate, time);
     const response = await Axios.post(
       "https://backend.chatmitra.com/developer/api/send_message",
       {
@@ -40,11 +40,11 @@ export async function sendRegistrationConfirmationViaCM({
                 {
                   type: "body",
                   parameters: [
-                    { type: "text", text: name }, // {{1}}
-                    { type: "text", text: regNo }, // {{2}}
-                    { type: "text", text: venue }, // {{3}}
-                    { type: "text", text: dayDate }, // {{4}}
-                    { type: "text", text: time }, // {{5}}
+                    { type: "text", text: String(name) }, // {{1}}
+                    { type: "text", text: String(regNo) }, // {{2}}
+                    { type: "text", text: String(venue) }, // {{3}}
+                    { type: "text", text: String(dayDate) }, // {{4}}
+                    { type: "text", text: String(time) }, // {{5}}
                   ],
                 },
               ],
