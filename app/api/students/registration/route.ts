@@ -40,19 +40,19 @@ export async function POST(req: NextRequest) {
     }
 
     // Allow maximum 2 registrations per phone
-    const registrationCount = await Student.countDocuments({
-      phone: body.phone,
-    });
+    // const registrationCount = await Student.countDocuments({
+    //   phone: body.phone,
+    // });
 
-    if (registrationCount >= 2) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Maximum 2 registrations are allowed per mobile number.",
-        },
-        { status: 400 },
-      );
-    }
+    // if (registrationCount >= 2) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       message: "Maximum 2 registrations are allowed per mobile number.",
+    //     },
+    //     { status: 400 },
+    //   );
+    // }
 
     const verifiedOtp = await Otp.findOne({
       phone: body.phone,
@@ -81,15 +81,16 @@ export async function POST(req: NextRequest) {
       ipAddress: req.headers.get("x-forwarded-for") || "unknown",
     });
 
-    const eventDetails = await Event.findOne({ city: body.eventLocation });
+    const eventDetails = await Event.findOne({ city: body.evenetLocation });
     console.log("Event details found", eventDetails);
+
     const result = await sendRegistrationConfirmationViaCM({
       phone: body.phone,
       name: body.fullname,
       regNo: String(body.regId),
       venue: eventDetails
         ? `${eventDetails.venue}, ${eventDetails.city}`
-        : body.eventLocation,
+        : body.evenetLocation,
       dayDate: eventDetails
         ? moment(eventDetails.startDateTime).format("dddd, DD MMMM YYYY")
         : " ",
