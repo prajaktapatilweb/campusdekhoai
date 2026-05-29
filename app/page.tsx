@@ -32,7 +32,7 @@ export default function Page() {
         {/* <UniversityCards /> */}
         {/* <PartnerColleges /> */}
         {/* <Colleges /> */}
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
         <SeminarAgenda />
         <ExpertGuidesSection />
         <FAQSection />
