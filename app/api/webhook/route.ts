@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
     }
     //  * PARSE BODY AFTER VERIFICATION
     const body = JSON.parse(rawBody);
+    console.log("Webhook Body:", body);
     await connectDB();
     const senderNumber =
       body?.sender_mobile_number ||
@@ -91,6 +92,7 @@ export async function POST(req: NextRequest) {
       .toUpperCase();
 
     const messageKey = incomingMessage as ReplyKey;
+    console.log("Message Received", messageKey);
 
     const replyMessage = QUICK_REPLY_MESSAGES[messageKey]
       ? QUICK_REPLY_MESSAGES[messageKey]({
