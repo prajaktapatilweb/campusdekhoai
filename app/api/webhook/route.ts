@@ -87,7 +87,13 @@ export async function POST(req: NextRequest) {
     const whatsappGroupLink = EVENT_WHATSAPP_GROUPS[eventLocation] || "";
     console.log("Links and city", eventLocation, whatsappGroupLink);
 
-    const incomingMessage = (body?.message?.text || body?.text || "")
+    const incomingMessage = (
+      body?.message?.text ||
+      body?.text ||
+      body?.message?.button ||
+      quickReply ||
+      ""
+    )
       .trim()
       .toUpperCase();
 
