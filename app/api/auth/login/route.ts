@@ -6,6 +6,7 @@ import { createToken } from "@/lib/jwt";
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("Login request received");
     await connectDB();
 
     const { email, password } = await req.json();
