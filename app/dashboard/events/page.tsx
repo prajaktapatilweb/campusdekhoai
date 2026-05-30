@@ -64,6 +64,11 @@ export default function EventsPage() {
     fetchEvents();
   }, []);
 
+  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
+  const [securityPassword, setSecurityPassword] = useState("");
+  const [actionType, setActionType] = useState<"edit" | "delete" | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
   const fetchEvents = async () => {
     try {
       const response = await fetch("/api/event/get");
@@ -134,9 +139,11 @@ export default function EventsPage() {
       startDateTime,
       endDateTime,
       maxAttendees: Number(values.maxAttendees),
+      password: securityPassword,
     };
 
     try {
+      console.log("Submitting Event with payload:", payload);
       const url = editingEvent
         ? `/api/event/edit/${editingEvent._id}`
         : "/api/event/add";
@@ -146,7 +153,7 @@ export default function EventsPage() {
         method: method,
         body: JSON.stringify(payload),
       });
-
+      console.log("Submit Response:", data);
       if (data.success) {
         setSuccess(
           editingEvent
@@ -161,12 +168,16 @@ export default function EventsPage() {
         }, 3000);
       } else {
         setError(data.error || "Failed to save event");
+        setDialogOpen(false);
       }
     } catch (error) {
       console.error("Error saving event:", error);
+      setDialogOpen(false);
 
       setError("Network error");
     } finally {
+      setSecurityPassword("");
+      setDialogOpen(false);
       setSubmitting(false);
     }
   };
@@ -180,9 +191,16 @@ export default function EventsPage() {
         `/api/event/delete/${selectedDeleteEvent._id}`,
         {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: securityPassword,
+          }),
         },
       );
       const data = await response.json();
+      console.log("Delete Response:", data);
       if (data.success) {
         setSuccess("Event deleted successfully!");
         fetchEvents();
@@ -191,10 +209,17 @@ export default function EventsPage() {
         setTimeout(() => {
           setSuccess("");
         }, 3000);
+      } else {
+        setError(data.error || "Failed to delete event");
+        alert(data.error || "Failed to delete event");
+        setDeleteOpen(false);
+        setSelectedDeleteEvent(null);
+        setDeleteLoading(false);
       }
     } catch (error) {
       console.error("Error deleting event:", error);
     } finally {
+      setSecurityPassword("");
       setDeleteLoading(false);
     }
   };
@@ -257,7 +282,11 @@ export default function EventsPage() {
 
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => handleOpenDialog(event)}
+                      onClick={() => {
+                        setSelectedEvent(event);
+                        setActionType("edit");
+                        setPasswordDialogOpen(true);
+                      }}
                       className="rounded-lg p-2 text-[#1a237e] transition hover:bg-slate-100"
                     >
                       <Pencil className="h-4 w-4" />
@@ -265,8 +294,9 @@ export default function EventsPage() {
 
                     <button
                       onClick={() => {
-                        setSelectedDeleteEvent(event);
-                        setDeleteOpen(true);
+                        setSelectedEvent(event);
+                        setActionType("delete");
+                        setPasswordDialogOpen(true);
                       }}
                       className="rounded-lg p-2 text-red-500 transition hover:bg-red-50"
                     >
@@ -366,6 +396,61 @@ export default function EventsPage() {
         }}
         onConfirm={confirmDelete}
       />
+      <AppModal
+        open={passwordDialogOpen}
+        title="Security Verification"
+        onClose={() => {
+          setPasswordDialogOpen(false);
+          setSecurityPassword("");
+        }}
+      >
+        <div className="space-y-4">
+          <input
+            type="password"
+            placeholder="Enter security password"
+            value={securityPassword}
+            onChange={(e) => setSecurityPassword(e.target.value)}
+            className="w-full rounded-xl border p-3"
+          />
+
+          <button
+            onClick={async () => {
+              if (!selectedEvent) return;
+
+              if (actionType === "edit") {
+                setEditingEvent(selectedEvent);
+
+                setFormInitialValues({
+                  city: selectedEvent.city,
+                  cityMarathi: selectedEvent.cityMarathi,
+                  venue: selectedEvent.venue,
+                  venueMarathi: selectedEvent.venueMarathi,
+                  date: selectedEvent.startDateTime.split("T")[0],
+                  startTime: new Date(selectedEvent.startDateTime)
+                    .toTimeString()
+                    .slice(0, 5),
+                  endTime: new Date(selectedEvent.endDateTime)
+                    .toTimeString()
+                    .slice(0, 5),
+                  maxAttendees: selectedEvent.maxAttendees,
+                });
+
+                setDialogOpen(true);
+                setPasswordDialogOpen(false);
+              }
+
+              if (actionType === "delete") {
+                setSelectedDeleteEvent(selectedEvent);
+                setDeleteOpen(true);
+                setPasswordDialogOpen(false);
+              }
+            }}
+            className="w-full rounded-xl bg-[#1a237e] py-3 text-white"
+          >
+            Continue
+          </button>
+        </div>
+      </AppModal>
     </>
   );
 }

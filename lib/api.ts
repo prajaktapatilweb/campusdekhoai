@@ -21,9 +21,10 @@ export async function apiFetch<T = any>(
 
       throw new Error("Unauthorized");
     }
-
+    console.log("API Response:", data, response);
     // Other API errors
     if (!response.ok) {
+      alert(data.error || data.message || "Something went wrong");
       throw new Error(data.error || data.message || "Something went wrong");
     }
 

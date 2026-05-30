@@ -18,13 +18,23 @@ export const PUT = withAuth(
           },
         );
       }
+
       await connectDB();
 
       const { id } = await params;
 
       const body = await req.json();
 
-      const updatedEvent = await EventModel.findByIdAndUpdate(id, body, {
+      if (body.password !== process.env.HS_PSWD) {
+        return NextResponse.json(
+          { success: false, error: "Invalid security password" },
+          { status: 403 },
+        );
+      }
+      const { password, ...updateData } = body;
+
+      await EventModel.findByIdAndUpdate(id, updateData);
+      const updatedEvent = await EventModel.findByIdAndUpdate(id, updateData, {
         new: true,
       });
 

@@ -14,6 +14,10 @@ const OtpSchema = new Schema(
       type: String,
       required: true,
     },
+    eventLocation: {
+      type: String,
+      required: true,
+    },
     purpose: {
       type: String,
       default: "Event Registration",

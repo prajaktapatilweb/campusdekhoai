@@ -24,6 +24,18 @@ export const DELETE = withAuth(
           },
         );
       }
+
+      const body = await req.json();
+
+      if (body.password !== process.env.HS_PSWD) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Invalid security password",
+          },
+          { status: 403 },
+        );
+      }
       await connectDB();
 
       const { id } = await params;

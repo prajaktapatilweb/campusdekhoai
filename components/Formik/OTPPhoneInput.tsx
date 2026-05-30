@@ -28,6 +28,7 @@ export default function OTPPhoneInput({
   const phone = values[name];
   const fullname = values["fullname"];
   const email = values["email"];
+  const evenetLocation = values["evenetLocation"];
 
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
@@ -82,6 +83,7 @@ export default function OTPPhoneInput({
         fullname,
         email,
         phone,
+        evenetLocation,
       });
       console.log("RRRR", response);
       if (response.data.success) {
