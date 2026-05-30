@@ -1,6 +1,7 @@
 export async function apiFetch<T = any>(
   url: string,
   options: RequestInit = {},
+  redirectOn401 = true,
 ): Promise<T> {
   try {
     const response = await fetch(url, {
@@ -15,7 +16,7 @@ export async function apiFetch<T = any>(
     const data = await response.json();
 
     // Unauthorized
-    if (response.status === 401) {
+    if (response.status === 401 && redirectOn401) {
       window.location.href = "/login";
 
       throw new Error("Unauthorized");

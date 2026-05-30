@@ -267,5 +267,6 @@ const mr = {
 
   "event.seats": "जागा उरल्या",
   "event.closed": "नोंदणी बंद",
+  "staff.eventLocation": "कार्यक्रम स्थळ",
 };
 export default mr;

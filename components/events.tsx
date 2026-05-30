@@ -11,7 +11,7 @@ import Image from "next/image";
 import EventIndivCard from "./EventIndivCard";
 import EventCard from "./EventCard";
 
-interface EventType {
+export interface EventType {
   _id: string;
   city: string;
   cityMarathi: string;

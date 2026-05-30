@@ -267,5 +267,6 @@ const en = {
 
   "event.seats": "Seats Left",
   "event.closed": "Closed",
+  "staff.eventLocation": "Event Location",
 };
 export default en;

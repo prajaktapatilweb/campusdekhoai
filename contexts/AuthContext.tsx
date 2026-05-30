@@ -65,6 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await apiFetch<{ success: boolean; user: User }>(
       "/api/auth/login",
       { method: "POST", body: JSON.stringify({ email, password }) },
+      false, // Don't redirect on 401, we'll handle it in the login page
     );
 
     setUser(data.user);

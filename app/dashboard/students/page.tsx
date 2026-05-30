@@ -40,7 +40,12 @@ export default function StudentPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [eventCounts, setEventCounts] = useState<
+    { _id: string; count: number }[]
+  >([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedEventLocation, setSelectedEventLocation] =
+    useState<string>("all");
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -51,16 +56,30 @@ export default function StudentPage() {
   const router = useRouter();
 
   useEffect(() => {
-    fetchStudents();
-  }, [user, authLoading, router]);
+    if (authLoading) return;
+    let isFetching = false;
+    const loadData = async () => {
+      if (isFetching) return;
+      try {
+        isFetching = true;
+        await fetchStudents();
+      } finally {
+        isFetching = false;
+      }
+    };
+    loadData();
+    const interval = setInterval(loadData, 60000);
+    return () => clearInterval(interval);
+  }, [authLoading]);
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch("/api/students/getStudent");
+      const response = await fetch("/api/students/summary");
       const data = await response.json();
       console.log("Fetch students response:", data);
       if (data.success) {
-        setStudents(data.data);
+        setStudents(data.students);
+        setEventCounts(data.eventCounts);
       }
     } catch (error) {
       console.error("Error fetching students:", error);
@@ -71,9 +90,13 @@ export default function StudentPage() {
 
   const filteredStudents = useMemo(() => {
     return students.filter((student) => {
+      const matchesLocation =
+        selectedEventLocation === "all" ||
+        student.evenetLocation === selectedEventLocation;
+
       const search = searchTerm.toLowerCase();
 
-      return [
+      const matchesSearch = [
         student.fullname,
         student.email,
         student.phone,
@@ -82,9 +105,10 @@ export default function StudentPage() {
       ]
         .filter(Boolean)
         .some((field) => String(field).toLowerCase().includes(search));
-    });
-  }, [students, searchTerm]);
 
+      return matchesLocation && matchesSearch;
+    });
+  }, [students, searchTerm, selectedEventLocation]);
   const paginatedStudents = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
@@ -110,19 +134,24 @@ export default function StudentPage() {
     };
   }, [students]);
 
+  const eventLocationSummary = eventCounts.map((item) => ({
+    location: item._id,
+    count: item.count,
+  }));
+
   const handleExportCSV = () => {
     // 1. Defined all available data columns as headers
     const headers = [
       "Name",
       "Email",
       "Phone",
-      "WhatsApp",
-      "Course/Event Location",
+      // "WhatsApp",
+      "Event Location",
       "City/District",
-      "Education",
+      // "Education",
       "Target Stream",
       "Attending Seminar",
-      "Help Needed",
+      // "Help Needed",
       "Reference Source",
       "Phone Verified",
       "Registration Date",
@@ -139,13 +168,13 @@ export default function StudentPage() {
         `"${student.fullname?.replace(/"/g, '""') || ""}"`,
         `"${student.email || ""}"`,
         `"${student.phone || ""}"`,
-        `"${student.whatsapp || ""}"`,
+        // `"${student.whatsapp || ""}"`,
         `"${student.evenetLocation?.replace(/"/g, '""') || ""}"`,
         `"${student.district?.replace(/"/g, '""') || ""}"`,
-        `"${student.education || ""}"`,
+        // `"${student.education || ""}"`,
         `"${student.targetStream || ""}"`,
         `"${student.attendingSeminar || ""}"`,
-        `"${helpNeededStr.replace(/"/g, '""')}"`,
+        // `"${helpNeededStr.replace(/"/g, '""')}"`,
         `"${student.reference?.replace(/"/g, '""') || ""}"`,
         `"${student.phoneVerified ? "Yes" : "No"}"`,
         `"${new Date(student.createdAt).toLocaleDateString()}"`,
@@ -252,6 +281,32 @@ export default function StudentPage() {
             </div>
           </motion.div>
         </div>
+        <div className="mb-6 rounded-3xl bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-bold text-[#1a237e]">
+            Event Registrations
+          </h2>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {eventLocationSummary.map((item) => (
+              <div
+                key={item.location}
+                className="rounded-2xl border border-slate-200 p-4"
+              >
+                <p className="text-sm text-slate-500">Event Location</p>
+
+                <h3 className="mt-1 text-lg font-semibold text-[#1a237e]">
+                  {item.location}
+                </h3>
+
+                <p className="mt-2 text-2xl font-bold text-[#43a047]">
+                  {item.count}
+                </p>
+
+                <p className="text-sm text-slate-500">Students Registered</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* SEARCH + EXPORT */}
         <div className="mb-6 flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm lg:flex-row lg:items-center lg:justify-between">
@@ -285,6 +340,22 @@ export default function StudentPage() {
             </button>
           </div>
         </div>
+        <select
+          value={selectedEventLocation}
+          onChange={(e) => {
+            setSelectedEventLocation(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-[#1a237e] focus:ring-4 focus:ring-[#1a237e]/10"
+        >
+          <option value="all">All Events</option>
+
+          {eventLocationSummary.map((item) => (
+            <option key={item.location} value={item.location}>
+              {item.location} ({item.count})
+            </option>
+          ))}
+        </select>
 
         {/* TABLE */}
         <motion.div
@@ -301,7 +372,7 @@ export default function StudentPage() {
                   <TableHeading title={t("staff.name")} />
                   <TableHeading title={t("staff.email")} />
                   <TableHeading title={t("staff.phone")} />
-                  <TableHeading title={t("staff.course")} />
+                  <TableHeading title={t("staff.eventLocation")} />
                   <TableHeading title={t("staff.city")} />
                   <TableHeading title={t("staff.date")} />
                 </tr>

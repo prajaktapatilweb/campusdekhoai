@@ -21,7 +21,10 @@ const studentSchema = new mongoose.Schema(
     },
 
     evenetLocation: { type: String },
-
+    eventId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+    },
     phoneVerified: { type: Boolean, default: false },
 
     verified: { type: Boolean, default: false },
@@ -31,6 +34,9 @@ const studentSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+studentSchema.index({ eventId: 1 });
+studentSchema.index({ createdAt: -1 });
 
 export default mongoose.models.Student ||
   mongoose.model("Student", studentSchema);

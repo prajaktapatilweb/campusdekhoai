@@ -33,6 +33,7 @@ import {
 } from "@/components/constants/formOptions";
 import OTPPhoneInput from "../Formik/OTPPhoneInput";
 import FormCheckboxGroup from "../Formik/FormCheckboxGroup";
+import { EventType } from "../events";
 
 interface FormValues {
   fullname: string;
@@ -46,13 +47,12 @@ interface FormValues {
   district: string;
   // helpNeeded: string[];
   evenetLocation: string;
+  eventId: string;
   phoneVerified: boolean;
 }
 
 interface Props {
-  selectedEvent?: {
-    city: string;
-  };
+  selectedEvent?: EventType;
 }
 
 const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
@@ -80,6 +80,7 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
   //   .min(1, "Please select at least one option")
   //   .required("Required"),
   evenetLocation: yup.string().required("Required"),
+  eventId: yup.string().required("Required"),
   phoneVerified: yup
     .boolean()
     .oneOf([true], "Phone verification required")
@@ -196,6 +197,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                 district: "",
                 // helpNeeded: [],
                 evenetLocation: selectedEvent?.city || "",
+                eventId: selectedEvent?._id || "",
                 phoneVerified: false,
               }}
               validationSchema={validationSchema}
