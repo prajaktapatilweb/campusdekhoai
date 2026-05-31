@@ -76,11 +76,10 @@ export default function Footer() {
                 Media Group, built in partnership with CampusDekho.AI to deliver
                 Marathi-language career guidance, college coverage and
                 scholarship awareness to Maharashtra’s students and parents.
-                Campus 2 Career 2026 is the flagship on-ground outreach
-                programme of Pudhari Edu-Disha — taking trusted guidance
-                directly into 14 cities across 6 districts of Maharashtra
-                through free seminars, digital webinars and university
-                partnerships.
+                Campus2Career 2026 is the flagship on-ground outreach programme
+                of Pudhari Edu-Disha — taking trusted guidance directly into 14
+                cities across 6 districts of Maharashtra through free seminars,
+                digital webinars and university partnerships.
               </p>
               <div className="flex flex-col gap-2">
                 <a
@@ -207,11 +206,29 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-[hsl(var(--border))]">
+      <div className="mb-10 border-t border-[hsl(var(--border))]">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 md:flex-row">
           <p className="text-xs text-[hsl(var(--muted-foreground))]">
             &copy; {new Date().getFullYear()}
-            Campus Dekho. {t("footer.rights")}
+            Campus Dekho.{t("footer.rights")}
+          </p>
+          <p className="text-xs text-[hsl(var(--muted-foreground))]">
+            Designed by
+            <a
+              href="https://www.mastermindweb.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="4 text-white/60 hover:underline"
+            >
+              <Image
+                src="/images/mastermindlogo.png"
+                width="25"
+                height="25"
+                alt="Matermind Web Developers Logo"
+                className="ml-1 inline-block"
+              />
+              Mastermind Web Developers
+            </a>
           </p>
           <button
             type="button"
