@@ -27,7 +27,7 @@ export default function Page() {
         <Partnerstrip />
         {/* <AboutSection /> */}
         <EventCards />
-        {/* <ServicesSection /> */}
+        <ServicesSection />
         {/* <Gallery /> */}
         {/* <UniversityCards /> */}
         {/* <PartnerColleges /> */}

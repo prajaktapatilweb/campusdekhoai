@@ -94,7 +94,7 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
-export default function NewContactForm({ selectedEvent }: Props) {
+export default function HeroContactForm({ selectedEvent }: Props) {
   const { t } = useLanguage();
 
   const targetStreamOptions = getTargetStreamOptions(t);
@@ -204,7 +204,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
               onSubmit={onSubmit}
             >
               {({ isSubmitting, values, errors }) => (
-                <Form className="h-full bg-transparent p-6 md:p-8">
+                <Form className="bg-transparent p-6 md:p-1">
                   {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
 
                   {/* FIELDS */}
@@ -223,29 +223,31 @@ export default function NewContactForm({ selectedEvent }: Props) {
                   >
                     {/* FULL NAME */}
 
-                    <FormInput
-                      name="fullname"
-                      label={t("form.fullname")}
-                      placeholder={t("form.fullname.placeholder")}
-                      icon={<User size={18} />}
-                    />
+                    <div className="relative z-10 mx-auto flex items-center px-4 sm:px-4 lg:px-6">
+                      <div className="grid w-full max-w-7xl items-center gap-10 md:grid-cols-2">
+                        <FormInput
+                          name="fullname"
+                          label={t("form.fullname")}
+                          placeholder={t("form.fullname.placeholder")}
+                          icon={<User size={18} />}
+                        />
 
-                    {/* EMAIL */}
+                        {/* EMAIL */}
 
-                    <FormInput
-                      name="email"
-                      label={t("form.email")}
-                      placeholder={t("form.email.placeholder")}
-                      icon={<Mail size={18} />}
-                    />
+                        <FormInput
+                          name="email"
+                          label={t("form.email")}
+                          placeholder={t("form.email.placeholder")}
+                          icon={<Mail size={18} />}
+                        />
 
-                    <OTPPhoneInput
-                      name="phone"
-                      label={t("form.whatsapp")}
-                      placeholder={t("form.phone.placeholder")}
-                    />
-                    {/* PHONE + WHATSAPP */}
-                    {/* <FormCheckboxGroup
+                        <OTPPhoneInput
+                          name="phone"
+                          label={t("form.whatsapp")}
+                          placeholder={t("form.phone.placeholder")}
+                        />
+                        {/* PHONE + WHATSAPP */}
+                        {/* <FormCheckboxGroup
                       name="helpNeeded"
                       label={t("form.help")}
                       options={[
@@ -281,7 +283,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
                         },
                       ]}
                     /> */}
-                    {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                       <FormInput
                         name="phone"
                         label={t("form.phone")}
@@ -291,70 +293,72 @@ export default function NewContactForm({ selectedEvent }: Props) {
 
                     
                     </div> */}
-                    <div className="hidden">
-                      <FormInput
-                        name="whatsapp"
-                        label={t("form.whatsapp")}
-                        placeholder={t("form.phone.placeholder")}
-                        icon={<MessageSquare size={18} />}
-                      />
-                    </div>
-                    {/* EDUCATION */}
+                        <div className="hidden">
+                          <FormInput
+                            name="whatsapp"
+                            label={t("form.whatsapp")}
+                            placeholder={t("form.phone.placeholder")}
+                            icon={<MessageSquare size={18} />}
+                          />
+                        </div>
+                        {/* EDUCATION */}
 
-                    {/* <FormInput
+                        {/* <FormInput
                       name="education"
                       label={t("form.education")}
                       placeholder={t("form.education.placeholder")}
                       icon={<GraduationCap size={18} />}
                     /> */}
 
-                    {/* TARGET STREAM */}
-                    <FormSelect
-                      name="targetStream"
-                      label={t("form.targetstream")}
-                      options={targetStreamOptions}
-                    />
+                        {/* TARGET STREAM */}
+                        <FormSelect
+                          name="targetStream"
+                          label={t("form.targetstream")}
+                          options={targetStreamOptions}
+                        />
 
-                    {/* <FormSelect
+                        {/* <FormSelect
                       name="reference"
                       label={t("form.reference")}
                       options={referenceOptions}
                     /> */}
 
-                    <FormSelect
-                      name="district"
-                      label={t("form.district")}
-                      options={districtOptions}
-                    />
-                    {/* RADIO */}
-                    {/* <RadioGroup
+                        <FormSelect
+                          name="district"
+                          label={t("form.district")}
+                          options={districtOptions}
+                        />
+                        {/* RADIO */}
+                        {/* <RadioGroup
                       name="attendingSeminar"
                       label={t("form.seminar")}
                       options={seminarOptions}
                     /> */}
 
-                    <Field type="hidden" name="evenetLocation" />
-                    {/* BUTTON */}
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      disabled={isSubmitting || !values.phoneVerified}
-                      type="submit"
-                      className="group mb-30 flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70 md:mb-3"
-                    >
-                      {isSubmitting ? (
-                        "Submitting..."
-                      ) : (
-                        <>
-                          {t("nav.register")}
-                          {/* Submit Message */}
-                          <Send
-                            size={18}
-                            className="transition-transform duration-300 group-hover:translate-x-1"
-                          />
-                        </>
-                      )}
-                    </motion.button>
+                        <Field type="hidden" name="evenetLocation" />
+                        {/* BUTTON */}
+                        <motion.button
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          disabled={isSubmitting || !values.phoneVerified}
+                          type="submit"
+                          className="group mb-30 flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70 md:mb-3"
+                        >
+                          {isSubmitting ? (
+                            "Submitting..."
+                          ) : (
+                            <>
+                              {t("nav.register")}
+                              {/* Submit Message */}
+                              <Send
+                                size={18}
+                                className="transition-transform duration-300 group-hover:translate-x-1"
+                              />
+                            </>
+                          )}
+                        </motion.button>
+                      </div>
+                    </div>
                   </motion.div>
                 </Form>
               )}
