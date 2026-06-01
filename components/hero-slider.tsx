@@ -15,7 +15,7 @@ export default function HeroSection({ events }: Props) {
   return (
     <section
       id="home"
-      className="m relative h-[90dvh] w-full overflow-hidden md:h-screen"
+      className="relative min-h-screen w-full overflow-hidden pb-30 md:pb-0"
     >
       {/* Background Image */}
       <motion.div
@@ -61,7 +61,7 @@ export default function HeroSection({ events }: Props) {
       />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto flex min-h-screen items-center px-4 sm:px-4 lg:px-6">
+      <div className="relative z-10 mx-auto flex min-h-screen items-start px-4 pt-28 sm:px-4 md:items-center lg:px-6">
         <div className="grid w-full max-w-7xl items-center gap-10 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 50 }}

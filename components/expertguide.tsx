@@ -82,6 +82,15 @@ const experts: ExpertCardProps[] = [
       "Ph.D. in Commerce & Management with 18 years of academic leadership experience, progressing from Lecturer to Director of and Dean at VIT, Pune.",
     highlight: "",
   },
+  {
+    initials: "YL",
+    img: "/images/Avadhut_Atre.jpeg",
+    name: "Prof. Dr. Avadhut Atre,",
+    achievement: "Department of Design",
+    experience:
+      "Ph.D. in Commerce & Management with 18 years of academic leadership experience, progressing from Lecturer to Director of and Dean at VIT, Pune.",
+    highlight: "",
+  },
 ];
 
 function ExpertCard({

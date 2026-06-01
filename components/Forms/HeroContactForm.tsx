@@ -275,7 +275,7 @@ export default function HeroContactForm({ eventLocations }: Props) {
                       whileTap={{ scale: 0.97 }}
                       disabled={isSubmitting || !values.phoneVerified}
                       type="submit"
-                      className="group mb-30 flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70 md:mb-3"
+                      className="group mb-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70 md:mb-3"
                     >
                       {isSubmitting ? (
                         "Submitting..."
