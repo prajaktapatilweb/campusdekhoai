@@ -33,7 +33,6 @@ import {
 } from "@/components/constants/formOptions";
 import OTPPhoneInput from "../Formik/OTPPhoneInput";
 import FormCheckboxGroup from "../Formik/FormCheckboxGroup";
-import { EventType } from "../events";
 
 interface FormValues {
   fullname: string;
@@ -44,15 +43,15 @@ interface FormValues {
   targetStream: string;
   // attendingSeminar: boolean | string;
   // reference: string;
-  district: string;
+  // district: string;
   // helpNeeded: string[];
   evenetLocation: string;
-  eventId: string;
+  // eventId: string;
   phoneVerified: boolean;
 }
 
 interface Props {
-  selectedEvent?: EventType;
+  eventLocations: { label: string; value: string; id: string }[];
 }
 
 const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
@@ -74,13 +73,12 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
   targetStream: yup.string().required("Required"),
   // attendingSeminar: yup.string().required("Required"),
   // reference: yup.string().required("Required"),
-  district: yup.string().required("Required"),
+  // district: yup.string().required("Required"),
   // helpNeeded: yup
   //   .array()
   //   .min(1, "Please select at least one option")
   //   .required("Required"),
   evenetLocation: yup.string().required("Required"),
-  eventId: yup.string().required("Required"),
   phoneVerified: yup
     .boolean()
     .oneOf([true], "Phone verification required")
@@ -94,7 +92,7 @@ const validationSchema: yup.ObjectSchema<FormValues> = yup.object({
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
-export default function HeroContactForm({ selectedEvent }: Props) {
+export default function HeroContactForm({ eventLocations }: Props) {
   const { t } = useLanguage();
 
   const targetStreamOptions = getTargetStreamOptions(t);
@@ -112,7 +110,16 @@ export default function HeroContactForm({ selectedEvent }: Props) {
     helpers: FormikHelpers<FormValues>,
   ): Promise<void> => {
     try {
-      await Axios.post("/api/students/registration", values);
+      const selectedEvent = eventLocations.find(
+        (e) => e.value === values.evenetLocation,
+      );
+
+      const payload = {
+        ...values,
+        eventId: selectedEvent?.id || "",
+      };
+
+      await Axios.post("/api/students/registration", payload);
 
       setSubmitted(true);
 
@@ -194,16 +201,15 @@ export default function HeroContactForm({ selectedEvent }: Props) {
                 targetStream: "",
                 // attendingSeminar: "",
                 // reference: "",
-                district: "",
+                // district: "",
                 // helpNeeded: [],
-                evenetLocation: selectedEvent?.city || "",
-                eventId: selectedEvent?._id || "",
+                evenetLocation: "",
                 phoneVerified: false,
               }}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
             >
-              {({ isSubmitting, values, errors }) => (
+              {({ isSubmitting, values, setFieldValue, errors }) => (
                 <Form className="bg-transparent p-6 md:p-1">
                   {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
 
@@ -211,11 +217,7 @@ export default function HeroContactForm({ selectedEvent }: Props) {
                   <motion.div
                     variants={{
                       hidden: {},
-                      show: {
-                        transition: {
-                          staggerChildren: 0.1,
-                        },
-                      },
+                      show: { transition: { staggerChildren: 0.1 } },
                     }}
                     initial="hidden"
                     animate="show"
@@ -223,142 +225,71 @@ export default function HeroContactForm({ selectedEvent }: Props) {
                   >
                     {/* FULL NAME */}
 
-                    <div className="relative z-10 mx-auto flex items-center px-4 sm:px-4 lg:px-6">
-                      <div className="grid w-full max-w-7xl items-center gap-10 md:grid-cols-2">
-                        <FormInput
-                          name="fullname"
-                          label={t("form.fullname")}
-                          placeholder={t("form.fullname.placeholder")}
-                          icon={<User size={18} />}
-                        />
-
-                        {/* EMAIL */}
-
-                        <FormInput
-                          name="email"
-                          label={t("form.email")}
-                          placeholder={t("form.email.placeholder")}
-                          icon={<Mail size={18} />}
-                        />
-
-                        <OTPPhoneInput
-                          name="phone"
-                          label={t("form.whatsapp")}
-                          placeholder={t("form.phone.placeholder")}
-                        />
-                        {/* PHONE + WHATSAPP */}
-                        {/* <FormCheckboxGroup
-                      name="helpNeeded"
-                      label={t("form.help")}
-                      options={[
-                        {
-                          label: "Best College Selection",
-                          value: "college_selection",
-                          icon: <GraduationCap size={20} />,
-                        },
-                        {
-                          label: "Admission Guidance",
-                          value: "admission_guidance",
-                          icon: <BookOpen size={20} />,
-                        },
-                        {
-                          label: "Placement Support",
-                          value: "placement_support",
-                          icon: <BriefcaseBusiness size={20} />,
-                        },
-                        {
-                          label: "Scholarship / Loan Guidance",
-                          value: "scholarship_guidance",
-                          icon: <BadgeIndianRupee size={20} />,
-                        },
-                        {
-                          label: "Hostel / Accommodation",
-                          value: "hostel_support",
-                          icon: <House size={20} />,
-                        },
-                        {
-                          label: "Career Counselling",
-                          value: "career_counselling",
-                          icon: <Compass size={20} />,
-                        },
-                      ]}
-                    /> */}
-                        {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div className="grid gap-3 md:grid-cols-2">
                       <FormInput
-                        name="phone"
-                        label={t("form.phone")}
-                        placeholder={t("form.phone.placeholder")}
-                        icon={<Phone size={18} />}
+                        name="fullname"
+                        // label=""
+                        placeholder={t("form.fullname.placeholder")}
+                        icon={<User size={18} />}
                       />
 
-                    
-                    </div> */}
-                        <div className="hidden">
-                          <FormInput
-                            name="whatsapp"
-                            label={t("form.whatsapp")}
-                            placeholder={t("form.phone.placeholder")}
-                            icon={<MessageSquare size={18} />}
-                          />
-                        </div>
-                        {/* EDUCATION */}
+                      {/* EMAIL */}
 
-                        {/* <FormInput
-                      name="education"
-                      label={t("form.education")}
-                      placeholder={t("form.education.placeholder")}
-                      icon={<GraduationCap size={18} />}
-                    /> */}
-
-                        {/* TARGET STREAM */}
-                        <FormSelect
-                          name="targetStream"
-                          label={t("form.targetstream")}
-                          options={targetStreamOptions}
-                        />
-
-                        {/* <FormSelect
-                      name="reference"
-                      label={t("form.reference")}
-                      options={referenceOptions}
-                    /> */}
-
-                        <FormSelect
-                          name="district"
-                          label={t("form.district")}
-                          options={districtOptions}
-                        />
-                        {/* RADIO */}
-                        {/* <RadioGroup
-                      name="attendingSeminar"
-                      label={t("form.seminar")}
-                      options={seminarOptions}
-                    /> */}
-
-                        <Field type="hidden" name="evenetLocation" />
-                        {/* BUTTON */}
-                        <motion.button
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
-                          disabled={isSubmitting || !values.phoneVerified}
-                          type="submit"
-                          className="group mb-30 flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70 md:mb-3"
-                        >
-                          {isSubmitting ? (
-                            "Submitting..."
-                          ) : (
-                            <>
-                              {t("nav.register")}
-                              {/* Submit Message */}
-                              <Send
-                                size={18}
-                                className="transition-transform duration-300 group-hover:translate-x-1"
-                              />
-                            </>
-                          )}
-                        </motion.button>
-                      </div>
+                      <FormInput
+                        name="email"
+                        // label=""
+                        placeholder={t("form.email.placeholder")}
+                        icon={<Mail size={18} />}
+                      />
                     </div>
+                    <OTPPhoneInput
+                      name="phone"
+                      // label={t("form.whatsapp")}
+                      placeholder={t("form.phone.placeholder")}
+                    />
+                    <div className="mt-3 grid gap-3 md:grid-cols-2">
+                      <FormSelect
+                        name="evenetLocation"
+                        placeholder={"Select Event Location"}
+                        options={eventLocations}
+                      />
+
+                      {/* TARGET STREAM */}
+                      <FormSelect
+                        name="targetStream"
+                        // label={t("form.targetstream")}
+                        options={targetStreamOptions}
+                        placeholder={"Select Target Stream"}
+                      />
+
+                      {/* <FormSelect
+                        name="district"
+                        label={t("form.district")}
+                        options={districtOptions}
+                      /> */}
+                    </div>
+
+                    {/* BUTTON */}
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      disabled={isSubmitting || !values.phoneVerified}
+                      type="submit"
+                      className="group mb-30 flex w-full items-center justify-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-8 py-4 font-sans text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-all duration-300 hover:shadow-xl hover:shadow-[hsl(var(--primary))]/30 disabled:opacity-70 md:mb-3"
+                    >
+                      {isSubmitting ? (
+                        "Submitting..."
+                      ) : (
+                        <>
+                          Book Free Seminar Seat
+                          {/* Submit Message */}
+                          <Send
+                            size={18}
+                            className="transition-transform duration-300 group-hover:translate-x-1"
+                          />
+                        </>
+                      )}
+                    </motion.button>
                   </motion.div>
                 </Form>
               )}

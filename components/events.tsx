@@ -22,71 +22,12 @@ export interface EventType {
   maxAttendees: number;
   status: string;
 }
-// const events = [
-//   {
-//     id: 1,
-//     date: "23 MAY",
-//     city: "Kolhapur",
-//     venue: "Swami Vivekanand Hall",
-//     time: "10:00 AM",
-//     seats: 42,
-//     status: "FAST",
-//     selected: true,
-//   },
-//   {
-//     id: 2,
-//     date: "25 MAY",
-//     city: "Pune",
-//     venue: "Bal Gandharva Hall",
-//     time: "11:30 AM",
-//     seats: 28,
-//     status: "HOT",
-//     selected: false,
-//   },
-//   {
-//     id: 3,
-//     date: "28 MAY",
-//     city: "Mumbai",
-//     venue: "Nesco Center",
-//     time: "02:00 PM",
-//     seats: 15,
-//     status: "LIMITED",
-//     selected: false,
-//   },
-//   {
-//     id: 4,
-//     date: "28 MAY",
-//     city: "Satara",
-//     venue: "Nesco Center",
-//     time: "02:00 PM",
-//     seats: 15,
-//     status: "LIMITED",
-//     selected: false,
-//   },
-//   {
-//     id: 5,
-//     date: "28 MAY",
-//     city: "Sangali",
-//     venue: "Nesco Center",
-//     time: "02:00 PM",
-//     seats: 15,
-//     status: "LIMITED",
-//     selected: false,
-//   },
-//   {
-//     id: 6,
-//     date: "28 MAY",
-//     city: "Chatrapati Sambhajinagar",
-//     venue: "Nesco Center",
-//     time: "02:00 PM",
-//     seats: 15,
-//     status: "LIMITED",
-//     selected: false,
-//   },
-// ];
-
-export default function EventCards() {
-  const [events, setEvents] = useState<EventType[]>([]);
+interface Props {
+  events: EventType[];
+}
+export default function EventCards({ events }: Props) {
+  // export default function EventCards() {
+  // const [events, setEvents] = useState<EventType[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<null | (typeof events)[0]>(
     null,
@@ -94,35 +35,35 @@ export default function EventCards() {
 
   const { language, t } = useLanguage();
   console.log("Events Component Rendered with events:", language);
-  useEffect(() => {
-    fetchEvents();
-  }, []);
+  // useEffect(() => {
+  //   fetchEvents();
+  // }, []);
 
-  const fetchEvents = async () => {
-    try {
-      const response = await fetch("/api/event/get");
-      if (!response.ok) {
-        setLoading(false);
-        return;
-      }
+  // const fetchEvents = async () => {
+  //   try {
+  //     const response = await fetch("/api/event/get");
+  //     if (!response.ok) {
+  //       setLoading(false);
+  //       return;
+  //     }
 
-      const contentType = response.headers.get("content-type");
+  //     const contentType = response.headers.get("content-type");
 
-      if (!contentType?.includes("application/json")) {
-        throw new Error("Invalid response type");
-      }
+  //     if (!contentType?.includes("application/json")) {
+  //       throw new Error("Invalid response type");
+  //     }
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (data.success) {
-        setEvents(data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (data.success) {
+  //       setEvents(data.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching events:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const sortedEvents = [...events].sort(
     (a, b) =>

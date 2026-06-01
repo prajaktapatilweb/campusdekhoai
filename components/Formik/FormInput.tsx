@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 interface FormInputProps {
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   icon?: React.ReactNode;
   type?: string;
@@ -41,9 +41,11 @@ export default function FormInput({
             className="space-y-2"
           >
             {/* LABEL */}
-            <label className="block text-sm font-semibold text-[hsl(var(--foreground))]">
-              {label}
-            </label>
+            {label && (
+              <label className="block text-sm font-semibold text-[hsl(var(--foreground))]">
+                {label}
+              </label>
+            )}
 
             {/* INPUT WRAPPER */}
             <div className="relative">
@@ -70,7 +72,7 @@ export default function FormInput({
                   setFocused(false);
                   field.onBlur(e);
                 }}
-                className={`w-full rounded-2xl border bg-[hsl(var(--input))/0.7] py-3.5 pr-4 pl-12 text-sm text-[hsl(var(--foreground))] placeholder-[hsl(var(--muted-foreground))] backdrop-blur-md transition-all duration-300 outline-none ${
+                className={`w-full rounded-2xl border bg-[hsl(var(--input))/0.7] py-2.5 pr-4 pl-12 text-sm text-[hsl(var(--foreground))] placeholder-[hsl(var(--muted-foreground))] backdrop-blur-md transition-all duration-300 outline-none ${
                   hasError
                     ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
                     : "border-[hsl(var(--border))] focus:border-[hsl(var(--primary))] focus:ring-2 focus:ring-[hsl(var(--primary))]/20"

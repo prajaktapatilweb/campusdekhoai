@@ -5,8 +5,13 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import NewContactForm from "./Forms/newContactForm";
 import HeroContactForm from "./Forms/HeroContactForm";
+import { EventType } from "./events";
 
-export default function HeroSection() {
+interface Props {
+  events: EventType[];
+}
+
+export default function HeroSection({ events }: Props) {
   return (
     <section
       id="home"
@@ -158,9 +163,15 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.5 }}
             // className="mx-auto w-full max-w-md"
           >
-            {/* <div className="rounded-2xl bg-white p-4 shadow-2xl">
-              <HeroContactForm />
-            </div> */}
+            <div className="rounded-2xl bg-white p-4 shadow-2xl">
+              <HeroContactForm
+                eventLocations={events.map((e) => ({
+                  label: e.city,
+                  value: e.city,
+                  id: e._id,
+                }))}
+              />
+            </div>
           </motion.div>
         </div>
       </div>

@@ -18,7 +18,7 @@ interface Props {
 
 export default function OTPPhoneInput({
   name,
-  label = "Phone Number",
+  label = "",
   placeholder = "Enter phone number",
   onVerified,
 }: Props) {

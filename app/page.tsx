@@ -16,17 +16,19 @@ import EventCardsSection from "@/components/Appcard";
 import PartnerColleges from "@/components/partnercolleges";
 import Partnerstrip from "@/components/partnerstrip";
 import UniversityCards from "@/components/Slider";
+import { getEvents } from "@/lib/getEvents";
 
-export default function Page() {
+export default async function Page() {
+  const events = await getEvents();
   return (
     <>
       <main>
         <AppThemeSetting />
         <Navbar />
-        <HeroSlider />
+        <HeroSlider events={events} />
         <Partnerstrip />
         {/* <AboutSection /> */}
-        <EventCards />
+        <EventCards events={events} />
         <ServicesSection />
         {/* <Gallery /> */}
         {/* <UniversityCards /> */}

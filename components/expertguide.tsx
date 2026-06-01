@@ -73,6 +73,15 @@ const experts: ExpertCardProps[] = [
     experience: "Guides Information Technology students.",
     highlight: "",
   },
+  {
+    initials: "YL",
+    img: "/images/Yuvraj_Lahoti.jpeg",
+    name: "Dr. Yuvraj Lahoti",
+    achievement: "Director and Dean Vishwakarma University, Pune",
+    experience:
+      "Ph.D. in Commerce & Management with 18 years of academic leadership experience, progressing from Lecturer to Director of and Dean at VIT, Pune.",
+    highlight: "",
+  },
 ];
 
 function ExpertCard({

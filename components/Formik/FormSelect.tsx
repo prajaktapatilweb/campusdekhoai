@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 interface FormSelectProps {
   name: string;
-  label: string;
+  label?: string;
   options: {
     label: string;
     value: string;
@@ -42,16 +42,13 @@ export default function FormSelect({
             }}
             className="space-y-2"
           >
-            <label className="block text-sm font-semibold text-[hsl(var(--foreground))]">{label}</label>
+            <label className="block text-sm font-semibold text-[hsl(var(--foreground))]">
+              {label}
+            </label>
 
             <select
               {...field}
-              className={`
-                w-full rounded-xl border bg-[hsl(var(--input))/0.7]
-                px-4 py-3 text-sm outline-none transition-all duration-200
-
-                ${hasError ? "border-red-500" : "border-gray-300 focus:border-[#1b2b52]"}
-              `}
+              className={`w-full rounded-xl border bg-[hsl(var(--input))/0.7] px-4 py-3 text-sm transition-all duration-200 outline-none ${hasError ? "border-red-500" : "border-gray-300 focus:border-[#1b2b52]"} `}
             >
               <option value="">{placeholder}</option>
 

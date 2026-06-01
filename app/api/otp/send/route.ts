@@ -127,6 +127,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.log(
       "ChatMitra Error:",
+      error,
       JSON.stringify(error.response?.data, null, 2),
     );
     return NextResponse.json(
