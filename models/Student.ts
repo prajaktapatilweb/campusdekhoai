@@ -11,7 +11,7 @@ const studentSchema = new mongoose.Schema(
     targetStream: { type: String },
     attendingSeminar: { type: String },
     reference: { type: String },
-    district: { type: String, required: true },
+    district: { type: String },
 
     // ✅ ARRAY FIELD
     helpNeeded: {

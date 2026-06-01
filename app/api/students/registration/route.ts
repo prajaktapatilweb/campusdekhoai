@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     //   return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     // }
     const body = await req.json();
-    // console.log("RRRRREE", body, body.whatsapp !== "");
+    console.log("RRRRREE", body);
     // // Honeypot
     // if (body.whatsapp !== "") {
     //   return NextResponse.json({ message: "Spam detected" }, { status: 400 });
