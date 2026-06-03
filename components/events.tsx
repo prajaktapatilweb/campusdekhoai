@@ -102,7 +102,7 @@ export default function EventCards({ events }: Props) {
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
           {/* <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-2 lg:grid-cols-3"> */}
-          {displayEvents.map((event, index) => (
+          {sortedEvents.map((event, index) => (
             // <EventIndivCard
             //   key={event._id}
             //   event={event}

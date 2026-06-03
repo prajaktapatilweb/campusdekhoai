@@ -116,6 +116,11 @@ export default function EventCard({
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/65 to-black/40" />
+      {event.city === "Online" && (
+        <div className="absolute top-4 right-4 rounded-full bg-red-600 px-4 py-2 text-xs font-bold tracking-wider text-white uppercase">
+          Online Event
+        </div>
+      )}
 
       {/* Top Content */}
       <div className="absolute top-4 left-4 flex w-[calc(100%-32px)] items-start justify-between">
@@ -128,14 +133,25 @@ export default function EventCard({
           <div className="text-md bg-white px-4 py-2 text-center font-semibold text-gray-700">
             {moment(event.startDateTime).format("ddd").toUpperCase()}
           </div>
+          <div className="bg-[#1a237e] px-4 py-4 text-center text-white">
+            {event.city === "Online" ? (
+              <>
+                <h3 className="text-lg font-bold">
+                  {moment(event.startDateTime).format("DD MMM")}
+                </h3>
 
-          <div className="bg-[#1a237e] px-4 py-3 text-center text-white">
-            <h3 className="text-2xl leading-none font-bold">
-              {moment(event.startDateTime).format("DD")}
-            </h3>
-            <p className="mt-1 text-sm tracking-wide uppercase">
-              {moment(event.startDateTime).format("MMM YYYY")}
-            </p>
+                <p className="text-xs uppercase">Tentative</p>
+              </>
+            ) : (
+              <>
+                <h3 className="text-2xl leading-none font-bold">
+                  {moment(event.startDateTime).format("DD")}
+                </h3>
+                <p className="mt-1 text-sm tracking-wide uppercase">
+                  {moment(event.startDateTime).format("MMM YYYY")}
+                </p>
+              </>
+            )}
           </div>
         </motion.div>
 
@@ -148,10 +164,18 @@ export default function EventCard({
           <h4
             className={`text-center text-xl font-bold ${status.active ? "text-green-950" : "text-red-400"}`}
           >
-            {status.active ? `${displaySeats}` : t("event.closed")}
+            {event.city === "Online"
+              ? "FREE"
+              : status.active
+                ? `${displaySeats}`
+                : t("event.closed")}{" "}
           </h4>
           <p className="text-xs font-medium tracking-wide text-white/80 uppercase">
-            {status.active ? "Seats Lefts" : ""}
+            {event.city === "Online"
+              ? "ONLINE"
+              : status.active
+                ? "Seats Left"
+                : ""}
           </p>
         </motion.div>
       </div>
@@ -185,8 +209,9 @@ export default function EventCard({
           <div className="mt-3 flex items-center gap-2 text-sm text-white/80">
             <Clock3 size={15} />
             <p>
-              {moment(event.startDateTime).format("h:mm A")} -{" "}
-              {moment(event.endDateTime).format("h:mm A")}
+              {event.city === "Online"
+                ? "Time will be declared soon"
+                : `${moment(event.startDateTime).format("h:mm A")} - ${moment(event.endDateTime).format("h:mm A")}`}
             </p>
           </div>
 
@@ -212,7 +237,7 @@ export default function EventCard({
               <h4
                 className={`text-md font-bold whitespace-nowrap ${status.active ? "text-green-200" : "text-red-200"}`}
               >
-                {seatLabel}
+                {event.city === "Online" ? "Online Session" : seatLabel}
               </h4>
             </div>
           </div>
