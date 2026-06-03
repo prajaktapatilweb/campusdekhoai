@@ -174,7 +174,7 @@ export default function NewContactForm({ selectedEvent }: Props) {
               onClick={() => setSubmitted(false)}
               className="mt-6 rounded-full border border-[hsl(var(--border))] px-5 py-2 text-sm font-medium transition-all duration-300 hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))]"
             >
-              Send another message
+              Register another student
             </button>
           </motion.div>
         ) : (

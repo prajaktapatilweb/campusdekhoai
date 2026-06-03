@@ -221,10 +221,10 @@ export default function Footer() {
               className="4 text-white/60 hover:underline"
             >
               <Image
-                src="/images/mastermindlogo.png"
+                src="/images/mastermindLogo.png"
                 width="25"
                 height="25"
-                alt="Matermind Web Developers Logo"
+                alt="Matermind Logo"
                 className="ml-1 inline-block"
               />
               Mastermind Web Developers

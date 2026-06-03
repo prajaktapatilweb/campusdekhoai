@@ -25,6 +25,7 @@ export interface EventType {
 interface Props {
   events: EventType[];
 }
+
 export default function EventCards({ events }: Props) {
   // export default function EventCards() {
   // const [events, setEvents] = useState<EventType[]>([]);
@@ -64,12 +65,24 @@ export default function EventCards({ events }: Props) {
   //     setLoading(false);
   //   }
   // };
+  const onlineEvent: EventType = {
+    _id: "online-event-2026",
+    city: "Online",
+    cityMarathi: "ऑनलाइन",
+    startDateTime: "2026-06-21T00:00:00",
+    endDateTime: "2026-06-21T00:00:00",
+    venue: "Online",
+    venueMarathi: "ऑनलाइन",
+    maxAttendees: 999,
+    status: "ACTIVE",
+  };
 
   const sortedEvents = [...events].sort(
     (a, b) =>
       new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime(),
   );
 
+  const displayEvents = [...sortedEvents, onlineEvent];
   const secondSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -89,7 +102,7 @@ export default function EventCards({ events }: Props) {
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
           {/* <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-2 lg:grid-cols-3"> */}
-          {sortedEvents.map((event, index) => (
+          {displayEvents.map((event, index) => (
             // <EventIndivCard
             //   key={event._id}
             //   event={event}
