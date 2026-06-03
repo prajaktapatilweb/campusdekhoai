@@ -117,7 +117,7 @@ export default function EventCard({
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/65 to-black/40" />
       {event.city === "Online" && (
-        <div className="absolute top-4 right-4 rounded-full bg-red-600 px-4 py-2 text-xs font-bold tracking-wider text-white uppercase">
+        <div className="absolute top-4 right-24 rounded-full bg-red-600 px-4 py-2 text-xs font-bold tracking-wider text-white uppercase">
           Online Event
         </div>
       )}
