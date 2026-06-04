@@ -3,28 +3,27 @@ import Axios from "axios";
 export interface SendRegistrationParams {
   phone: string;
   name: string; // {{1}} - User's name
-  regNo: string; // {{2}} - Registration number
+  city: string; // {{2}} - Registration number
   venue: string; // {{3}} - Location / Venue
   dayDate: string; // {{4}} - Day/Date
   time: string; // {{5}} - Day string or extra date info
-  // imageUrl: string; // URL of the header image to display
-  // contactName: string; // {{5}} - Contact person
-  // contactPhone: string; // {{6}} - Contact number
+  templateName: string; // Name of the WhatsApp template to use
 }
 
-export async function sendRegistrationConfirmationViaCM({
+export async function sendReminderViaCM({
   phone,
   name,
-  regNo,
+  city,
   venue,
   dayDate,
   time,
+  templateName,
   // imageUrl,
   // contactName,
   // contactPhone,
 }: SendRegistrationParams) {
   try {
-    console.log("Reached Function", name, regNo, venue, dayDate, time);
+    console.log("Reached Function", name, city, venue, dayDate, time);
     const response = await Axios.post(
       "https://backend.chatmitra.com/developer/api/send_message",
       {
@@ -33,16 +32,28 @@ export async function sendRegistrationConfirmationViaCM({
           {
             kind: "template",
             template: {
-              name: "reg_cnfm_20260529213441",
+              name: templateName,
               language: "en_US",
               // category: "utility",
               components: [
                 {
+                  type: "header",
+                  parameters: [
+                    {
+                      type: "image",
+                      image: {
+                        link: "https://pudhariedudisha.com/images/PudhaiCampus2CareerLogo.png",
+                      },
+                    },
+                  ],
+                },
+                {
                   type: "body",
                   parameters: [
                     { type: "text", text: String(name) }, // {{1}}
-                    { type: "text", text: String(regNo) }, // {{2}}
+                    // { type: "text", text: String(regNo) }, // {{2}}
                     { type: "text", text: String(venue) }, // {{3}}
+                    { type: "text", text: String(city) }, // {{3}}
                     { type: "text", text: String(dayDate) }, // {{4}}
                     { type: "text", text: String(time) }, // {{5}}
                   ],

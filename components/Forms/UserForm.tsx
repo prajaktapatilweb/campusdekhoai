@@ -20,13 +20,21 @@ import {
 } from "@/components/Formik/FormDateTimeInput";
 import { useLanguage } from "@/contexts/LanguageContext";
 import RadioGroup from "../Formik/RadioGroup";
-import User from "@/models/User";
+import FormCheckboxGroup from "../Formik/FormCheckboxGroup";
+import { EventType } from "../events";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),
   email: Yup.string().required("Required"),
-  phone: Yup.string().required("Required"),
+  phone: Yup.string()
+    .required("Required")
+    .matches(/^[0-9]+$/, "Only digits allowed")
+    .length(10, "Enter 10 digit number"),
+  password: Yup.string().min(4, "Password must be at least 4 characters"),
   role: Yup.string().required("Required"),
+  allowedEvents: Yup.array()
+    .of(Yup.string())
+    .min(1, "Select at least one event"),
 });
 
 interface Props {
@@ -34,6 +42,7 @@ interface Props {
   loading?: boolean;
   onSubmit: (values: any) => void;
   onCancel: () => void;
+  events: EventType[];
 }
 
 export default function UserForm({
@@ -41,6 +50,7 @@ export default function UserForm({
   loading = false,
   onSubmit,
   onCancel,
+  events,
 }: Props) {
   const { t } = useLanguage();
   return (
@@ -53,7 +63,7 @@ export default function UserForm({
       {({ handleSubmit, errors, values }) => (
         <form onSubmit={handleSubmit}>
           {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
             <FormInput
               name="name"
               label="Name"
@@ -61,7 +71,13 @@ export default function UserForm({
               icon={<User2 size={18} />}
             />
 
-            <FormInputMarathi
+            <FormInput
+              name="password"
+              label="Password"
+              placeholder="Enter password (min 4 characters)"
+              // icon={<Mail size={18} />}
+            />
+            <FormInput
               name="email"
               label="Email"
               placeholder="Enter email Id"
@@ -78,12 +94,20 @@ export default function UserForm({
               name="role"
               label="Select Role of the user"
               options={[
-                { label: "Admin", value: "admin" },
+                // { label: "Admin", value: "admin" },
                 { label: "Staff", value: "staff" },
                 { label: "College", value: "college" },
               ]}
             />
           </div>
+          <FormCheckboxGroup
+            name="allowedEvents"
+            label="Allowed Events"
+            options={events.map((event) => ({
+              label: event.city,
+              value: event._id,
+            }))}
+          />
           {/* ACTIONS */}
           <div className="mt-8 flex justify-end gap-3">
             <button
@@ -102,7 +126,7 @@ export default function UserForm({
               {loading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
-                t("admin.save")
+                "Add User"
               )}
             </button>
           </div>

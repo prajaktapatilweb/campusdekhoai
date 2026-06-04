@@ -15,7 +15,7 @@ import {
 interface CheckboxOption {
   label: string;
   value: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 interface FormCheckboxGroupProps {

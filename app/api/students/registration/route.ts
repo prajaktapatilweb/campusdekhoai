@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
     const time =
       startTime && endTime
         ? `${startTime.format("h:mm A")} to ${endTime.format("h:mm A")}`
-        : "04:00 PM to 06:00 PM";
+        : "-";
 
     console.log("Formatted date and time", dayDate, time);
 

@@ -21,6 +21,12 @@ const UserSchema = new mongoose.Schema(
       enum: ["admin", "college", "student", "staff"],
       default: "college",
     },
+    allowedEvents: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Event",
+      },
+    ],
     name: String,
   },
   {

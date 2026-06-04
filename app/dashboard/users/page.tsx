@@ -21,6 +21,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import UserForm from "@/components/Forms/UserForm";
 import AppModal from "@/components/@/AppModal";
 import DeleteDialog from "@/components/@/DeleteDialog";
+import { EventType } from "@/components/events";
+import { apiFetch } from "@/lib/api";
 
 interface User {
   _id: string;
@@ -29,14 +31,25 @@ interface User {
   password: string;
   phone: string;
   role: string;
+  allowedEvents: string[];
 }
 
-const initialValues = {
+interface UserFormValues {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  role: string;
+  allowedEvents: string[];
+}
+
+const initialValues: UserFormValues = {
   name: "",
   email: "",
   password: "",
   phone: "",
   role: "",
+  allowedEvents: [],
 };
 
 export default function UsersPage() {
@@ -47,7 +60,9 @@ export default function UsersPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [formInitialValues, setFormInitialValues] = useState(initialValues);
+
+  const [formInitialValues, setFormInitialValues] =
+    useState<UserFormValues>(initialValues);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedDeleteUser, setSelectedDeleteUser] = useState<User | null>(
     null,
@@ -55,9 +70,11 @@ export default function UsersPage() {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const { language, t } = useLanguage();
+  const [events, setEvents] = useState<EventType[]>([]);
 
   useEffect(() => {
     fetchFunction();
+    fetchEvents();
   }, []);
 
   const fetchFunction = async () => {
@@ -75,7 +92,7 @@ export default function UsersPage() {
       }
 
       const data = await response.json();
-
+      console.log("Fetched Users:", data.data);
       if (data.success) {
         setUsers(data.data);
       }
@@ -83,6 +100,29 @@ export default function UsersPage() {
       console.error("Error fetching Users:", error);
     } finally {
       setLoading(false);
+    }
+  };
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch("/api/event/get");
+      if (!response.ok) {
+        setLoading(false);
+        return;
+      }
+
+      const contentType = response.headers.get("content-type");
+
+      if (!contentType?.includes("application/json")) {
+        throw new Error("Invalid response type");
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        setEvents(data.data);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -98,6 +138,7 @@ export default function UsersPage() {
         password: "",
         phone: user.phone,
         role: user.role,
+        allowedEvents: user.allowedEvents || [],
       });
     } else {
       setEditingUser(null);
@@ -119,8 +160,8 @@ export default function UsersPage() {
 
     try {
       const url = editingUser
-        ? `/api/user/edit/${editingUser._id}`
-        : "/api/user/add";
+        ? `/api/users/edit/${editingUser._id}`
+        : "/api/users/add";
       const method = editingUser ? "PUT" : "POST";
       const response = await fetch(url, {
         method,
@@ -310,6 +351,7 @@ export default function UsersPage() {
           loading={submitting}
           onSubmit={handleSubmit}
           onCancel={handleCloseDialog}
+          events={events}
         />
         {error && (
           <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">

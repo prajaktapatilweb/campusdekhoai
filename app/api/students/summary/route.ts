@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 import Student from "@/models/Student";
+import UserModel from "@/models/User";
 
 import { connectDB } from "@/lib/mongodb";
 import { withAuth } from "@/lib/withAuth";
@@ -18,11 +19,29 @@ export const GET = withAuth(async (req, user) => {
     // jwt.verify(token, process.env.JWT_SECRET!);
     console.log("Reached to GET", user);
     await connectDB();
+    const loggedInUser = await UserModel.findById(user.id).select(
+      "role allowedEvents",
+    );
+    if (!loggedInUser) {
+      return NextResponse.json(
+        { success: false, message: "User not found" },
+        { status: 404 },
+      );
+    }
+    let studentFilter = {};
+    if (loggedInUser.role !== "admin") {
+      studentFilter = {
+        eventId: {
+          $in: loggedInUser.allowedEvents,
+        },
+      };
+    }
     // Student List
-    const students = await Student.find().sort({
+    const students = await Student.find(studentFilter).sort({
       createdAt: -1,
     });
     const eventCounts = await Student.aggregate([
+      { $match: studentFilter },
       {
         $group: {
           _id: "$evenetLocation",
