@@ -158,7 +158,7 @@ export default function StudentPage() {
     ];
 
     // 2. Map through the complete raw backend data array
-    const csvData = students.map((student) => {
+    const csvData = filteredStudents.map((student) => {
       // Process the array fields safely so they don't break CSV formatting
       const helpNeededStr = Array.isArray(student.helpNeeded)
         ? student.helpNeeded.join("; ")
