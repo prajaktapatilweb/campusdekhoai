@@ -120,7 +120,7 @@ export default function StudentPage() {
 
   const stats = useMemo(() => {
     const cities = [...new Set(students.map((s) => s.district))];
-
+    console.log("Unique cities extracted:", cities);
     const today = new Date().toDateString();
 
     const todayCount = students.filter(

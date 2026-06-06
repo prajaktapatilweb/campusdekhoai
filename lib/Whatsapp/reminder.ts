@@ -8,6 +8,7 @@ export interface SendRegistrationParams {
   dayDate: string; // {{4}} - Day/Date
   time: string; // {{5}} - Day string or extra date info
   templateName: string; // Name of the WhatsApp template to use
+  locationUrl?: string; // Optional: URL for location pin (if needed in template)
 }
 
 export async function sendReminderViaCM({
@@ -18,12 +19,21 @@ export async function sendReminderViaCM({
   dayDate,
   time,
   templateName,
+  locationUrl,
   // imageUrl,
   // contactName,
   // contactPhone,
 }: SendRegistrationParams) {
   try {
-    console.log("Reached Function", name, city, venue, dayDate, time);
+    console.log(
+      "Reached Function",
+      name,
+      city,
+      venue,
+      dayDate,
+      time,
+      locationUrl,
+    );
     const response = await Axios.post(
       "https://backend.chatmitra.com/developer/api/send_message",
       {
@@ -56,6 +66,17 @@ export async function sendReminderViaCM({
                     { type: "text", text: String(city) }, // {{3}}
                     { type: "text", text: String(dayDate) }, // {{4}}
                     { type: "text", text: String(time) }, // {{5}}
+                  ],
+                },
+                {
+                  type: "button",
+                  sub_type: "url",
+                  index: "0",
+                  parameters: [
+                    {
+                      type: "text",
+                      text: locationUrl || "", // Default location if not provided
+                    },
                   ],
                 },
               ],

@@ -7,6 +7,7 @@ import EventModel from "@/models/Event";
 import StudentModel from "@/models/Student";
 import ReminderLogModel from "@/models/ReminderLog";
 import { sendReminderViaCM } from "@/lib/Whatsapp/reminder";
+import { EVENT_LOCATION } from "@/components/constants/eventWhatsappGroups";
 
 // import your whatsapp function
 // import { sendWhatsAppTemplate } from "@/lib/whatsapp";
@@ -43,7 +44,8 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
   const templateName =
     reminderType === "24H"
       ? "before_24h_20260602155616"
-      : "reminder_2h_before_20260602160044";
+      : // : "reminder_2h_before_20260602160044";
+        "reminder_2h_before_cta_20260606124700";
   const startTime = event
     ? moment(event.startDateTime).utcOffset("+05:30")
     : null;
@@ -71,6 +73,7 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
           dayDate: String(dayDate),
           time: String(time),
           templateName,
+          locationUrl: EVENT_LOCATION[event.city] || "",
         }),
       ),
     );
@@ -119,7 +122,7 @@ export async function GET(request: NextRequest) {
       }
 
       // 2 Hour Reminder
-      if (hoursRemaining <= 2 && hoursRemaining > 1) {
+      if (hoursRemaining <= 2.5 && hoursRemaining > 1.5) {
         await sendReminder(event, "2H");
         remindersSent++;
       }

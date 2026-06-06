@@ -59,24 +59,19 @@ export default function EventCard({
     };
   };
   const getDisplaySeats = () => {
-    const now = new Date().getTime();
+    const now = Date.now();
     const start = new Date(event.startDateTime).getTime();
-    // Assume registration opened 30 days before event
+
     const assumedLaunch = start - 30 * 24 * 60 * 60 * 1000;
     const totalDuration = start - assumedLaunch;
     const elapsed = now - assumedLaunch;
-    // Progress between 0 and 1
-    const progress = Math.min(Math.max(elapsed / totalDuration, 0), 1);
-    // Reduce up to 85% seats as event approaches
-    const reducedSeats = Math.floor(event.maxAttendees * (1 - progress * 0.85));
-    // Random decrease (0–7)
-    const randomOffset = Math.floor(Math.random() * 8);
-    // Final visible seats
-    const visibleSeats = reducedSeats - randomOffset;
-    // Always minimum 5 seats
-    return Math.max(visibleSeats, 5);
-  };
 
+    const progress = Math.min(Math.max(elapsed / totalDuration, 0), 1);
+
+    const reducedSeats = Math.floor(event.maxAttendees * (1 - progress * 0.85));
+
+    return Math.max(reducedSeats, 5);
+  };
   const getSeatLabel = (seats: number) => {
     if (seats <= 10) return "Almost Full";
     if (seats <= 30) return "Limited Seats";
