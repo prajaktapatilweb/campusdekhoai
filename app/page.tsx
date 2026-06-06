@@ -17,6 +17,7 @@ import PartnerColleges from "@/components/partnercolleges";
 import Partnerstrip from "@/components/partnerstrip";
 import UniversityCards from "@/components/Slider";
 import { getEvents } from "@/lib/getEvents";
+import HeroContactPopup from "@/components/HeroContactPopup";
 
 export default async function Page() {
   const events = await getEvents();
@@ -41,6 +42,13 @@ export default async function Page() {
         {/* <CTABanner /> */}
         <Footer />
         {/* <EventCardsSection /> */}
+        <HeroContactPopup
+          eventLocations={events.map((e: any) => ({
+            label: e.city,
+            value: e.city,
+            id: e._id,
+          }))}
+        />
       </main>
     </>
   );

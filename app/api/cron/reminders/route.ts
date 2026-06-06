@@ -43,7 +43,7 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
 
   const templateName =
     reminderType === "24H"
-      ? "before_24h_20260602155616"
+      ? "reminder_24h_cta_20260606132938"
       : // : "reminder_2h_before_20260602160044";
         "reminder_2h_before_cta_20260606124700";
   const startTime = event
