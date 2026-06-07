@@ -82,7 +82,6 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
-
   console.log(`${reminderType}: Success=${successCount} Failed=${failCount}`);
   await ReminderLogModel.updateOne(
     { eventId: event._id, reminderType },
@@ -95,6 +94,27 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
       },
     },
   );
+  sendReminderViaCM({
+    phone: "9823217284",
+    name: `BJ Patil S_${successCount} F_${failCount}`,
+    city: String(event.city),
+    venue: String(event.venue),
+    dayDate: String(dayDate),
+    time: String(time),
+    templateName,
+    locationUrl: EVENT_LOCATION[event.city] || "",
+  });
+
+  sendReminderViaCM({
+    phone: "9922913434",
+    name: "Deepak Bhosale",
+    city: String(event.city),
+    venue: String(event.venue),
+    dayDate: String(dayDate),
+    time: String(time),
+    templateName,
+    locationUrl: EVENT_LOCATION[event.city] || "",
+  });
 }
 
 export async function GET(request: NextRequest) {
