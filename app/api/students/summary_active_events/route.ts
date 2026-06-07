@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 import Student from "@/models/Student";
 import UserModel from "@/models/User";
+import EventModel from "@/models/Event";
 
 import { connectDB } from "@/lib/mongodb";
 import { withAuth } from "@/lib/withAuth";
@@ -16,7 +17,8 @@ export const GET = withAuth(async (req, user) => {
     //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     // }
 
-    // jwt.verify(token, process.env.JWT_SECRET!);
+    // jwt.verify
+    // (token, process.env.JWT_SECRET!);
     console.log("Reached to GET", user);
     await connectDB();
     const loggedInUser = await UserModel.findById(user.id).select(
@@ -28,14 +30,35 @@ export const GET = withAuth(async (req, user) => {
         { status: 404 },
       );
     }
-    let studentFilter = {};
+
+    const now = new Date();
+
+    // Get active events
+    const activeEvents = await EventModel.find({
+      endDateTime: { $gt: new Date().toISOString() },
+    }).select("_id");
+
+    const activeEventIds = activeEvents.map((e) => e._id);
+    // console.log("Active event IDs:", activeEvents, activeEventIds);
+
+    let studentFilter = {
+      eventId: { $in: activeEventIds },
+    };
+
     if (loggedInUser.role !== "admin") {
-      studentFilter = {
-        eventId: {
-          $in: loggedInUser.allowedEvents,
-        },
-      };
+      studentFilter.eventId.$in = activeEventIds.filter((id) =>
+        loggedInUser.allowedEvents.includes(id),
+      );
     }
+    // console.log("Student filter:", studentFilter);
+    // let studentFilter = {};
+    // if (loggedInUser.role !== "admin") {
+    //   studentFilter = {
+    //     eventId: {
+    //       $in: loggedInUser.allowedEvents,
+    //     },
+    //   };
+    // }
     // Student List
     const students = await Student.find(studentFilter).sort({
       createdAt: -1,

@@ -139,7 +139,7 @@ export default function StudentPage() {
     count: item.count,
   }));
 
-  const handleExportCSV = () => {
+  const handleExportCSV = (type: "All" | "Filter") => {
     // 1. Defined all available data columns as headers
     const headers = [
       "Name",
@@ -158,7 +158,8 @@ export default function StudentPage() {
     ];
 
     // 2. Map through the complete raw backend data array
-    const csvData = filteredStudents.map((student) => {
+    const sourceData = type === "All" ? students : filteredStudents;
+    const csvData = sourceData.map((student) => {
       // Process the array fields safely so they don't break CSV formatting
       const helpNeededStr = Array.isArray(student.helpNeeded)
         ? student.helpNeeded.join("; ")
@@ -332,7 +333,7 @@ export default function StudentPage() {
 
             {/* EXPORT */}
             <button
-              onClick={handleExportCSV}
+              onClick={() => handleExportCSV("All")}
               className="flex items-center justify-center gap-2 rounded-xl bg-[#1a237e] px-5 py-3 font-medium text-white transition hover:bg-[#0d1452]"
             >
               <Download className="h-5 w-5" />
@@ -340,23 +341,31 @@ export default function StudentPage() {
             </button>
           </div>
         </div>
-        <select
-          value={selectedEventLocation}
-          onChange={(e) => {
-            setSelectedEventLocation(e.target.value);
-            setPage(1);
-          }}
-          className="rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-[#1a237e] focus:ring-4 focus:ring-[#1a237e]/10"
-        >
-          <option value="all">All Events</option>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <select
+            value={selectedEventLocation}
+            onChange={(e) => {
+              setSelectedEventLocation(e.target.value);
+              setPage(1);
+            }}
+            className="rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-[#1a237e] focus:ring-4 focus:ring-[#1a237e]/10"
+          >
+            <option value="all">All Events</option>
 
-          {eventLocationSummary.map((item) => (
-            <option key={item.location} value={item.location}>
-              {item.location} ({item.count})
-            </option>
-          ))}
-        </select>
-
+            {eventLocationSummary.map((item) => (
+              <option key={item.location} value={item.location}>
+                {item.location} ({item.count})
+              </option>
+            ))}
+          </select>
+          {/* <button
+            onClick={() => handleExportCSV("Filter")}
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#1a237e] px-5 py-3 font-medium text-white transition hover:bg-[#0d1452]"
+          >
+            <Download className="h-5 w-5" />
+            Export Filtered Data to CSV
+          </button> */}
+        </div>
         {/* TABLE */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

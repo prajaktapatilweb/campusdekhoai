@@ -32,7 +32,9 @@ export default function LoginPage() {
       const user = await login(email, password);
 
       router.replace(
-        user.role === "admin" ? "/dashboard/events" : "/dashboard/students",
+        user.role === "admin"
+          ? "/dashboard/events"
+          : "/dashboard/students/activeevents",
       );
     } catch (error: any) {
       setError(error.message || "Login failed");

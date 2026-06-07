@@ -5,7 +5,7 @@ import ServicesSection from "@/components/services-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import Footer from "@/components/footer";
 import AppThemeSetting from "./AppThemeSetting";
-import EventCards from "@/components/events";
+import EventCards, { EventType } from "@/components/events";
 import Gallery from "@/components/Gallery";
 import Colleges from "@/components/colleges";
 import ExpertGuidesSection from "@/components/expertguide";
@@ -20,7 +20,16 @@ import { getEvents } from "@/lib/getEvents";
 import HeroContactPopup from "@/components/HeroContactPopup";
 
 export default async function Page() {
-  const events = await getEvents();
+  const eventsAll = await getEvents();
+  const events = eventsAll.filter(
+    (event: EventType) => new Date(event.endDateTime) > new Date(),
+  );
+  // .map((e: any) => ({
+  //   label: e.city,
+  //   value: e.city,
+  //   id: e._id,
+  // }));
+
   return (
     <>
       <main>
@@ -48,6 +57,15 @@ export default async function Page() {
             value: e.city,
             id: e._id,
           }))}
+          // eventLocations={events
+          //   .filter(
+          //     (event: EventType) => new Date(event.endDateTime) > new Date(),
+          //   )
+          //   .map((e: any) => ({
+          //     label: e.city,
+          //     value: e.city,
+          //     id: e._id,
+          //   }))}
         />
       </main>
     </>

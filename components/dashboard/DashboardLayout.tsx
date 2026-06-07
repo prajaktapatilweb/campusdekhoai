@@ -28,9 +28,15 @@ export default function DashboardLayout({ children }: Props) {
       allowedRoles: ["admin"],
     },
     {
-      title: "Students",
+      title: "Students Active Events",
       icon: Users,
-      href: "/dashboard/students",
+      href: "/dashboard/students/activeevents",
+      allowedRoles: ["admin", "staff", "college"],
+    },
+    {
+      title: "Students All Events",
+      icon: Users,
+      href: "/dashboard/students/allevents",
       allowedRoles: ["admin", "staff", "college"],
     },
     {
@@ -59,7 +65,7 @@ export default function DashboardLayout({ children }: Props) {
     );
 
     if (currentRoute && !currentRoute.allowedRoles.includes(user.role)) {
-      router.replace("/dashboard/students");
+      router.replace("/dashboard/students/activeevents");
     }
   }, [user, pathname, loading]);
 
