@@ -4,7 +4,7 @@ export const EVENT_WHATSAPP_GROUPS: Record<string, string> = {
   Kolhapur: "https://chat.whatsapp.com/HlCxJVYLD8SJ24tWXs0vws?s=cl&p=i&mlu=1",
   Mudal: "https://chat.whatsapp.com/DAJItgvyeuT0Iwo2jyCh15?s=cl&p=i&mlu=1",
   Gadhinglaj: "https://chat.whatsapp.com/JhwIUyuKKwn1G6L1CedYfE?s=cl&p=i&mlu=1",
-  Ishawarpur: "https://chat.whatsapp.com/DbLLZebIO9fGJbsaNKvF2V?s=cl&p=i&mlu=1",
+  Ishwarpur: "https://chat.whatsapp.com/DbLLZebIO9fGJbsaNKvF2V?s=cl&p=i&mlu=1",
   Sangli: "https://chat.whatsapp.com/DbLLZebIO9fGJbsaNKvF2V?s=cl&p=i&mlu=1",
   Karad: "https://chat.whatsapp.com/DyhaPq2ghiHJHes1FRlRhD?s=cl&p=i&mlu=1",
   Wai: "https://chat.whatsapp.com/DyhaPq2ghiHJHes1FRlRhD?s=cl&p=i&mlu=1",

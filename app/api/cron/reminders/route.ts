@@ -43,7 +43,8 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
 
   const templateName =
     reminderType === "24H"
-      ? "reminder_24h_cta_20260606132938"
+      ? // "reminder_24h_cta_20260606132938"
+        "before_24h_20260602155616"
       : // : "reminder_2h_before_20260602160044";
         "reminder_2h_before_cta_20260606124700";
   const startTime = event
@@ -94,9 +95,9 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
       },
     },
   );
-  sendReminderViaCM({
+  await sendReminderViaCM({
     phone: "9823217284",
-    name: `BJ Patil S_${successCount} F_${failCount}`,
+    name: "Bhushankumar Patil",
     city: String(event.city),
     venue: String(event.venue),
     dayDate: String(dayDate),
@@ -105,7 +106,7 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
     locationUrl: EVENT_LOCATION[event.city] || "",
   });
 
-  sendReminderViaCM({
+  await sendReminderViaCM({
     phone: "9922913434",
     name: "Deepak Bhosale",
     city: String(event.city),

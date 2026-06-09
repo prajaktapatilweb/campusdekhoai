@@ -18,6 +18,7 @@ import Partnerstrip from "@/components/partnerstrip";
 import UniversityCards from "@/components/Slider";
 import { getEvents } from "@/lib/getEvents";
 import HeroContactPopup from "@/components/HeroContactPopup";
+export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const eventsAll = await getEvents();

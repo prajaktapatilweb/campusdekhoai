@@ -34,6 +34,42 @@ export async function sendReminderViaCM({
       time,
       locationUrl,
     );
+    const components: any[] = [
+      {
+        type: "header",
+        parameters: [
+          {
+            type: "image",
+            image: {
+              link: "https://pudhariedudisha.com/images/PudhaiCampus2CareerLogo.png",
+            },
+          },
+        ],
+      },
+      {
+        type: "body",
+        parameters: [
+          { type: "text", text: String(name) },
+          { type: "text", text: String(venue) },
+          { type: "text", text: String(city) },
+          { type: "text", text: String(dayDate) },
+          { type: "text", text: String(time) },
+        ],
+      },
+    ];
+    if (templateName === "reminder_2h_before_cta_20260606124700") {
+      components.push({
+        type: "button",
+        sub_type: "url",
+        index: "0",
+        parameters: [
+          {
+            type: "text",
+            text: locationUrl || "No location provided", // Default location if not provided
+          },
+        ],
+      });
+    }
     const response = await Axios.post(
       "https://backend.chatmitra.com/developer/api/send_message",
       {
@@ -45,41 +81,7 @@ export async function sendReminderViaCM({
               name: templateName,
               language: "en_US",
               // category: "utility",
-              components: [
-                {
-                  type: "header",
-                  parameters: [
-                    {
-                      type: "image",
-                      image: {
-                        link: "https://pudhariedudisha.com/images/PudhaiCampus2CareerLogo.png",
-                      },
-                    },
-                  ],
-                },
-                {
-                  type: "body",
-                  parameters: [
-                    { type: "text", text: String(name) }, // {{1}}
-                    // { type: "text", text: String(regNo) }, // {{2}}
-                    { type: "text", text: String(venue) }, // {{3}}
-                    { type: "text", text: String(city) }, // {{3}}
-                    { type: "text", text: String(dayDate) }, // {{4}}
-                    { type: "text", text: String(time) }, // {{5}}
-                  ],
-                },
-                {
-                  type: "button",
-                  sub_type: "url",
-                  index: "0",
-                  parameters: [
-                    {
-                      type: "text",
-                      text: locationUrl || "", // Default location if not provided
-                    },
-                  ],
-                },
-              ],
+              components,
             },
           },
         ],
