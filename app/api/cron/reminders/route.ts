@@ -19,7 +19,7 @@ async function sendReminder(event: any, reminderType: "24H" | "2H") {
       $set: { status: "PROCESSING" },
       $setOnInsert: { eventId: event._id, reminderType, sentAt: new Date() },
     },
-    { upsert: true, new: false },
+    { upsert: true, returnDocument: "before" },
   );
 
   if (lock?.status === "SENT") {
