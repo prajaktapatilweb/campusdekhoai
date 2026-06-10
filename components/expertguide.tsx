@@ -123,6 +123,14 @@ const experts: ExpertCardProps[] = [
     experience: "Department of Architecture at VIT, Pune.",
     highlight: "",
   },
+  {
+    initials: "PA",
+    img: "/images/Prashant_Acharya.jpeg",
+    name: "Prof. Prashant Acharya",
+    achievement: "",
+    experience: "Faculty of Art & Design.",
+    highlight: "",
+  },
 ];
 
 function ExpertCard({

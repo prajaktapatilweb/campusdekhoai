@@ -18,6 +18,7 @@ import Partnerstrip from "@/components/partnerstrip";
 import UniversityCards from "@/components/Slider";
 import { getEvents } from "@/lib/getEvents";
 import HeroContactPopup from "@/components/HeroContactPopup";
+import SeminarAgendaNew from "@/components/eventstimelineNew";
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
@@ -46,7 +47,7 @@ export default async function Page() {
         {/* <PartnerColleges /> */}
         {/* <Colleges /> */}
         {/* <TestimonialsSection /> */}
-        <SeminarAgenda />
+        <SeminarAgendaNew />
         <ExpertGuidesSection />
         <FAQSection />
         {/* <CTABanner /> */}
