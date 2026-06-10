@@ -57,7 +57,7 @@ const experts: ExpertCardProps[] = [
   },
   {
     initials: "SP",
-    img: "/images/Prasannata_Ramtirthe1.jpeg",
+    img: "/images/Prasannata_Ramtirthe2.jpeg",
     name: "Dr. Prasannata Ramtirthe",
     achievement:
       "Assistant Professor of English, School of Law, Pimpri Chinchwad University, Pune",
