@@ -24,7 +24,7 @@ export const EVENT_LOCATION: Record<string, string> = {
   Mudal: "F7CNttsz1FiRVnKF8",
   Gadhinglaj: "SPgGpgZdZ4Lxo67D8",
   Ishawarpur: "39Sbrkomjx7UkGuH6",
-  Sangli: "Ws2MeRkL6oWpbbsr5",
+  Sangli: "BkCzt9LvtivtMaTM9",
   Karad: "kW1Xrej8zUEd6aSj6",
   Wai: "notfound",
   Satara: "notfound",
