@@ -6,6 +6,8 @@ import Event from "@/models/Event";
 import { sendRegistrationConfirmationViaCM } from "@/lib/Whatsapp/sendRegConfirm";
 import { generateSeqId } from "@/lib/GenerateIds";
 import moment from "moment";
+import { sendRegistrationConfirmationViaCMNew } from "@/lib/Whatsapp/sendRegConfirmNew";
+// import { EVENT_WHATSAPP_GROUPS } from "@/components/constants/eventWhatsappGroups";
 
 export async function POST(req: NextRequest) {
   try {
@@ -109,6 +111,7 @@ export async function POST(req: NextRequest) {
         : body.evenetLocation,
       dayDate: String(dayDate),
       time: String(time),
+      // groupLink: EVENT_WHATSAPP_GROUPS[eventDetails.city],
       // imageUrl: "https://pudhariedudisha.com/favicon.png",
       // contactName: "Atul",
       // contactPhone: "99",
