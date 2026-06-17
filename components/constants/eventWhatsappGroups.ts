@@ -30,7 +30,7 @@ export const EVENT_LOCATION: Record<string, string> = {
   Satara: "notfound",
   Baramati: "oEQR9YDrdCnzbawT7",
   Nashik: "jazA8sziuuX16rWC7",
-  Ahilyanagar: "fSuSTFSW5Q7Z18W57",
+  Ahilyanagar: "65onAAwu7KUZaH5j7",
   Indapur: "CBmrZCizSaJgZ6bE9",
   Shrirampur: "W2hg2kRFPTnrA1Av9",
   "Chatrapati Sambhajinagar": "wNxGDpq8VMLqPX7o8",
